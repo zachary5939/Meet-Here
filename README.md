@@ -1,4 +1,4 @@
-# `<name of application here>`
+# `Meetup`
 
 ## Database Schema Design
 
