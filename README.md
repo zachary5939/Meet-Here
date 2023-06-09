@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+[db-schema]: ./images/meetup_dbdiagram.png
 
 ## API Documentation
 
