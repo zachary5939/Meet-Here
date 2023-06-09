@@ -1,4 +1,4 @@
-# `Meetup`
+# `Meetup Clone`
 
 ## Database Schema Design
 
