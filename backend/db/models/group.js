@@ -1,23 +1,24 @@
-"use strict";
-const { Model } = require("sequelize");
-
+'use strict';
+const {
+  Model
+} = require('sequelize');
 module.exports = (sequelize, DataTypes) => {
   class Group extends Model {
+
     static associate(models) {
       Group.hasMany(models.Event, {
         foreignKey: "groupId",
       });
-
       Group.belongsTo(models.User, {
         foreignKey: "organizerId",
         as: "Organizer",
       });
 
-      Group.belongsToMany(models.User, {
-        through: "Membership",
-        foreignKey: "groupId",
-        otherKey: "userId",
-      });
+      // Group.belongsTo(models.User, {
+      //   through: "Membership",
+      //   foreignKey: "groupId",
+      //   otherKey: "userId",
+      // });
 
       Group.hasMany(models.Venue, {
         foreignKey: "groupId",
@@ -32,7 +33,6 @@ module.exports = (sequelize, DataTypes) => {
       });
     }
   }
-
   Group.init(
     {
       organizerId: {
@@ -70,6 +70,5 @@ module.exports = (sequelize, DataTypes) => {
       modelName: "Group",
     }
   );
-
   return Group;
 };
