@@ -5,9 +5,6 @@ if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
 }
 
-const { query } = require("express");
-
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   up: async (queryInterface, Sequelize) => {
     const groupImagesData = [
@@ -19,14 +16,15 @@ module.exports = {
       {
         groupId: 2,
         url: "/pic",
-        preview: true,
+        preview: false,
       },
       {
         groupId: 3,
         url: "/pic",
-        preview: true,
+        preview: false,
       },
     ];
+
     options.tableName = "GroupImages";
 
     return queryInterface.bulkInsert(options, groupImagesData, {});
