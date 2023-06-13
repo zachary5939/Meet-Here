@@ -17,30 +17,109 @@ const {
   getVenue,
 } = require("../../utils/validation.js");
 
-//get all groups
 router.get("/", async (req, res) => {
-  let groups = await Group.findAll();
-
-  // getting the image
-  for (const group of groups) {
-    let members = await Membership.count({ where: { groupId: group.id } });
-    group.dataValues.numMembers = members;
-
-    let groupImage = await group.getGroupImages({
-      where: { preview: true },
-      attributes: ["url"],
+    const groups = await Group.findAll({
+      include: {
+        model: GroupImage,
+        where: {
+          preview: true,
+        },
+        attributes: ["url"],
+        required: false,
+      },
     });
 
-    if (groupImage[0]) {
-      group.dataValues.previewImage = groupImage[0].dataValues.url;
-    } else {
-      group.dataValues.previewImage = null;
-    }
-  }
+    const newGroups = await Promise.all(
+      groups.map(async (group) => {
+        const groupJson = group.toJSON();
+        const numMembers = await Membership.count({
+          where: {
+            groupId: groupJson.id,
+            status: {
+              [Op.in]: ["co-host", "member"],
+            },
+          },
+        });
 
-  return res.status(200).json({
-    Groups: groups,
+        const { url } = groupJson.GroupImages[0]
+          ? groupJson.GroupImages[0]
+          : { url: null };
+
+        return {
+          ...groupJson,
+          numMembers,
+          previewImage: url,
+          GroupImages: undefined,
+        };
+      })
+    );
+
+    res.json({ Groups: newGroups });
   });
-});
+
+  router.get("/current", requireAuth, async (req, res) => {
+    const userId = req.user.id;
+
+    const groups = await Group.findAll({
+      where: {
+        [Op.or]: [
+          { organizerId: userId },
+          { "$Organizer.id$": userId },
+          { "$Users.id$": userId },
+        ],
+      },
+      include: [
+        {
+          model: User,
+          as: "Organizer",
+          attributes: [],
+        },
+        {
+          model: User,
+          through: {
+            attributes: [],
+          },
+          as: "Users",
+          attributes: [],
+        },
+        {
+          model: GroupImage,
+          where: {
+            preview: true,
+          },
+          attributes: ["url"],
+          required: false,
+        },
+      ],
+    });
+
+    const newGroups = await Promise.all(
+      groups.map(async (group) => {
+        const groupJson = group.toJSON();
+        const numMembers = await Membership.count({
+          where: {
+            groupId: groupJson.id,
+            status: {
+              [Op.in]: ["co-host", "member"],
+            },
+          },
+        });
+
+        const { url } =
+          groupJson.GroupImages && groupJson.GroupImages[0]
+            ? groupJson.GroupImages[0]
+            : { url: null };
+
+        return {
+          ...groupJson,
+          numMembers,
+          previewImage: url,
+          GroupImages: undefined,
+        };
+      })
+    );
+
+    res.json({ Groups: newGroups });
+  });
 
 module.exports = router;
