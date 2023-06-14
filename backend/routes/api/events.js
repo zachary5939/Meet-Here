@@ -154,36 +154,178 @@ router.get("/:eventId", async (req, res) => {
   });
 });
 
-//delete an event
-router.delete("/:eventId", requireAuth, async (req, res) => {
+//post image to event
+router.post("/:eventId/images", requireAuth, async (req, res) => {
+  try {
+    const { eventId } = req.params;
+    const { url, preview } = req.body;
+
+    const event = await Event.findByPk(eventId);
+    if (!event) {
+      return res.status(404).json({ message: "Event couldn't be found" });
+    }
+
+    const image = await EventImage.create({
+      eventId,
+      url,
+      preview,
+    });
+
+    res.status(201).json({
+      id: image.id,
+      url: image.url,
+      preview: image.preview,
+    });
+  } catch (error) {
+    res.status(500).json({ message: "Internal server error" });
+  }
+});
+
+//edit an event
+router.put("/:eventId", requireAuth, async (req, res) => {
   const event = await Event.findOne({
-    where: { id: req.params.eventId },
-    attributes: { exclude: ["updatedAt", "createdAt"] },
-  });
-
-  if (!event)
-    return res.status(404).json({ message: "Event couldn't be found" });
-
-  const group = await Group.findOne({ where: { id: event.groupId } });
-
-  const membership = await Membership.findOne({
     where: {
-      groupId: event.groupId,
-      userId: req.user.id,
+      id: req.params.eventId,
+    },
+    attributes: {
+      exclude: ["updatedAt", "createdAt"],
     },
   });
 
-  if (group.organizerId !== req.user.id) {
-    if (!membership || membership.status !== "co-host") {
-      return res.status(403).json({ message: "Forbidden" });
-    }
+  if (!event) {
+    res.status(404);
+    return res.json({
+      message: "Event couldn't be found",
+    });
   }
 
-  await event.destroy();
-
-  res.json({
-    message: "Successfully deleted",
+  const group = await Group.findOne({
+    where: {
+      id: event.groupId,
+    },
   });
+
+  if (!group) {
+    return res.status(404).json({ message: "Group couldn't be found" });
+  }
+
+  const membership = await Membership.findOne({
+    groupId: event.groupId,
+    userId: req.user.id,
+  });
+
+  if (
+    (group.organizerId !== req.user.id && !membership) ||
+    (group.organizerId !== req.user.id && membership.status !== "co-host")
+  ) {
+    return res.status(401).json({ message: "Forbidden" });
+  }
+
+  const {
+    venueId,
+    name,
+    type,
+    capacity,
+    price,
+    description,
+    startDate,
+    endDate,
+  } = req.body;
+
+  let errResult = { message: "Bad Request", errors: {} };
+
+  if (venueId) {
+    const venue = await Venue.findByPk(venueId);
+    if (!venue) errResult.errors.venueId = "Venue does not exist";
+  }
+
+  if (!name || name.length < 5) {
+    errResult.errors.name = "Name must be at least 5 characters";
+  }
+  if (type && !["Online", "In person"].includes(type)) {
+    errResult.errors.type = "Type must be Online or In person";
+  }
+  if (!capacity || typeof capacity !== "number") {
+    errResult.errors.capacity = "Capacity must be an integer";
+  }
+  if (!price || typeof price !== "number") {
+    errResult.errors.price = "Price is invalid";
+  }
+  if (!description) {
+    errResult.errors.description = "Description is required";
+  }
+  if (startDate && new Date() > new Date(startDate)) {
+    errResult.errors.startDate = "Start date must be in the future";
+  }
+
+  if (endDate && startDate && endDate < startDate) {
+    errResult.errors.endDate = "End date is less than start date";
+  }
+
+  if (Object.keys(errResult.errors).length) {
+    return res.status(400).json(errResult);
+  }
+  //or or or or or or
+  if (
+    venueId ||
+    name ||
+    type ||
+    capacity ||
+    price ||
+    description ||
+    startDate ||
+    endDate
+  ) {
+    event.set({
+      venueId,
+      name,
+      type,
+      capacity,
+      price,
+      description,
+      startDate,
+      endDate,
+    });
+  }
+  event.save();
+  res.json(event);
+});
+
+//delete an event
+router.delete("/:eventId", requireAuth, async (req, res) => {
+  try {
+    const event = await Event.findOne({
+      where: { id: req.params.eventId },
+      attributes: { exclude: ["updatedAt", "createdAt"] },
+    });
+
+    if (!event) {
+      return res.status(404).json({ message: "Event couldn't be found" });
+    }
+
+    const group = await Group.findOne({ where: { id: event.groupId } });
+    const membership = await Membership.findOne({
+      where: {
+        groupId: event.groupId,
+        userId: req.user.id,
+      },
+    });
+
+    if (group.organizerId !== req.user.id) {
+      if (!membership || membership.status !== "co-host") {
+        return res.status(403).json({ message: "Forbidden" });
+      }
+    }
+
+    await event.destroy();
+
+    res.json({
+      message: "Successfully deleted",
+    });
+  } catch (error) {
+    console.error("Error deleting event:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
 });
 
 router.get("/:eventId/attendees", async (req, res) => {
