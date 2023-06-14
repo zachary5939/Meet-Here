@@ -1,32 +1,49 @@
 "use strict";
-const { Model } = require("sequelize");
+const { Model, Validator } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class Attendance extends Model {
     static associate(models) {
-      Attendance.belongsTo(models.Event, { foreignKey: "eventId" });
-      Attendance.belongsTo(models.User, { foreignKey: "userId" });
+      Attendance.belongsTo(models.User, {
+        foreignKey: "userId",
+        targetKey: "id",
+      });
+      Attendance.belongsTo(models.Event, {
+        foreignKey: "eventId",
+        targetKey: "id",
+      });
     }
   }
+
   Attendance.init(
     {
+      id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        primaryKey: true,
+        autoIncrement: true,
+      },
       eventId: {
         type: DataTypes.INTEGER,
         allowNull: false,
-        onDelete: "CASCADE",
       },
       userId: {
         type: DataTypes.INTEGER,
         allowNull: false,
       },
       status: {
-        type: DataTypes.ENUM("attending", "pending", "waitlist"),
+        type: DataTypes.ENUM,
         allowNull: false,
-        defaultValue: "pending",
+        values: ["co-host", "attending", "waitlist", "organizer"],
       },
     },
     {
       sequelize,
       modelName: "Attendance",
+      defaultScope: {
+        attributes: {
+          exclude: ["createdAt", "updatedAt"],
+        },
+      },
     }
   );
   return Attendance;
