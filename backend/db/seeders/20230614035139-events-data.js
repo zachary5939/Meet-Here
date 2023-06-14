@@ -20,8 +20,8 @@ module.exports = {
         type: "In person",
         capacity: 500,
         price: 0,
-        startDate: "2023-010-15 9:00:00",
-        endDate: "2023-010-15 16:00:00",
+        startDate: "2023-10-15 9:00:00",
+        endDate: "2023-10-15 16:00:00",
       },
       {
         groupId: 1,
@@ -32,8 +32,8 @@ module.exports = {
         type: "In person",
         capacity: 500,
         price: 0,
-        startDate: "2023-010-22 9:00:00",
-        endDate: "2023-010-22 16:00:00",
+        startDate: "2023-10-22 9:00:00",
+        endDate: "2023-10-22 16:00:00",
       },
       {
         groupId: 2,
