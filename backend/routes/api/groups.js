@@ -708,4 +708,108 @@ router.post(
   },
 );
 
+//MEMBERSHIP
+
+router.get("/:groupId/members", async (req, res) => {
+  const group = await Group.findOne({
+    where: {
+      id: req.params.groupId,
+    },
+  });
+
+  if (!group) {
+    return res.status(404).json({
+      message: "Group couldn't be found",
+    });
+  }
+
+  const membership = req.user ? await Membership.findOne({
+    where: {
+      groupId: req.params.groupId,
+      userId: req.user.id,
+    },
+  }) : null;
+
+  const membershipStatus = ["co-host", "member"];
+  const isOrganizerOrCoHost = req.user && (
+    group.organizerId === req.user.id ||
+    (membership && membership.status === "co-host")
+  );
+
+  const whereClause = {
+    groupId: group.id,
+    ...(isOrganizerOrCoHost ? {} : { status: { [Op.in]: membershipStatus } }),
+  };
+
+  const myMembers = await Membership.findAll({
+    attributes: {
+      exclude: ["createdAt", "updatedAt"],
+    },
+    where: whereClause,
+  });
+
+  const Members = [];
+
+  for (const member of myMembers) {
+    const user = await User.findOne({
+      where: {
+        id: member.userId,
+      },
+      attributes: ["id", "firstName", "lastName"],
+    });
+
+    const memberData = user.toJSON();
+    memberData.Membership = {
+      status: member.status,
+    };
+
+    Members.push(memberData);
+  }
+
+  return res.status(200).json({ Members });
+});
+
+router.post("/:groupId/membership", requireAuth, async (req, res) => {
+  const group = await Group.findOne({
+    where: {
+      id: req.params.groupId,
+    },
+  });
+
+  const membership = await Membership.findOne({
+    where: {
+      groupId: req.params.groupId,
+      userId: req.user.id,
+    },
+  });
+
+  if (!group)
+    return res.status(404).json({ message: "Group couldn't be found" });
+
+  if (membership) {
+    if (membership.status === "pending") {
+      return res.status(400).json({
+        message: "Membership has already been requested",
+      });
+    } else {
+      return res.status(400).json({
+        message: "User is already a member of the group",
+      });
+    }
+  } else {
+    const newMember = await Membership.create({
+      userId: req.user.id,
+      groupId: req.params.groupId,
+      status: "pending",
+    });
+
+    const returnMem = {
+      memberId: newMember.userId,
+      status: newMember.status,
+    };
+
+    return res.status(200).json(returnMem);
+  }
+});
+
 module.exports = router;
