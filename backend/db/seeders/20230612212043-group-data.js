@@ -1,11 +1,11 @@
 "use strict";
+/** @type {import('sequelize-cli').Migration} */
 
 let options = { tableName: "Groups" };
 if (process.env.NODE_ENV === "production") {
   options.schema = process.env.SCHEMA;
 }
 
-/** @type {import('sequelize-cli').Migration} */
 module.exports = {
   async up(queryInterface, Sequelize) {
     await queryInterface.bulkInsert(
