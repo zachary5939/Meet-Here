@@ -19,7 +19,7 @@ module.exports = {
         },
         groupId: {
           type: Sequelize.INTEGER,
-          onDelete: "Cascade",
+          onDelete: "CASCADE",
           references: {
             model: "Groups",
             key: "id",
@@ -58,6 +58,7 @@ module.exports = {
     );
   },
   async down(queryInterface, Sequelize) {
-    await queryInterface.dropTable("Venues");
+    options.tableName = "Venues";
+    await queryInterface.dropTable(options);
   },
 };
