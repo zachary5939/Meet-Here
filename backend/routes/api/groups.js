@@ -194,7 +194,7 @@ router.get("/:groupId", async (req, res) => {
   }
 });
 
-//creating groups DOUBLE CHECK BOOLEAN IF IT WORKS
+//creating groups
 router.post("/", requireAuth, handleValidationErrors, async (req, res) => {
   const userId = req.user.id;
   const groups = {
@@ -232,7 +232,7 @@ router.post("/", requireAuth, handleValidationErrors, async (req, res) => {
       updatedAt: group.updatedAt,
     });
   } catch (error) {
-    handleCreateGroupError(error, res);
+    createGroupError(error, res);
   }
 });
 
@@ -266,7 +266,7 @@ function validateGroups(groups) {
   return validationErrors;
 }
 
-function handleCreateGroupError(error, res) {
+function createGroupError(error, res) {
   if (error.name === "SequelizeValidationError") {
     const errors = {};
 
@@ -320,6 +320,7 @@ router.post("/:groupId/images", requireAuth, async (req, res, next) => {
   }
 });
 
+//Updates and returns an existing group.
 router.put(
   "/:groupId",
   requireAuth,
@@ -336,6 +337,7 @@ router.put(
         state: req.body.state,
       };
 
+      //errors
       const validationErrors = {};
 
       if (!groupData.name || groupData.name.length > 60) {
@@ -401,7 +403,7 @@ router.put(
   }
 );
 
-//delete group
+//kill a group of people
 router.delete("/:groupId", requireAuth, async (req, res) => {
   try {
     const groupId = req.params.groupId;
