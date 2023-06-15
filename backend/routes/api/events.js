@@ -528,15 +528,14 @@ router.post("/:eventId/attendance", requireAuth, async (req, res) => {
     return res.status(statusCode).json({ message });
   }
 
-  router.delete("/:eventId/attendance", requireAuth, async (req, res) => {
+  router.delete("/:eventId/attendance", requireAuth, deleteAttendance);
+
+  async function deleteAttendance(req, res) {
     try {
       const event = await findEventById(req.params.eventId);
 
       if (!event) {
-        res.status(404);
-        return res.json({
-          message: "Event couldn't be found",
-        });
+        return sendErrorResponse(res, 404, "Event couldn't be found");
       }
 
       const group = await findGroupById(event.groupId);
@@ -546,17 +545,11 @@ router.post("/:eventId/attendance", requireAuth, async (req, res) => {
       const attendance = await findAttendanceByUserIdAndEventId(userId, event.id);
 
       if (!attendance) {
-        res.status(404);
-        return res.json({
-          message: "Attendance does not exist for this User",
-        });
+        return sendErrorResponse(res, 404, "Attendance does not exist for this User");
       }
 
       if (!isAuthorizedToDelete(group, userId, req.user.id)) {
-        res.status(403);
-        return res.json({
-          message: "Only the User or organizer may delete an Attendance",
-        });
+        return sendErrorResponse(res, 403, "Only the User or organizer may delete an Attendance");
       }
 
       await attendance.destroy();
@@ -564,13 +557,9 @@ router.post("/:eventId/attendance", requireAuth, async (req, res) => {
         message: "Successfully deleted attendance from event",
       });
     } catch (error) {
-      return sendErrorResponse(
-        res,
-        500,
-        "An error occurred while processing the request"
-      );
+      return sendErrorResponse(res, 500, "An error occurred while processing the request");
     }
-  });
+  }
 
   async function findEventById(id) {
     return Event.findByPk(id);
