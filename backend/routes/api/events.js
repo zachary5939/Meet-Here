@@ -120,11 +120,6 @@ router.get("/", async (req, res) => {
 
     const response = {
       Events: eventsArr,
-      pagination: {
-        page: parseInt(page),
-        size: parseInt(size),
-        totalPages: totalPages,
-      },
     };
 
     res.json(response);
