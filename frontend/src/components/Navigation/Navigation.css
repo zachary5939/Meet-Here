@@ -1,3 +1,69 @@
 .hidden {
     display: none;
   }
+
+nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+  border-bottom: 1px solid grey;
+}
+
+.logo-container {
+  margin-right: 10px; /* Adjust margin as needed */
+}
+
+.logo-image {
+  width: 250px;
+  height: auto;
+}
+
+.navigation-links {
+  list-style-type: none;
+  display: flex;
+  align-items: center;
+  margin: 0;
+  padding: 0;
+}
+
+.navigation-links li {
+  margin-right: 10px; /* Adjust margin as needed */
+}
+
+.navigation-links li:last-child {
+  margin-right: 0;
+}
+
+.create-group-button {
+  background-color: black;
+  color: #ffffff;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}
+
+.create-group-button:hover {
+  background-color: rgb(77, 77, 77);
+}
+
+.login {
+  background-color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  
+}
+
+.signup {
+  background-color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+}

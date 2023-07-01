@@ -6,6 +6,7 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import "./Navigation.css";
+import logo from "../../assets/meetlogo.png"
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
@@ -13,9 +14,16 @@ function Navigation({ isLoaded }) {
   let sessionLinks;
   if (sessionUser) {
     sessionLinks = (
-      <li>
-        <ProfileButton user={sessionUser} />
-      </li>
+      <>
+        <li>
+          <NavLink exact to="/create-group">
+            <button className="create-group-button">Create a New Group</button>
+          </NavLink>
+        </li>
+        <li>
+          <ProfileButton user={sessionUser} />
+        </li>
+      </>
     );
   } else {
     sessionLinks = (
@@ -23,24 +31,28 @@ function Navigation({ isLoaded }) {
         <OpenModalButton
           buttonText="Log In"
           modalComponent={<LoginFormModal />}
+          className="login"
         />
         <OpenModalButton
           buttonText="Sign Up"
           modalComponent={<SignupFormModal />}
+          className="signup"
         />
       </li>
     );
   }
 
   return (
-    <ul>
-      <li>
+    <nav>
+      <div className="logo-container">
         <NavLink exact to="/">
-          Home
+        <img src={logo} alt="Meet Here Logo" className="logo-image" />
         </NavLink>
-      </li>
-      {isLoaded && sessionLinks}
-    </ul>
+      </div>
+      <ul className="navigation-links">
+        {isLoaded && sessionLinks}
+      </ul>
+    </nav>
   );
 }
 
