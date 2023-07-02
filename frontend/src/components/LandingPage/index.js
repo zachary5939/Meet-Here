@@ -1,7 +1,12 @@
 import React from "react";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./LandingPage.css";
+import ComputerImage from "../../assets/online_events.svg";
+import HandsUp from "../../assets/handsUp.svg";
+import Ticket from "../../assets/ticket.svg";
+import JoinGroup from "../../assets/joinGroup.svg";
 
 function LandingPage() {
   const user = useSelector((state) => state.session.user);
@@ -21,16 +26,13 @@ function LandingPage() {
           </p>
         </div>
         <div className="image-section">
-          <img
-            src="https://secure.meetupstatic.com/next/images/shared/online_events.svg?w=640"
-            alt="Static Image from Meetup"
-          />
+          <img alt="" src={ComputerImage} />
         </div>
       </section>
 
       <section className="featurePart">
         <div className="feature-description">
-          <h3>How meetup works</h3>
+          <h3>How Meet Here Works</h3>
         </div>
         <div className="feature-p">
           <p>
@@ -42,37 +44,35 @@ function LandingPage() {
 
       <section className="features-section">
         <div className="feature1">
-          <img
-            src="https://secure.meetupstatic.com/next/images/shared/handsUp.svg?w=256"
-            alt="Hand Clapping"
-          ></img>
-          <h3>Join a group</h3>
+          <img alt="" src={HandsUp} />
+          <h3>See all groups</h3>
           <p>
             Do what you love, meet others who love it, find your community. The
             rest is history!
           </p>
         </div>
         <div className="feature2">
-          <img
-            src="https://secure.meetupstatic.com/next/images/shared/ticket.svg?w=256"
-            alt="Ticket"
-          ></img>
+          <img alt="" src={Ticket} />
           <h3>Find an event</h3>
           <p>
             Events are happening on just about any topic you can think of, from
             online gaming and photography to yoga and hiking.
           </p>
         </div>
-        <div className="feature3">
-          <img
-            src="https://secure.meetupstatic.com/next/images/shared/joinGroup.svg?w=256"
-            alt="People"
-          ></img>
-          <h3>Start a new group</h3>
-          <p>
-            You don’t have to be an expert to gather people together and explore
-            shared interests.
-          </p>
+        <div className={`feature3${user ? "" : " disabled"}`}>
+          <img alt="" src={JoinGroup} />
+          <h3 className={user ? "" : "disabled-text"}>Start a new group</h3>
+          {user ? (
+            <p>
+              You don’t have to be an expert to gather people together and explore
+              shared interests.
+            </p>
+          ) : (
+            <p className="disabled-text">
+              You don’t have to be an expert to gather people together and explore
+              shared interests.
+            </p>
+          )}
         </div>
       </section>
 

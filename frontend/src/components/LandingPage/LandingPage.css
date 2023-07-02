@@ -6,52 +6,29 @@ html {
   font-family: "Raleway", sans-serif;
 }
 
-#root .landingPage .intro .intro-content p{
-  width:90% !important;
- }
-
- #root .landingPage .intro{
-  padding-bottom:129px;
-  padding-top:78px;
- }
-
 .landingPage {
   display: flex;
   flex-direction: column;
-  flex-wrap: wrap;
-  justify-content: center;
   align-items: center;
 }
 
-.landingPage .intro .intro-content{
-  padding-left:62px;
- }
-
- .intro .image-section img{
-  transform:translatex(0px) translatey(0px);
-  min-height:280px;
-  padding-right:94px;
- }
-
-.navigation-links li .login{
-  font-size:15px;
-  font-weight:600;
- }
-
-
- .navigation-links li .signup{
-  font-size:14px;
-  font-weight:600;
- }
-
+.navigation-links li .login,
+.navigation-links li .signup {
+  font-size: 15px;
+  font-weight: 400;
+}
 
 .intro {
-  font-family: "Raleway", sans-serif;
   display: flex;
   flex-wrap: wrap;
-  padding: 40px;
+  padding-top: 40px;
   padding-left: 90px;
+  padding-right: 20px;
   align-items: center;
+}
+
+.intro p {
+  width: 384px !important;
 }
 
 .intro-content {
@@ -60,66 +37,59 @@ html {
   margin-right: 20px;
 }
 
-.image-section {
-  flex: 1;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.intro .intro-content p {
+  width: 90%;
 }
 
 .intro .image-section img {
-  position: relative;
-  transform: scale(0.97);
-  top: 16px;
-  left: 33px;
-  perspective: 0px;
-  flex: 0 0 auto;
-  align-self: center;
-  padding-left: 0px;
-  margin-left: -43px;
+  width: 347px;
+  min-height: 287px;
 }
 
-   featurePart .feature-description h3{
-    height:125px;
-    width:100%;
-    transform:translatex(0px) translatey(0px);
-    position:relative;
-    left:12px;
-    bottom:-123px;
-   }
+.featurePart .feature-description h3 {
+  font-size: 25px;
+}
 
-   .featurePart .feature-description h3{
-    font-size:30px;
-   }
+.featurePart .feature-p p {
+  font-size: 14px;
+  font-style: bold;
+}
 
-   .featurePart .feature-p p{
-    font-weight:600;
-    font-size:17px;
-   }
+.features-section {
+  display: flex;
+  justify-content: center;
+}
 
-   .features-section {
-    display: flex;
-    justify-content: center;
-  }
+.feature1,
+.feature2,
+.feature3 {
+  flex: 1;
+  padding: 0 20px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
 
-  .featurePart {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-    margin-bottom: 40px; /* Add some bottom margin for spacing */
-  }
 
-  .feature1,
-  .feature2,
-  .feature3 {
-    flex: 1;
-    padding: 0 20px; /* Adjust the padding as per your preference */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    text-align: center;
-  }
+.feature1 img,
+.feature2 img,
+.feature3 img {
+  cursor: pointer;
+}
+
+.feature3.disabled img {
+  cursor: default;
+  pointer-events: none;
+}
+
+.featurePart {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: 40px;
+}
 
 .join-section {
   display: flex;
@@ -134,5 +104,11 @@ html {
   color: #ffffff;
   border: none;
   border-radius: 5px;
-  cursor: pointer
+  cursor: pointer;
+}
+
+.feature3 .disabled-text {
+  color: rgb(157, 157, 157);
+  cursor: default;
+  pointer-events: none;
 }
