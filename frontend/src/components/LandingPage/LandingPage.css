@@ -1,0 +1,138 @@
+body,
+html {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+  font-family: "Raleway", sans-serif;
+}
+
+#root .landingPage .intro .intro-content p{
+  width:90% !important;
+ }
+
+ #root .landingPage .intro{
+  padding-bottom:129px;
+  padding-top:78px;
+ }
+
+.landingPage {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+
+.landingPage .intro .intro-content{
+  padding-left:62px;
+ }
+
+ .intro .image-section img{
+  transform:translatex(0px) translatey(0px);
+  min-height:280px;
+  padding-right:94px;
+ }
+
+.navigation-links li .login{
+  font-size:15px;
+  font-weight:600;
+ }
+
+
+ .navigation-links li .signup{
+  font-size:14px;
+  font-weight:600;
+ }
+
+
+.intro {
+  font-family: "Raleway", sans-serif;
+  display: flex;
+  flex-wrap: wrap;
+  padding: 40px;
+  padding-left: 90px;
+  align-items: center;
+}
+
+.intro-content {
+  flex: 1;
+  max-width: 800px;
+  margin-right: 20px;
+}
+
+.image-section {
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.intro .image-section img {
+  position: relative;
+  transform: scale(0.97);
+  top: 16px;
+  left: 33px;
+  perspective: 0px;
+  flex: 0 0 auto;
+  align-self: center;
+  padding-left: 0px;
+  margin-left: -43px;
+}
+
+   featurePart .feature-description h3{
+    height:125px;
+    width:100%;
+    transform:translatex(0px) translatey(0px);
+    position:relative;
+    left:12px;
+    bottom:-123px;
+   }
+
+   .featurePart .feature-description h3{
+    font-size:30px;
+   }
+
+   .featurePart .feature-p p{
+    font-weight:600;
+    font-size:17px;
+   }
+
+   .features-section {
+    display: flex;
+    justify-content: center;
+  }
+
+  .featurePart {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    margin-bottom: 40px; /* Add some bottom margin for spacing */
+  }
+
+  .feature1,
+  .feature2,
+  .feature3 {
+    flex: 1;
+    padding: 0 20px; /* Adjust the padding as per your preference */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+  }
+
+.join-section {
+  display: flex;
+  justify-content: center;
+  margin-top: 50px;
+}
+
+.join-button {
+  padding: 10px 20px;
+  font-size: 18px;
+  background-color: #00525E;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer
+}
