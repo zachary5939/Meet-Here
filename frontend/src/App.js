@@ -5,6 +5,7 @@ import * as sessionActions from "./store/session";
 
 import Navigation from "./components/Navigation";
 import LandingPage from "./components/LandingPage";
+import Groups from "./components/Groups";
 
 function App() {
   const dispatch = useDispatch();

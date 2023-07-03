@@ -1,13 +1,21 @@
-import React from "react";
-import "./Groups.css";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
-import { useSelector } from "react-redux";
-import { useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useParams, Link, useHistory } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { thunkGetAllGroups } from "../../store/groups";
 
-function GroupPage() {
+const Groups = () => {
+  const { groupId } = useParams();
+  const dispatch = useDispatch();
 
-}
+  useEffect(() => {
+    dispatch(thunkGetAllGroups());
+  }, [dispatch]);
 
-return (
-    
-)
+  return (
+    <>
+      <h1>Hi</h1>
+    </>
+  );
+};
+
+export default Groups;
