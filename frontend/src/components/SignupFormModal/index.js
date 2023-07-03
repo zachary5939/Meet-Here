@@ -1,12 +1,11 @@
-import React, { useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
 import { useModal } from "../../context/Modal";
 import * as sessionActions from "../../store/session";
 import "./SignupForm.css";
 
 function SignupFormModal() {
   const dispatch = useDispatch();
-  const sessionUser = useSelector((state) => state.session.use);
   const [email, setEmail] = useState("");
   const [username, setUsername] = useState("");
   const [firstName, setFirstName] = useState("");
@@ -14,7 +13,29 @@ function SignupFormModal() {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [errors, setErrors] = useState({});
+  const [validationErrors, setValidationErrors] = useState({});
   const { closeModal } = useModal();
+
+  useEffect(() => {
+    const validationErrors = {};
+    if (!firstName.length) {
+      validationErrors.firstName = "First name field cannot be empty";
+    } else if (!lastName.length) {
+      validationErrors.lastName = "Last name field cannot be empty";
+    } else if (username.length < 4) {
+      validationErrors.username = "Username must be four characters or longer";
+    } else if (password.length < 6) {
+      validationErrors.password = "Password must be six characters or longer";
+    } else if (password !== confirmPassword) {
+      validationErrors.confirmPassword = "Passwords don't match";
+    } else if (!email.length) {
+      validationErrors.email = "Email can't be empty";
+    }
+
+    setValidationErrors(validationErrors);
+  }, [email, username, firstName, lastName, password, confirmPassword]);
+
+  const isFormValid = Object.keys(validationErrors).length === 0;
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -43,20 +64,26 @@ function SignupFormModal() {
     });
   };
 
-  return (
-    <>
+return (
+  <>
+    <section className="modal-box">
       <h1>Sign Up</h1>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} className="signup-form">
+        <div className="error-container">
+          {Object.values(errors).map((error, index) => (
+            <p key={index}>{error}</p>
+          ))}
+        </div>
         <label>
           Email
           <input
             type="text"
+            className="signup-content"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
             required
           />
         </label>
-        {errors.email && <p>{errors.email}</p>}
         <label>
           Username
           <input
@@ -64,9 +91,9 @@ function SignupFormModal() {
             value={username}
             onChange={(e) => setUsername(e.target.value)}
             required
+            className="signup-content"
           />
         </label>
-        {errors.username && <p>{errors.username}</p>}
         <label>
           First Name
           <input
@@ -74,9 +101,9 @@ function SignupFormModal() {
             value={firstName}
             onChange={(e) => setFirstName(e.target.value)}
             required
+            className="signup-content"
           />
         </label>
-        {errors.firstName && <p>{errors.firstName}</p>}
         <label>
           Last Name
           <input
@@ -84,9 +111,9 @@ function SignupFormModal() {
             value={lastName}
             onChange={(e) => setLastName(e.target.value)}
             required
+            className="signup-content"
           />
         </label>
-        {errors.lastName && <p>{errors.lastName}</p>}
         <label>
           Password
           <input
@@ -94,9 +121,9 @@ function SignupFormModal() {
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             required
+            className="signup-content"
           />
         </label>
-        {errors.password && <p>{errors.password}</p>}
         <label>
           Confirm Password
           <input
@@ -104,13 +131,20 @@ function SignupFormModal() {
             value={confirmPassword}
             onChange={(e) => setConfirmPassword(e.target.value)}
             required
+            className="signup-content"
           />
         </label>
-        {errors.confirmPassword && <p>{errors.confirmPassword}</p>}
-        <button type="submit">Sign Up</button>
+        <button
+          className="signup-button"
+          type="submit"
+          disabled={!isFormValid}
+        >
+          Sign Up
+        </button>
       </form>
-    </>
-  );
+    </section>
+  </>
+);
 }
 
 export default SignupFormModal;
