@@ -1,0 +1,9 @@
+#modal-content {
+    width: 400px;
+    max-width: 700px;
+}
+
+label {
+    display: flex;
+    flex-direction: column;
+}
