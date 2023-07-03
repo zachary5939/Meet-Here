@@ -112,3 +112,18 @@ html {
   cursor: default;
   pointer-events: none;
 }
+
+.feature3 .disabled-paragraph {
+  color: rgb(0, 0, 0);
+  cursor: default;
+  pointer-events: none;
+}
+
+@media (min-width:1024px){
+
+  /* Paragraph Format so it doesn't look ugly in 1024px */
+  #root .landingPage .features-section .feature2 p{
+   width:106% !important;
+  }
+
+ }

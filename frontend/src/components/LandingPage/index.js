@@ -68,7 +68,7 @@ function LandingPage() {
               shared interests.
             </p>
           ) : (
-            <p className="disabled-text">
+            <p className="disabled-paragraph">
               You don’t have to be an expert to gather people together and explore
               shared interests.
             </p>
