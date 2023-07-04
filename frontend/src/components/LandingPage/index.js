@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./LandingPage.css";
@@ -44,8 +44,10 @@ function LandingPage() {
 
       <section className="features-section">
         <div className="feature1">
-          <img alt="" src={HandsUp} />
-          <h3>See all groups</h3>
+        <Link to="/groups" style={{ textDecoration: 'none' }}>
+            <img alt="" src={HandsUp} />
+            <h3>See all groups</h3>
+          </Link>
           <p>
             Do what you love, meet others who love it, find your community. The
             rest is history!

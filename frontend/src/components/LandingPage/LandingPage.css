@@ -71,6 +71,20 @@ html {
   text-align: center;
 }
 
+.feature1 h3,
+.feature2 h3,
+.feature3 h3 {
+  color: #00525E;
+  cursor: pointer;
+}
+
+.feature1 h3:hover {
+  text-decoration: underline;
+}
+
+.feature2 h3:hover {
+  text-decoration: underline;
+}
 
 .feature1 img,
 .feature2 img,
@@ -103,8 +117,8 @@ html {
   background-color: #00525E;
   color: #ffffff;
   border: none;
-  border-radius: 5px;
   cursor: pointer;
+  box-shadow: 5px 2px 2px black;
 }
 
 .feature3 .disabled-text {
