@@ -161,7 +161,6 @@ const initialState = { allGroups: {}, singleGroup: {} };
 const groupsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_GROUPS: {
-      console.log(action.groups);
       return { ...state, allGroups: action.groups };
     }
     case GET_ONE_GROUP: {
