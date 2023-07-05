@@ -1,0 +1,27 @@
+#root .group-list .group-record-div{
+    padding-left:440px;
+    padding-right:440px;
+   }
+
+.group-list-header-events {
+    display: flex;
+    flex-direction: row;
+}
+
+.group-list
+
+.group-list {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.group-header {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+
+  .group-list-item {
+    border: 1.5px gray;
+  }

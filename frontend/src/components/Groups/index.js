@@ -25,7 +25,7 @@ function GroupPage() {
           <Link className="group-list-header-groups" to="/groups">
             Groups
           </Link>
-          <p>Groups in Connect</p>
+          <p>Groups in Meet Here</p>
         </div>
         <p className="group-list-item"></p>
         {normalizedGroups.map((group) => (
