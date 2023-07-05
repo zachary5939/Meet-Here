@@ -17,7 +17,7 @@ function Navigation({ isLoaded }) {
       <>
         <li>
           <NavLink exact to="/create-group">
-            <button className="create-group-button">Create a New Group</button>
+            <p className="create-group-button">Start a new Group</p>
           </NavLink>
         </li>
         <li>

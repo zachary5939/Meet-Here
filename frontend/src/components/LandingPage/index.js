@@ -3,20 +3,26 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import "./LandingPage.css";
+import OpenModalButton from "../OpenModalButton";
 import ComputerImage from "../../assets/online_events.svg";
 import HandsUp from "../../assets/handsUp.svg";
 import Ticket from "../../assets/ticket.svg";
 import JoinGroup from "../../assets/joinGroup.svg";
+import SignupFormModal from "../SignupFormModal";
 
 function LandingPage() {
   const user = useSelector((state) => state.session.user);
   const history = useHistory();
 
+  const handleJoinMeetup = () => {
+    console.log("Join Meetup button clicked");
+  };
+
   return (
     <div className="landingPage">
       <section className="intro">
         <div className="intro-content">
-          <h1>Where interests become friendships</h1>
+          <h1>The people platform - Where interests become friendships</h1>
           <p>
             No matter what your hobbies or interests are, whether it's hiking,
             reading, networking, or sharing skills, there are countless
@@ -44,7 +50,7 @@ function LandingPage() {
 
       <section className="features-section">
         <div className="feature1">
-        <Link to="/groups" style={{ textDecoration: 'none' }}>
+          <Link to="/groups" style={{ textDecoration: "none" }}>
             <img alt="" src={HandsUp} />
             <h3>See all groups</h3>
           </Link>
@@ -66,20 +72,27 @@ function LandingPage() {
           <h3 className={user ? "" : "disabled-text"}>Start a new group</h3>
           {user ? (
             <p>
-              You don’t have to be an expert to gather people together and explore
-              shared interests.
+              You don’t have to be an expert to gather people together and
+              explore shared interests.
             </p>
           ) : (
             <p className="disabled-paragraph">
-              You don’t have to be an expert to gather people together and explore
-              shared interests.
+              You don’t have to be an expert to gather people together and
+              explore shared interests.
             </p>
           )}
         </div>
       </section>
 
       <section className="join-section">
-        <button className="join-button">Join Meetup</button>
+        {!user && (
+          <OpenModalButton
+            className="join-button"
+            onClick={handleJoinMeetup}
+            modalComponent={<SignupFormModal />}
+            buttonText="Join MeetHere"
+          />
+        )}
       </section>
     </div>
   );

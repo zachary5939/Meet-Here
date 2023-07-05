@@ -1,9 +1,17 @@
 // frontend/src/store/session.js
 import { csrfFetch } from "./csrf";
 
+const CREATE_SESSION = "session/POST_SESSION";
 const SET_USER = "session/setUser";
 const REMOVE_USER = "session/removeUser";
+const CREATE_USER = "session/POST_USER";
 
+const CreateSession = (user) => {
+  return {
+    type: CREATE_SESSION,
+    user,
+  };
+};
 
 const setUser = (user) => {
     return {
@@ -16,6 +24,28 @@ const removeUser = () => {
     return {
         type: REMOVE_USER,
     };
+};
+
+const CreateUser = (user) => {
+  return {
+    type: CREATE_USER,
+    user,
+  };
+};
+
+export const createSessionThunk = (user) => async (dispatch) => {
+  const { credential, password } = user;
+  const response = await csrfFetch("/api/session", {
+    method: "POST",
+    body: JSON.stringify({
+      credential,
+      password,
+    }),
+  });
+  const resBody = await response.json();
+
+  if (response.ok) dispatch(CreateSession(resBody.user));
+  return resBody;
 };
 
 export const login = (user) => async (dispatch) => {
@@ -56,6 +86,16 @@ export const restoreUser = () => async (dispatch) => {
     return response;
   };
 
+  export const createUserThunk = (user) => async (dispatch) => {
+    const response = await csrfFetch("/api/users", {
+      method: "POST",
+      body: JSON.stringify(user),
+    });
+    const resBody = await response.json();
+    if (response.ok) dispatch(CreateUser(resBody.user));
+    return resBody;
+  };
+
   export const logout = () => async (dispatch) => {
     const response = await csrfFetch('/api/session', {
       method: 'DELETE',
@@ -81,7 +121,5 @@ const sessionReducer = (state = initialState, action) => {
       return state;
   }
 };
-
-
 
 export default sessionReducer;

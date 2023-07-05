@@ -18,6 +18,24 @@ html {
   font-weight: 400;
 }
 
+.navigation-links li .fa-chevron-up {
+  margin-left: 0;
+  width: 44px;
+}
+
+.navigation-links li .fa-user-circle {
+  margin-left: 0;
+  width: 58px;
+}
+
+.landingPage .features-section .feature1 {
+  padding-left: 213px;
+}
+
+.landingPage .features-section .feature3 {
+  padding-right: 213px;
+}
+
 .intro {
   display: flex;
   flex-wrap: wrap;
@@ -27,8 +45,22 @@ html {
   align-items: center;
 }
 
+.intro h1 {
+  transform: translatex(-5px);
+  direction: ltr;
+  column-count: 1;
+  letter-spacing: 0.7px;
+  text-shadow: rgba(0, 0, 0, 0.3) 0px 1px 1px;
+  text-align: left;
+  padding-left: 7px;
+  width: 358px;
+  transform: translatex(0px) translatey(0px);
+}
+
 .intro p {
   width: 384px !important;
+  font-weight: 600;
+  transform: translatex(0px) translatey(0px);
 }
 
 .intro-content {
@@ -78,10 +110,7 @@ html {
   cursor: pointer;
 }
 
-.feature1 h3:hover {
-  text-decoration: underline;
-}
-
+.feature1 h3:hover,
 .feature2 h3:hover {
   text-decoration: underline;
 }
@@ -133,11 +162,8 @@ html {
   pointer-events: none;
 }
 
-@media (min-width:1024px){
-
-  /* Paragraph Format so it doesn't look ugly in 1024px */
-  #root .landingPage .features-section .feature2 p{
-   width:106% !important;
+@media (min-width: 1024px) {
+  #root .landingPage .features-section .feature2 p {
+    width: 106% !important;
   }
-
- }
+}

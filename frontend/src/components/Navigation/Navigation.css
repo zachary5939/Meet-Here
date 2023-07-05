@@ -36,17 +36,13 @@ nav {
 }
 
 .create-group-button {
-  background-color: black;
-  color: #ffffff;
+  color: black;
   border: none;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
   text-decoration: none;
-}
-
-.create-group-button:hover {
-  background-color: rgb(77, 77, 77);
+  font-weight: 900;
 }
 
 .login {
@@ -66,3 +62,41 @@ nav {
   cursor: pointer;
   text-decoration: none;
 }
+
+.profile-button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 0;
+  position: relative;
+}
+
+.profile-icon {
+  color: #FF5A5F;
+  font-size: 30px;
+  transition: transform 0.1s ease;
+}
+
+.arrow-icon {
+  position: absolute;
+  top: 50%;
+  right: -10px;
+  transform: translateY(-50%);
+  color: grey;
+  font-size: 19px;
+  transition: transform 0.2s ease;
+}
+
+.active .arrow-icon {
+  transform: translateY(-50%) rotate(180deg);
+}
+
+.navigation-links li .fa-chevron-up{
+  padding-right:3px;
+  margin-left:0px;
+  width:29px;
+ }
+
+ .navigation-links li .fa-user-circle{
+  padding-right:24px;
+ }

@@ -1,11 +1,14 @@
 import React, { useEffect } from "react";
-import { useParams, Link, useHistory } from "react-router-dom";
-import { useSelector, useDispatch } from "react-redux";
+import { Link } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAllGroups } from "../../store/groups";
+import { GroupRecord } from "./GroupRecord";
+import "./Groups.css";
 
-const Groups = () => {
-  const { groupId } = useParams();
+function GroupPage() {
   const dispatch = useDispatch();
+  const groups = useSelector((state) => state.groups?.allGroups);
+  const normalizedGroups = groups ? Object.values(groups) : [];
 
   useEffect(() => {
     dispatch(thunkGetAllGroups());
@@ -13,9 +16,23 @@ const Groups = () => {
 
   return (
     <>
-      <h1>Hi</h1>
+      <div className="group-list">
+        <h3>{groups}</h3>
+        <div className="group-header">
+          <Link className="group-list-header-events" to="/events">
+            Events
+          </Link>
+          <Link className="group-list-header-groups" to="/groups">
+            Groups
+          </Link>
+          <p>Groups in Connect</p>
+        </div>
+        {normalizedGroups.map((group) => (
+          <GroupRecord group={group} key={group.id} />
+        ))}
+      </div>
     </>
   );
-};
+}
 
-export default Groups;
+export default GroupPage;

@@ -1,12 +1,12 @@
-// frontend/src/components/LoginFormModal/index.js
 import React, { useState } from "react";
-import * as sessionActions from "../../store/session";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useModal } from "../../context/Modal";
+import { login } from "../../store/session";
 import "./LoginForm.css";
 
 function LoginFormModal() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector((state) => state.session.user);
   const [credential, setCredential] = useState("");
   const [password, setPassword] = useState("");
   const [errors, setErrors] = useState({});
@@ -15,12 +15,24 @@ function LoginFormModal() {
   const handleSubmit = (e) => {
     e.preventDefault();
     setErrors({});
-    return dispatch(sessionActions.login({ credential, password }))
+    dispatch(login({ credential, password }))
       .then(closeModal)
-      .catch(async (res) => {
-        const data = await res.json();
-        if (data && data.errors) {
-          setErrors(data.errors);
+      .catch((res) => {
+        if (res.data && res.data.errors) {
+          setErrors(res.data.errors);
+        }
+      });
+  };
+
+  const handleDemoUserClick = () => {
+    const demoCredential = "demo@user.io";
+    const demoPassword = "password";
+
+    dispatch(login({ credential: demoCredential, password: demoPassword }))
+      .then(closeModal)
+      .catch((res) => {
+        if (res.data && res.data.errors) {
+          setErrors(res.data.errors);
         }
       });
   };
@@ -49,12 +61,13 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && (
-          <p>{errors.credential}</p>
-        )}
-        <button
-        className="LoginButton"
-        type="submit">Log In</button>
+        {errors.credential && <p>{errors.credential}</p>}
+        <button className="LoginButton" type="submit">
+          Log In
+        </button>
+        <p className="DemoButton" type="button" onClick={handleDemoUserClick}>
+          <u>Demo User</u>
+        </p>
       </form>
     </>
   );
