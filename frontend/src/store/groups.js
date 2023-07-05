@@ -136,7 +136,7 @@ export const thunkUpdateGroupImage =
     await csrfFetch(`/api/group-images/${groupImage.id}`, {
       method: "DELETE",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(groupImage),
     });
@@ -144,7 +144,7 @@ export const thunkUpdateGroupImage =
     const response = await csrfFetch(`/api/groups/${groupId}/images`, {
       method: "post",
       headers: {
-        "content-type": "application/json",
+        "Content-Type": "application/json",
       },
       body: JSON.stringify(groupImage),
     });

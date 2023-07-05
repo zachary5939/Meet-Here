@@ -3,21 +3,21 @@ import { Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetAllGroups } from "../../store/groups";
 import { GroupRecord } from "./GroupRecord";
+import * as groupActions from '../../store/groups';
 import "./Groups.css";
 
 function GroupPage() {
   const dispatch = useDispatch();
-  const groups = useSelector((state) => state.groups?.allGroups);
-  const normalizedGroups = groups ? Object.values(groups) : [];
+  const groups = useSelector((state) => state.groups);
+  const normalizedGroups = groups && groups.allGroups ? Object.values(groups.allGroups) : [];
 
   useEffect(() => {
-    dispatch(thunkGetAllGroups());
+    dispatch(groupActions.thunkGetAllGroups());
   }, [dispatch]);
 
   return (
     <>
       <div className="group-list">
-        <h3>{groups}</h3>
         <div className="group-header">
           <Link className="group-list-header-events" to="/events">
             Events
@@ -27,8 +27,12 @@ function GroupPage() {
           </Link>
           <p>Groups in Connect</p>
         </div>
+        <p className="group-list-item"></p>
         {normalizedGroups.map((group) => (
+          <>
           <GroupRecord group={group} key={group.id} />
+          <p className="group-list-item"></p>
+          </>
         ))}
       </div>
     </>
