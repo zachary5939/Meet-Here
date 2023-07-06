@@ -1,5 +1,5 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useSelector } from "react-redux";
 import ProfileButton from "./ProfileButton";
 import OpenModalButton from "../OpenModalButton";
@@ -10,6 +10,11 @@ import logo from "../../assets/meetlogo.png"
 
 function Navigation({ isLoaded }) {
   const sessionUser = useSelector((state) => state.session.user);
+  const history = useHistory();
+
+  const newGroup = () => {
+    history.push("/groups/new");
+  }
 
   let sessionLinks;
   if (sessionUser) {

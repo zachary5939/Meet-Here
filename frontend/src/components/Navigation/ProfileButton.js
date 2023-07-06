@@ -5,11 +5,13 @@ import OpenModalButton from "../OpenModalButton";
 import LoginFormModal from "../LoginFormModal";
 import SignupFormModal from "../SignupFormModal";
 import "./Navigation.css";
+import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
 
 function ProfileButton({ user }) {
   const dispatch = useDispatch();
   const [showMenu, setShowMenu] = useState(false);
   const ulRef = useRef();
+  const history = useHistory()
 
   const openMenu = () => {
     if (showMenu) return;
@@ -24,6 +26,12 @@ function ProfileButton({ user }) {
         setShowMenu(false);
       }
     };
+
+    const toGroups = (e) => {
+      e.preventDefault()
+      closeMenu()
+      history.push("/groups")
+    }
 
     document.addEventListener("click", closeMenu);
 
@@ -46,11 +54,11 @@ function ProfileButton({ user }) {
       <ul className={ulClassName} ref={ulRef}>
         {user ? (
           <>
-            <li>{user.username}</li>
-            <li>{user.firstName} {user.lastName}</li>
+            <li>Hello, {user.username}</li>
+            {/* <li>{user.firstName} {user.lastName}</li> */}
             <li>{user.email}</li>
             <li>
-              <button onClick={logout}>Log Out</button>
+              <button className="MenuLogout" onClick={logout}>Log Out</button>
             </li>
           </>
         ) : (

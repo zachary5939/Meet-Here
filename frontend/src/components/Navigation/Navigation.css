@@ -100,3 +100,19 @@ nav {
  .navigation-links li .fa-user-circle{
   padding-right:24px;
  }
+
+
+ /* PROFILE DROPDOWN IN NAV BAR */
+ .profile-dropdown {
+  position: absolute;
+  background-color: white;
+  border: solid black 1px;
+  padding-left: 0px;
+  list-style-type: none;
+ }
+
+
+ /* LOGOUT BUTTON IN DROPDOWN */
+ .MenuLogout {
+  background-color: rgb(130, 175, 226);
+ }
