@@ -40,19 +40,19 @@ const initialState = {};
 // Reducer
 const eventsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL_EVENTS: {
-      const newState = {};
-      action.events.Events.forEach((event) => {
-        newState[event.id] = event;
-      });
-      return newState;
-    }
-    case GET_EVENT_DETAIL: {
-      const newState = { [action.event.id]: action.event}
-      return newState
-    }
-    default:
-      return state;
+      case GET_ALL_EVENTS: {
+          const newState = {...state};
+          action.events.Events.forEach(event => {
+              newState[event.id] = event;
+          });
+          return newState;
+      }
+      case GET_EVENT_DETAIL: {
+          const newState = { ...state, [action.event.id]: action.event };
+          return newState;
+      }
+      default:
+          return state;
   }
 };
 

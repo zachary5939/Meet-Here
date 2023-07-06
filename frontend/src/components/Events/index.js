@@ -1,44 +1,58 @@
 import React, { useEffect } from "react";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { EventRecord } from "./EventRecords";
+import { Link } from "react-router-dom/cjs/react-router-dom.min";
+import { useSelector, useDispatch } from "react-redux";
+import { NavLink } from "react-router-dom";
 import { thunkGetAllEvents } from "../../store/events";
+import { EventRecord } from "./EventRecords";
 import "./Events.css";
 
-function EventPage() {
+const EventPage = () => {
   const dispatch = useDispatch();
-  const events = useSelector((state) => state.events);
-  const normalizedGroups = Object.values(events)
+  const events = useSelector((state) => Object.values(state.events));
+  const time = new Date();
+  const upcomingEvents = [];
+  const pastEvents = [];
 
   useEffect(() => {
     dispatch(thunkGetAllEvents());
   }, [dispatch]);
 
-  console.log('events:', events); // log the events state to check its contents
-  console.log('normalizedGroups:', normalizedGroups); // log the normalizedGroups array to check its contents
+  for (let event of events) {
+    if (new Date(event.startDate) > time) {
+      upcomingEvents.push(event);
+    } else {
+      pastEvents.push(event);
+    }
+  }
+
+  upcomingEvents.sort((a, b) => {
+    return new Date(a.startDate) - new Date(b.startDate);
+  });
+
+  pastEvents.sort((a, b) => {
+    return new Date(b.startDate) - new Date(a.startDate);
+  });
+
+  const sortedEvents = upcomingEvents.concat(pastEvents);
 
   return (
-    <>
-      <div className="event-list">
-        <div className="event-header">
-          <Link className="group-list-header-events" to="/events">
-            Events
-          </Link>
-          <Link className="group-list-header-groups" to="/groups">
-            Groups
-          </Link>
-          <p>Events in Meet Here</p>
-        </div>
-        <p className="event-list-item"></p>
-        {normalizedGroups.map((event) => (
-          <React.Fragment key={event.id}>
-            <EventRecord event={event} />
-            <p className="event-list-item"></p>
-          </React.Fragment>
-        ))}
+    <div className="event-list">
+      <div className="event-header">
+        <Link className="event-list-header-events" to="/events">
+          Events
+        </Link>
+        <Link className="event-list-header-groups" to="/groups">
+          Groups
+        </Link>
       </div>
-    </>
+      <div>
+        <p className="events-in-connect">Events in Connect</p>
+      </div>
+      {sortedEvents.map((event) => (
+        <EventRecord event={event} key={event.id} />
+      ))}
+    </div>
   );
-}
+};
 
 export default EventPage;

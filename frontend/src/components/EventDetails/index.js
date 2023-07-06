@@ -1,33 +1,36 @@
 import React, { useEffect } from "react";
-import { useParams} from "react-router-dom";
-import { useHistory } from "react-router-dom/cjs/react-router-dom.min";
+import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetEventDetail } from "../../store/events";
 import "./EventDetails.css";
 import { EventDeleteButton } from "./EventDeleteButton";
 
- const EventDetail = () => {
+export const EventDetail = () => {
   const dispatch = useDispatch();
   const { eventId } = useParams();
+  const eventInfo = useSelector((state) => state.events);
+  const event = eventInfo[eventId];
   const history = useHistory();
-  const event = useSelector((state) => state.events.singleEvent);
-  const eventStore = useSelector((state) => state.events);
 
   useEffect(() => {
     dispatch(thunkGetEventDetail(eventId));
   }, [dispatch, eventId]);
 
-
-  const eventPrivateCheck = () => {
-    if (event?.Group?.private === true) {
-      return "Private";
-    } else {
-      return "Public";
-    }
-  };
+  // console.log('event:', event);
 
   const sendToGroup = () => {
     history.push(`/groups/${event.Group.id}`);
+  };
+
+  const imageCheck = () => {
+  };
+
+  const eventPriceCheck = () => {
+    if (event.price <= 0) {
+      return "FREE";
+    } else {
+      return `Price: $${event.price}`;
+    }
   };
 
   const returnEvents = () => {
@@ -44,12 +47,65 @@ import { EventDeleteButton } from "./EventDeleteButton";
 
   return (
     <>
-      <div className="event-container">
-        <h2>{event.name}</h2>
-        <p>{"<"}</p>
+      <div className="event-detail-container">
+        <div className="event-detail-breadcrumb">
+          <p>{"<"}</p>
+          <Link to="/events">
+            Events
+          </Link>
+        </div>
+        <div className="event-detail-header-container">
+          <h2>{event.name}</h2>
+          <p>Hosted by {event.Group.firstName} {event.Group.lastName}</p>
+        </div>
       </div>
+      <div className="event-detail-body-container">
+        <div className="event-detail-body-info">
+            <div className="event-detail-body-info-group-body">
+              <h4 onClick={sendToGroup}>{event.Group.name}</h4>
+            </div>
+          </div>
+          <div className="event-detail-body-info-event">
+            <div className="event-detail-body-info-event-time-details">
+              <i className="far fa-clock fa-lg" style={{ color: "#CCCCCC" }}></i>
+              <div className="event-detail-body-info-event-details-time-container">
+                <div className="event-detail-body-info-event-details-start-time">
+                  <span>START </span>
+                  <div>
+                    {event.startDate.split("T")[0]} · {}
+                    {event.startDate.split("T")[1].split(".")[0]}
+                  </div>
+                </div>
+                <div className="event-detail-body-info-event-details-end-time">
+                  <span>END </span>
+                  <div>
+                    {event.endDate.split("T")[0]} · {}
+                    {event.endDate.split("T")[1].split(".")[0]}
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="event-detail-body-info-event-price-details">
+              <i className="fa-solid fa-sack-dollar fa-xl" style={{ color: "#CCCCCC" }}></i>
+              <p>{eventPriceCheck()}</p>
+            </div>
+            <div className="event-detail-body-info-event-type-details">
+              <i className="fa-solid fa-map-pin fa-xl" style={{ color: "#CCCCCC" }}></i>
+              <p>{event.type}</p>
+            </div>
+            <div className="event-detail-body-info-event-button">
+              {/* <EventDetailButton event={event} /> */}
+            </div>
+          </div>
+        </div>
+        <div className="event-detail-body-description">
+          <h2 style={{ marginBottom: ".25rem" }}>Details</h2>
+          <p>{event.description}</p>
+        </div>
     </>
   );
+
+
 };
 
 export default EventDetail;
