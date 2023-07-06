@@ -13,7 +13,7 @@ const getEventDetail = (event) => ({
   event,
 });
 
-//thunks
+// Thunks
 export const thunkGetAllEvents = () => async (dispatch) => {
   try {
     const res = await csrfFetch("/api/events");
@@ -42,14 +42,18 @@ export const thunkGetEventDetail = (eventId) => async (dispatch) => {
 
 const initialState = {};
 
-//reducer
+// Reducer
 const eventsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_EVENTS: {
+      console.log('GET_ALL_EVENTS action:', action.events); // Log the action to check its contents
+
       const newState = {};
       action.events.Events.forEach((event) => {
         newState[event.id] = event;
       });
+      console.log('newState:', newState); // Log the newState to check its contents
+
       return newState;
     }
     case GET_EVENT_DETAIL: {

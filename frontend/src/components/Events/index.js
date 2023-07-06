@@ -8,7 +8,7 @@ import "./Events.css";
 function EventPage() {
   const dispatch = useDispatch();
   const events = useSelector((state) => state.events);
-  const normalizedGroups = events && events.allGroups ? Object.values(events.allGroups) : [];
+  const normalizedGroups = events && events.allEvents ? Object.values(events.allEvents) : [];
 
   useEffect(() => {
     dispatch(eventActions.thunkGetAllEvents());
