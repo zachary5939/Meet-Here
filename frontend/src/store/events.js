@@ -27,17 +27,12 @@ export const thunkGetAllEvents = () => async (dispatch) => {
   }
 };
 
+
 export const thunkGetEventDetail = (eventId) => async (dispatch) => {
-  try {
-    const res = await csrfFetch(`/api/events/${eventId}`);
-    if (res.ok) {
-      const data = await res.json();
-      dispatch(getEventDetail(data));
-      return data;
-    }
-  } catch (error) {
-    console.error("Error fetching event detail:", error);
-  }
+  const response = await fetch(`/api/events/${eventId}`);
+  const resBody = await response.json();
+  if (response.ok) dispatch(getEventDetail(resBody));
+  return resBody;
 };
 
 const initialState = {};
@@ -46,23 +41,20 @@ const initialState = {};
 const eventsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_EVENTS: {
-      console.log('GET_ALL_EVENTS action:', action.events); // Log the action to check its contents
-
       const newState = {};
       action.events.Events.forEach((event) => {
         newState[event.id] = event;
       });
-      console.log('newState:', newState); // Log the newState to check its contents
-
       return newState;
     }
     case GET_EVENT_DETAIL: {
-      const newState = { [action.event.id]: action.event };
-      return newState;
+      const newState = { [action.event.id]: action.event}
+      return newState
     }
     default:
       return state;
   }
 };
+
 
 export default eventsReducer;

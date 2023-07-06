@@ -4,14 +4,6 @@ import { useHistory } from "react-router-dom";
 export const EventRecord = ({ event }) => {
   const history = useHistory();
 
-  const eventStatus = () => {
-    if (event.private === true) {
-      return "events: Private";
-    } else {
-      return "events: Public";
-    }
-  };
-
   const eventHistory = () => {
     history.push(`/events/${event.id}`);
   };
