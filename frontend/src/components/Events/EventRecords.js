@@ -27,7 +27,7 @@ export const EventRecord = ({ event }) => {
       ></img>
       <div
         className="group-individual-record"
-        to={{ pathname: `/groups/${event.id}`, state: {} }}
+        to={{ pathname: `/events/${event.id}`, state: {} }}
       >
         {event.name}
       </div>

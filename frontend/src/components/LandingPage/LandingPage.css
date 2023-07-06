@@ -156,10 +156,23 @@ html {
   pointer-events: none;
 }
 
+.feature3.disabled h3 {
+  cursor: default;
+}
+
+
 .feature3 .disabled-paragraph {
   color: rgb(0, 0, 0);
   cursor: default;
   pointer-events: none;
+}
+.disabled-text {
+  cursor: default;
+  pointer-events: none;
+}
+
+.hover-pointer:hover {
+  cursor: pointer;
 }
 
 @media (min-width: 1024px) {

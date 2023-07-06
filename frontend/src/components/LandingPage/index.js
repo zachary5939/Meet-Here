@@ -15,7 +15,7 @@ function LandingPage() {
   const history = useHistory();
 
   const handleJoinMeetup = () => {
-    console.log("Join Meetup button clicked");
+    console.log("hi");
   };
 
   return (
@@ -60,25 +60,34 @@ function LandingPage() {
           </p>
         </div>
         <div className="feature2">
-          <img alt="" src={Ticket} />
-          <h3>Find an event</h3>
+          <Link to="/events" style={{ textDecoration: "none" }}>
+            <img alt="" src={Ticket} />
+            <h3>Find an event</h3>
+          </Link>
           <p>
             Events are happening on just about any topic you can think of, from
             online gaming and photography to yoga and hiking.
           </p>
         </div>
         <div className={`feature3${user ? "" : " disabled"}`}>
-          <img alt="" src={JoinGroup} />
-          <h3 className={user ? "" : "disabled-text"}>Start a new group</h3>
+          {user ? (
+            <Link to="/create-group" style={{ textDecoration: "none" }}>
+              <img alt="" src={JoinGroup} />
+              <h3 className="hover-pointer">Start a new group</h3>
+            </Link>
+          ) : (
+            <div>
+              <img alt="" src={JoinGroup} />
+              <h3 className="disabled-text">Start a new group</h3>
+            </div>
+          )}
           {user ? (
             <p>
-              You don’t have to be an expert to gather people together and
-              explore shared interests.
+              You don’t have to be an expert to gather people together and explore shared interests.
             </p>
           ) : (
             <p className="disabled-paragraph">
-              You don’t have to be an expert to gather people together and
-              explore shared interests.
+              You don’t have to be an expert to gather people together and explore shared interests.
             </p>
           )}
         </div>

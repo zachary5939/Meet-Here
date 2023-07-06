@@ -13,6 +13,7 @@ const getEventDetail = (event) => ({
   event,
 });
 
+//thunks
 export const thunkGetAllEvents = () => async (dispatch) => {
   try {
     const res = await csrfFetch("/api/events");
@@ -20,8 +21,6 @@ export const thunkGetAllEvents = () => async (dispatch) => {
       const data = await res.json();
       dispatch(getAllEvents(data));
       return data;
-    } else {
-      return (window.location.href = "/not-found");
     }
   } catch (error) {
     console.error("Error fetching events:", error);
@@ -35,8 +34,6 @@ export const thunkGetEventDetail = (eventId) => async (dispatch) => {
       const data = await res.json();
       dispatch(getEventDetail(data));
       return data;
-    } else {
-      return (window.location.href = "/not-found");
     }
   } catch (error) {
     console.error("Error fetching event detail:", error);
@@ -45,6 +42,7 @@ export const thunkGetEventDetail = (eventId) => async (dispatch) => {
 
 const initialState = {};
 
+//reducer
 const eventsReducer = (state = initialState, action) => {
   switch (action.type) {
     case GET_ALL_EVENTS: {

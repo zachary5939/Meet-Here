@@ -14,6 +14,9 @@ function EventPage() {
     dispatch(eventActions.thunkGetAllEvents());
   }, [dispatch]);
 
+  console.log('events:', events); // Log the events state to check its contents
+  console.log('normalizedGroups:', normalizedGroups); // Log the normalizedGroups array to check its contents
+
   return (
     <>
       <div className="event-list">
@@ -28,10 +31,10 @@ function EventPage() {
         </div>
         <p className="event-list-item"></p>
         {normalizedGroups.map((event) => (
-          <>
-          <EventRecord event={event} key={events.id} />
-          <p className="event-list-item"></p>
-          </>
+          <React.Fragment key={event.id}>
+            <EventRecord event={event} />
+            <p className="event-list-item"></p>
+          </React.Fragment>
         ))}
       </div>
     </>
