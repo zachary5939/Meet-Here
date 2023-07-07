@@ -82,9 +82,15 @@ export const thunkCreateGroup = (group, img) => async(dispatch) => {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(group)
-  })
+  });
+
+  console.log('Create Group Response:', res);
+
   if (res.ok) {
-      const data = await res.json()
+      const data = await res.json();
+
+      console.log('Create Group Data:', data);
+
       const imgRes = await csrfFetch(`/api/groups/${data.id}/images`, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json'},
@@ -92,16 +98,20 @@ export const thunkCreateGroup = (group, img) => async(dispatch) => {
               url: img,
               preview: true
           })
-      })
-      const newImg = await imgRes.json()
-      data.GroupImages = [newImg]
-      dispatch(createGroup([data]))
-      return data
+      });
+
+      console.log('Add Group Image Response:', imgRes);
+
+      const newImg = await imgRes.json();
+      data.GroupImages = [newImg];
+      dispatch(createGroup([data]));
+      return data;
   } else {
-      const errorData = await res.json()
-      return errorData
+      const errorData = await res.json();
+      return errorData;
   }
-}
+};
+
 
 export const thunkUpdateGroup = (groupId, payload) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}`, {

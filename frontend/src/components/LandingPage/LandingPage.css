@@ -111,7 +111,8 @@ html {
 }
 
 .feature1 h3:hover,
-.feature2 h3:hover {
+.feature2 h3:hover,
+.feature3 h3:hover {
   text-decoration: underline;
 }
 
