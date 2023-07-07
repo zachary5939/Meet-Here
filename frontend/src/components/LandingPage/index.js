@@ -71,7 +71,7 @@ function LandingPage() {
         </div>
         <div className={`feature3${user ? "" : " disabled"}`}>
           {user ? (
-            <Link to="/create-group" style={{ textDecoration: "none" }}>
+            <Link to="/groups/new" style={{ textDecoration: "none" }}>
               <img alt="" src={JoinGroup} />
               <h3 className="hover-pointer">Start a new group</h3>
             </Link>

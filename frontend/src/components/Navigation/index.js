@@ -21,7 +21,7 @@ function Navigation({ isLoaded }) {
     sessionLinks = (
       <>
         <li>
-          <NavLink exact to="/create-group">
+          <NavLink exact to="/groups/new">
             <p className="create-group-button">Start a new Group</p>
           </NavLink>
         </li>
