@@ -26,40 +26,28 @@ const deleteEvent = (eventId) => ({
 });
 
 // Thunks
-export const thunkCreateEvent = (event, groupId, img) => async (dispatch) => {
+export const thunkCreateEvent = (event, groupId, imageURL) => async (dispatch) => {
   const res = await csrfFetch(`/api/groups/${groupId}/events`, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(event),
-  });
-
-  if (res.ok) {
-    const data = await res.json();
-    const imgRes = await csrfFetch(`/api/events/${data.id}/images`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({
-        url: img,
-        preview: true,
-      }),
-    });
-
-    if (imgRes.ok) {
-      const newImg = await imgRes.json();
-      data.EventImages = [newImg];
-      dispatch(createEvent(data)); // Dispatch the createEvent action
-      return data;
+    method: "POST",
+    headers: {'Content-Type': 'application/json'},
+    body: JSON.stringify(event)
+  })
+  if (res.ok){
+    const data = await res.json()
+    const res2 = await csrfFetch(`/api/events/${data.id}/images`, {
+      method:"POST",
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({"url":imageURL.toString(), "preview": true})
+    })
+    if (res2.ok) {
+      const data2 = await res2.json()
+      dispatch(createEvent(data2))
+      return window.location.href = `/events/${data.id}`
     } else {
-      console.error('Error creating event image:', imgRes);
-      // Handle the error appropriately (display an error message, etc.)
+      dispatch(createEvent(data))
     }
-  } else {
-    const errorData = await res.json();
-    console.error('Error creating event:', errorData);
-    // Handle the error appropriately (display an error message, etc.)
-    return errorData;
-  }
-};
+  } alert("Cannot find group!")
+}
 
 export const thunkGetAllEvents = () => async (dispatch) => {
   try {

@@ -344,8 +344,8 @@ router.put(
         validationErrors.name = "Name must be 60 characters or less";
       }
 
-      if (!groupData.about || groupData.about.length < 50) {
-        validationErrors.about = "About must be 50 characters or more";
+      if (!groupData.about || groupData.about.length < 30) {
+        validationErrors.about = "About must be 30 characters or more";
       }
 
       if (

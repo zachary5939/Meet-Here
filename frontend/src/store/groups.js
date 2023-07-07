@@ -1,35 +1,34 @@
 import { csrfFetch } from "./csrf";
 
-
 //variables for GETs
 const GET_ALL_GROUPS = "groups/GET_ALL_GROUPS";
 const GET_ONE_GROUP = "groups/GET_ONE_GROUP";
 const CREATE_GROUP = "groups/CREATE_GROUP";
 const ADD_GROUP_IMG = "groups/ADD_GROUP_IMG";
 const DELETE_GROUP = "groups/DELETE_GROUP";
-const GET_GROUP_DETAILS = 'groups/groupDetails';
+const GET_GROUP_DETAILS = "groups/groupDetails";
 
 //actions
 const getAllGroups = (groups) => {
-    return {
-        type: GET_ALL_GROUPS,
-        groups,
-    };
+  return {
+    type: GET_ALL_GROUPS,
+    groups,
+  };
 };
 
 const getOneGroup = (group) => {
-    return {
-        type: GET_ONE_GROUP,
-        group,
-    };
+  return {
+    type: GET_ONE_GROUP,
+    group,
+  };
 };
 
 const createGroup = (group) => {
   return {
     type: CREATE_GROUP,
     group,
-  }
-}
+  };
+};
 
 const deleteGroup = (groupId) => {
   return {
@@ -49,15 +48,15 @@ const updateGroup = (updatedGroup) => {
   return {
     type: "UPDATE_GROUP",
     group: updateGroup,
-  }
-}
+  };
+};
 
 const actionGetGroupDetails = (data) => {
   return {
-      type: GET_GROUP_DETAILS,
-      payload: data
-  }
-}
+    type: GET_GROUP_DETAILS,
+    payload: data,
+  };
+};
 
 export const thunkGetAllGroups = () => async (dispatch) => {
   const response = await fetch("/api/groups");
@@ -77,41 +76,43 @@ export const thunkGetOneGroup = (groupId) => async (dispatch) => {
   return resBody;
 };
 
-export const thunkCreateGroup = (group, img) => async(dispatch) => {
-  const res = await csrfFetch('/api/groups', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(group)
-  });
+export const thunkCreateGroup =
+  (group, img, currentUser) => async (dispatch) => {
+    const res = await csrfFetch("/api/groups", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(group),
+    });
 
-  console.log('Create Group Response:', res);
+    // console.log("Create Group Response:", res);
 
-  if (res.ok) {
+    if (res.ok) {
       const data = await res.json();
 
-      console.log('Create Group Data:', data);
+      // console.log("Create Group Data:", data);
 
       const imgRes = await csrfFetch(`/api/groups/${data.id}/images`, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json'},
-          body: JSON.stringify({
-              url: img,
-              preview: true
-          })
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          url: img,
+          preview: true,
+        }),
       });
 
-      console.log('Add Group Image Response:', imgRes);
+      console.log("Add Group Image Response:", imgRes);
 
       const newImg = await imgRes.json();
       data.GroupImages = [newImg];
-      dispatch(createGroup([data]));
+      data.Organizer = currentUser;
+      data.numMembers = 1;
+      dispatch(createGroup(data));
       return data;
-  } else {
+    } else {
       const errorData = await res.json();
       return errorData;
-  }
-};
-
+    }
+  };
 
 export const thunkUpdateGroup = (groupId, payload) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}`, {
@@ -169,20 +170,19 @@ export const thunkUpdateGroupImage =
     return resBody;
   };
 
-  export const thunkGetGroupDetails = (groupId) => async(dispatch) => {
-    const res = await fetch(`/api/groups/${groupId}`)
-    if (res.ok) {
-        const data = await res.json()
-        dispatch(actionGetGroupDetails(data))
-        return data
-    } else {
-        const errorData = await res.json()
-        return errorData
-    }
-}
+export const thunkGetGroupDetails = (groupId) => async (dispatch) => {
+  const res = await fetch(`/api/groups/${groupId}`);
+  if (res.ok) {
+    const data = await res.json();
+    dispatch(actionGetGroupDetails(data));
+    return data;
+  } else {
+    const errorData = await res.json();
+    return errorData;
+  }
+};
 
-
-  //init state
+//init state
 const initialState = { allGroups: {}, singleGroup: {} };
 //reducer
 
@@ -195,16 +195,10 @@ const groupsReducer = (state = initialState, action) => {
       return { ...state, singleGroup: action.group };
     }
     case CREATE_GROUP: {
-      const allGroups = {
-        ...state.allGroups,
-        [action.group.id]: action.group,
-      };
       const singleGroup = {
         ...action.group,
-        Organizer: { id: action.group.organizerId },
-        GroupImages: [],
       };
-      return { ...state, allGroups, singleGroup };
+      return { ...state, singleGroup };
     }
     case DELETE_GROUP: {
       const allGroups = { ...state.allGroups };

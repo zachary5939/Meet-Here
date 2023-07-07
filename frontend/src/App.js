@@ -28,8 +28,8 @@ function App() {
           <Route exact path="/" component={LandingPage} />
           <Route exact path="/groups" component={GroupsPage} />
           <Route exact path="/groups/new" component={CreateGroup} />
-          <Route path="/groups/:groupId" component={GroupDetails} />
-          <Route exact path = '/groups/:groupId/newEvent'component={CreateEvent} />
+          <Route exact path="/groups/:groupId" component={GroupDetails} />
+          <Route exact path="/groups/:groupId/events/new" component={CreateEvent} />
           <Route exact path="/events" component={Events} />
           <Route path="/events/:eventId" component={EventDetail} />
         </Switch>

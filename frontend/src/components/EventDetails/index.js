@@ -16,13 +16,17 @@ export const EventDetail = () => {
     dispatch(thunkGetEventDetail(eventId));
   }, [dispatch, eventId]);
 
-  // console.log('event:', event);
+  if (!event) {
+    // Render loading state or return null
+    return null;
+  }
 
   const sendToGroup = () => {
     history.push(`/groups/${event.Group.id}`);
   };
 
   const imageCheck = () => {
+    // Your image rendering logic here
   };
 
   const eventPriceCheck = () => {
@@ -50,9 +54,7 @@ export const EventDetail = () => {
       <div className="event-detail-container">
         <div className="event-detail-breadcrumb">
           <p>{"<"}</p>
-          <Link to="/events">
-            Events
-          </Link>
+          <Link to="/events">Events</Link>
         </div>
         <div className="event-detail-header-container">
           <h2>{event.name}</h2>
@@ -61,51 +63,58 @@ export const EventDetail = () => {
       </div>
       <div className="event-detail-body-container">
         <div className="event-detail-body-info">
-            <div className="event-detail-body-info-group-body">
-              <h4 onClick={sendToGroup}>{event.Group.name}</h4>
-            </div>
+          <div className="event-detail-body-info-group-body">
+            <h4 onClick={sendToGroup}>{event.Group.name}</h4>
           </div>
-          <div className="event-detail-body-info-event">
-            <div className="event-detail-body-info-event-time-details">
-              <i className="far fa-clock fa-lg" style={{ color: "#CCCCCC" }}></i>
-              <div className="event-detail-body-info-event-details-time-container">
-                <div className="event-detail-body-info-event-details-start-time">
-                  <span>START </span>
-                  <div>
-                    {event.startDate.split("T")[0]} · {}
-                    {event.startDate.split("T")[1].split(".")[0]}
-                  </div>
+        </div>
+        <div className="event-detail-body-info-event">
+          <div className="event-detail-body-info-event-time-details">
+            <i
+              className="far fa-clock fa-lg"
+              style={{ color: "#CCCCCC" }}
+            ></i>
+            <div className="event-detail-body-info-event-details-time-container">
+              <div className="event-detail-body-info-event-details-start-time">
+                <span>START </span>
+                <div>
+                  {event.startDate.split("T")[0]} · {}
+                  {event.startDate.split("T")[1].split(".")[0]}
                 </div>
-                <div className="event-detail-body-info-event-details-end-time">
-                  <span>END </span>
-                  <div>
-                    {event.endDate.split("T")[0]} · {}
-                    {event.endDate.split("T")[1].split(".")[0]}
-                  </div>
+              </div>
+              <div className="event-detail-body-info-event-details-end-time">
+                <span>END </span>
+                <div>
+                  {event.endDate.split("T")[0]} · {}
+                  {event.endDate.split("T")[1].split(".")[0]}
                 </div>
               </div>
             </div>
-            <div className="event-detail-body-info-event-price-details">
-              <i className="fa-solid fa-sack-dollar fa-xl" style={{ color: "#CCCCCC" }}></i>
-              <p>{eventPriceCheck()}</p>
-            </div>
-            <div className="event-detail-body-info-event-type-details">
-              <i className="fa-solid fa-map-pin fa-xl" style={{ color: "#CCCCCC" }}></i>
-              <p>{event.type}</p>
-            </div>
-            <div className="event-detail-body-info-event-button">
-              {/* <EventDetailButton event={event} /> */}
-            </div>
+          </div>
+          <div className="event-detail-body-info-event-price-details">
+            <i
+              className="fa-solid fa-sack-dollar fa-xl"
+              style={{ color: "#CCCCCC" }}
+            ></i>
+            <p>{eventPriceCheck()}</p>
+          </div>
+          <div className="event-detail-body-info-event-type-details">
+            <i
+              className="fa-solid fa-map-pin fa-xl"
+              style={{ color: "#CCCCCC" }}
+            ></i>
+            <p>{event.type}</p>
+          </div>
+          <div className="event-detail-body-info-event-button">
+            {/* <EventDetailButton event={event} /> */}
           </div>
         </div>
-        <div className="event-detail-body-description">
-          <h2 style={{ marginBottom: ".25rem" }}>Details</h2>
-          <p>{event.description}</p>
-        </div>
+      </div>
+      <div className="event-detail-body-description">
+        <h2>Details</h2>
+        <p>{event.description}</p>
+      </div>
     </>
   );
-
-
 };
 
 export default EventDetail;

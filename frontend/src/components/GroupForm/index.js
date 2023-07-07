@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 import { thunkCreateGroup } from "../../store/groups";
 import { thunkUpdateGroup } from "../../store/groups";
@@ -8,7 +8,7 @@ import "./GroupForm.css"
 export const GroupForm = ({ formType, group }) => {
   const dispatch = useDispatch();
   const history = useHistory();
-
+  const currentUser = useSelector(state => state.session.user)
   const [formData, setFormData] = useState({
     location: "",
     name: "",
@@ -66,7 +66,7 @@ export const GroupForm = ({ formType, group }) => {
       const payload = { name, about, type, private: privacy, city, state };
 
       try {
-        const newGroup = await dispatch(thunkCreateGroup(payload, url));
+        const newGroup = await dispatch(thunkCreateGroup(payload, url, currentUser));
 
         history.push(`/groups/${newGroup.id}`);
       } catch (error) {
@@ -193,7 +193,7 @@ export const GroupForm = ({ formType, group }) => {
           <button
             type="submit"
             className="form-submit-btn"
-            onClick={handleSubmit}
+            // onClick={handleSubmit}
           >
             Create group
           </button>
