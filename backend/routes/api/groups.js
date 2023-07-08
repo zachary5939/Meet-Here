@@ -336,6 +336,7 @@ router.put(
         city: req.body.city,
         state: req.body.state,
       };
+      console.log("***************", typeof req.body.private)
 
       //errors
       const validationErrors = {};
@@ -355,7 +356,7 @@ router.put(
         validationErrors.type = "Type must be 'Online' or 'In person'";
       }
 
-      if (!groupData.private || typeof groupData.private !== "boolean") {
+      if (groupData.private === undefined || groupData.private === null) {
         validationErrors.private = "Private must be a boolean";
       }
 

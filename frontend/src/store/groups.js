@@ -44,10 +44,10 @@ const addGroupImg = (groupImage) => {
   };
 };
 
-const updateGroup = (updatedGroup) => {
+const updateGroup = (group) => {
   return {
     type: "UPDATE_GROUP",
-    group: updateGroup,
+    group: group,
   };
 };
 
@@ -114,20 +114,20 @@ export const thunkCreateGroup =
     }
   };
 
-export const thunkUpdateGroup = (groupId, payload) => async (dispatch) => {
-  const response = await csrfFetch(`/api/groups/${groupId}`, {
-    method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(payload),
-  });
-  const resBody = await response.json();
-  if (response.ok) {
-    dispatch(updateGroup(resBody));
-  }
-  return resBody;
-};
+  export const thunkUpdateGroup = (group, groupId) => async (dispatch) => {
+    const res = await csrfFetch(`/api/groups/${groupId}`, {
+      method: 'PUT',
+      body: JSON.stringify(group),
+    });
+    if (res.ok) {
+      const group = await res.json();
+      dispatch(updateGroup(group));
+      return group;
+    } else {
+      const errors = await res.json();
+      return errors;
+    }
+  };
 
 export const thunkDeleteGroup = (groupId) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}`, {
@@ -183,7 +183,7 @@ export const thunkGetGroupDetails = (groupId) => async (dispatch) => {
 };
 
 //init state
-const initialState = { allGroups: {}, singleGroup: {} };
+const initialState = { allGroups: {}, singleGroup: {}, currentGroup: {} };
 //reducer
 
 const groupsReducer = (state = initialState, action) => {

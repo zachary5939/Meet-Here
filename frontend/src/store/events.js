@@ -65,15 +65,15 @@ export const thunkGetAllEvents = () => async (dispatch) => {
 
 export const thunkGetEventDetail = (eventId) => async (dispatch) => {
   try {
-    const response = await fetch(`/api/events/${eventId}`);
-
-    if (response.ok) {
-      const resBody = await response.json();
-      dispatch(getEventDetail(resBody));
-      return resBody;
+    const response = await csrfFetch(`/api/events/${eventId}`);
+    if (!response.ok) {
+      throw new Error("Failed to fetch event details");
     }
+    const data = await response.json();
+    dispatch(getEventDetail(data));
   } catch (error) {
-    console.error("Error fetching event detail:", error);
+    console.log(error);
+    // Handle error state if needed
   }
 };
 
@@ -93,33 +93,27 @@ export const thunkDeleteEvent = (eventId) => async (dispatch) => {
   }
 };
 
-const initialState = {};
+const initialState = { allEvents: {}, singleEvents: {} };
 
 // Reducer
 const eventsReducer = (state = initialState, action) => {
   switch (action.type) {
-    case GET_ALL_EVENTS: {
-      const newState = { ...state };
-      action.events.Events.forEach((event) => {
-        newState[event.id] = event;
-      });
-      return newState;
-    }
-    case GET_EVENT_DETAIL: {
-      const newState = { ...state, [action.event.id]: action.event };
-      return newState;
-    }
-    case CREATE_EVENT: {
-      const newState = { ...state, [action.event.id]: action.event };
-      return newState;
-    }
-    case DELETE_EVENT: {
-      const newState = { ...state };
-      delete newState[action.eventId];
-      return newState;
-    }
-    default:
-      return state;
+      case GET_ALL_EVENTS: {
+          const newState = {...state};
+          action.events.Events.forEach(event => {
+              newState[event.id] = event;
+          });
+          return newState;
+      }
+      case GET_EVENT_DETAIL: {
+          const newState = { ...state, [action.event.id]: action.event };
+          return newState;
+      }
+      case CREATE_EVENT: {
+          return {...state, allEvents: {...state.allEvents}, [action.payload.id]: action.payload }
+      }
+      default:
+          return state;
   }
 };
 

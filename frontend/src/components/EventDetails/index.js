@@ -11,14 +11,18 @@ export const EventDetail = () => {
   const eventInfo = useSelector((state) => state.events);
   const event = eventInfo[eventId];
   const history = useHistory();
+  console.log("eeee", event)
 
   useEffect(() => {
     dispatch(thunkGetEventDetail(eventId));
   }, [dispatch, eventId]);
 
   if (!event) {
-    // Render loading state or return null
-    return null;
+    return (
+      <div className="loading-container">
+        <div className="loading"></div>
+      </div>
+    );
   }
 
   const sendToGroup = () => {
@@ -29,7 +33,7 @@ export const EventDetail = () => {
     // Your image rendering logic here
   };
 
-  const eventPriceCheck = () => {
+  const eventPrice = () => {
     if (event.price <= 0) {
       return "FREE";
     } else {
@@ -95,24 +99,20 @@ export const EventDetail = () => {
               className="fa-solid fa-sack-dollar fa-xl"
               style={{ color: "#CCCCCC" }}
             ></i>
-            <p>{eventPriceCheck()}</p>
-          </div>
-          <div className="event-detail-body-info-event-type-details">
-            <i
-              className="fa-solid fa-map-pin fa-xl"
-              style={{ color: "#CCCCCC" }}
-            ></i>
-            <p>{event.type}</p>
-          </div>
-          <div className="event-detail-body-info-event-button">
-            {/* <EventDetailButton event={event} /> */}
+              <p>{eventPrice()}</p>
+            </div>
+            <div className="event-detail-body-info-event-type-details">
+              <i className="fa-solid fa-map-pin fa-xl"></i>
+              <p>{event.type}</p>
+            </div>
+            <div className="event-detail-body-info-event-button">{/* <EventDetailButton event={event} /> */}</div>
           </div>
         </div>
-      </div>
-      <div className="event-detail-body-description">
-        <h2>Details</h2>
-        <p>{event.description}</p>
-      </div>
+        <div className="event-detail-body-description">
+          <h2>Details</h2>
+          <p>{event.description}</p>
+        </div>
+
     </>
   );
 };

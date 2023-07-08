@@ -3,6 +3,7 @@ import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetOneGroup } from "../../store/groups";
 import "./GroupDetails.css";
+import * as groupDetails from '../../store/groups';
 import GroupEvents from "./GroupEvents";
 import DeleteGroup from "../DeleteGroupModal";
 import CreateEvent from "../CreateEvent";

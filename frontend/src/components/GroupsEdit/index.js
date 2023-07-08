@@ -1,77 +1,70 @@
-import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import { useHistory } from "react-router-dom";
-import { thunkCreateGroup } from "../../store/groups";
-import { thunkUpdateGroup } from "../../store/groups";
-import "./GroupForm.css"
+import React, { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { useHistory, useParams } from "react-router-dom";
+import {
+  thunkGetOneGroup,
+  thunkUpdateGroup,
+} from "../../store/groups";
 
-export const GroupForm = ({ formType, group }) => {
+const EditGroup = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const { groupId } = useParams();
+  const group = useSelector((state) => state.groups.singleGroup);
+  const user = useSelector((state) => state.session.user);
 
-  const [formData, setFormData] = useState({
-    location: "",
-    name: "",
-    about: "",
-    type: undefined,
-    privacy: undefined,
-    url: "",
-  });
-
+  const [cityState, setCityState] = useState("");
+  const [name, setName] = useState("");
+  const [about, setAbout] = useState("");
+  const [type, setType] = useState("");
+  const [privacy, setPrivacy] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
 
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prevData) => ({ ...prevData, [name]: value }));
-  };
+  useEffect(() => {
+    dispatch(thunkGetOneGroup(groupId));
+  }, [dispatch, groupId]);
+
+  useEffect(() => {
+    if (groupId && group.Organizer) {
+      if (group.Organizer && (!user || user.id !== group.Organizer.id)) {
+        return history.push("/");
+      }
+      setCityState(group.city.trim() + ", " + group.state.trim());
+      setName(group.name);
+      setAbout(group.about);
+      setType(group.type);
+      setPrivacy(group.private);
+    }
+  }, [groupId, group, history, user]);
+
+  useEffect(() => {
+    if (!user) {
+      history.push("/");
+    }
+  }, [user, history]);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    if (formType === "Create") {
-      const errors = {};
-      const { location, name, about, type, privacy, url } = formData;
+    const errors = {};
+    if (!cityState || !cityState.includes(","))
+      errors.cityState = "Location is required";
+    if (!name) errors.name = "Name is required";
+    if (about.length < 30)
+      errors.about = "Description must be at least 30 characters long";
+    if (type === undefined) errors.type = "Group Type is required";
+    if (privacy === undefined) errors.privacy = "Visibility type is required";
 
-      if (!location || !location.includes(",")) {
-        errors.location = "Location is required";
-      }
-      if (!name) {
-        errors.name = "Name is required";
-      }
-      if (about.length < 30) {
-        errors.about = "Description must be at least 30 characters long";
-      }
-      if (type === undefined) {
-        errors.type = "Group Type is required";
-      }
-      if (privacy === undefined) {
-        errors.privacy = "Visibility type is required";
-      }
-      if (
-        !url.endsWith(".png") &&
-        !url.endsWith(".jpg") &&
-        !url.endsWith(".jpeg")
-      ) {
-        errors.url = "Image URL must end in .png, .jpg, or .jpeg";
-      }
-
+    if (Object.values(errors).length) {
       setValidationErrors(errors);
-
-      if (Object.values(errors).length) {
-        return;
-      }
-
-      const city = location.split(",")[0];
-      const state = location.split(",")[1];
-
+    } else {
+      const city = cityState.split(",")[0];
+      const state = cityState.split(",")[1];
       const payload = { name, about, type, private: privacy, city, state };
-
-      try {
-        const newGroup = await dispatch(thunkCreateGroup(payload, url));
-
-        history.push(`/groups/${newGroup.id}`);
-      } catch (error) {
-        console.error("Error creating group:", error);
-        // Handle the error appropriately
+      const updatedGroup = await dispatch(thunkUpdateGroup(payload, groupId));
+      if (updatedGroup.errors) {
+        setValidationErrors(updatedGroup.errors);
+      } else {
+        history.push(`/groups/${groupId}`);
       }
     }
   };
@@ -80,7 +73,7 @@ export const GroupForm = ({ formType, group }) => {
     <form className="form-step-form" onSubmit={handleSubmit}>
       <div className="form-container">
         <div className="form-header">
-          <span className="form-title">BECOME AN ORGANIZER</span>
+          <span className="form-title">UPDATE YOUR GROUP'S INFORMATION</span>
           <h2>
             We'll walk you through a few steps to build your local community
           </h2>
@@ -97,12 +90,11 @@ export const GroupForm = ({ formType, group }) => {
               type="text"
               className="form-input"
               placeholder="City, STATE"
-              name="location"
-              value={formData.location}
-              onChange={handleInputChange}
+              value={cityState}
+              onChange={(e) => setCityState(e.target.value)}
             />
-            {validationErrors.location && (
-              <span className="errors">{validationErrors.location}</span>
+            {validationErrors.cityState && (
+              <span className="errors">{validationErrors.cityState}</span>
             )}
           </div>
           <div className="form-group">
@@ -119,9 +111,8 @@ export const GroupForm = ({ formType, group }) => {
               type="text"
               className="form-input"
               placeholder="What is your group name?"
-              name="name"
-              value={formData.name}
-              onChange={handleInputChange}
+              value={name}
+              onChange={(e) => setName(e.target.value)}
             />
             {validationErrors.name && (
               <span className="errors">{validationErrors.name}</span>
@@ -138,10 +129,9 @@ export const GroupForm = ({ formType, group }) => {
             <span>3. What will you do at your events?</span>
             <textarea
               className="form-textarea"
-              name="about"
-              value={formData.about}
-              placeholder="Please write at least 30 characters"
-              onChange={handleInputChange}
+              value={about}
+              placeholder="Please write at least 50 characters"
+              onChange={(e) => setAbout(e.target.value)}
             ></textarea>
             {validationErrors.about && (
               <span className="errors">{validationErrors.about}</span>
@@ -152,9 +142,8 @@ export const GroupForm = ({ formType, group }) => {
             <span>Is this an in person or online group?</span>
             <select
               className="form-select"
-              name="type"
-              value={formData.type}
-              onChange={handleInputChange}
+              value={type}
+              onChange={(e) => setType(e.target.value)}
             >
               <option value={undefined}>(select one)</option>
               <option value="Online">Online</option>
@@ -166,9 +155,8 @@ export const GroupForm = ({ formType, group }) => {
             <span>Is this group private or public?</span>
             <select
               className="form-select"
-              name="privacy"
-              value={formData.privacy}
-              onChange={handleInputChange}
+              value={privacy}
+              onChange={(e) => setPrivacy(e.target.value)}
             >
               <option value={undefined}>(select one)</option>
               <option value={true}>Private</option>
@@ -177,25 +165,10 @@ export const GroupForm = ({ formType, group }) => {
             {validationErrors.privacy && (
               <span className="errors">{validationErrors.privacy}</span>
             )}
-            <span>Please add an image URL for your group below.</span>
-            <input
-              type="url"
-              className="form-input"
-              name="url"
-              value={formData.url}
-              onChange={handleInputChange}
-            />
-            {validationErrors.url && (
-              <span className="errors">{validationErrors.url}</span>
-            )}
           </div>
           <hr />
-          <button
-            type="submit"
-            className="form-submit-btn"
-            onClick={handleSubmit}
-          >
-            Create group
+          <button type="submit" className="form-submit-btn">
+            Update group
           </button>
         </div>
       </div>
@@ -203,4 +176,4 @@ export const GroupForm = ({ formType, group }) => {
   );
 };
 
-export default GroupForm;
+export default EditGroup;
