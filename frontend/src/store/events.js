@@ -106,20 +106,23 @@ const eventsReducer = (state = initialState, action) => {
           return newState;
       }
       case GET_EVENT_DETAIL: {
-          const newState = { ...state, [action.event.id]: action.event };
+        console.log(state, 'state')
+        console.log(action, 'action')
+          const newState = { ...state }
+          newState.singleEvents = { [action.event.event.id]: action.event };
           return newState;
       }
-          case CREATE_EVENT: {
-        const allEvents = {
-          ...state.allEvents,
-          [action.event.id]: action.event,
-        };
-        const singleEvent = {
-          ...action.event,
-          EventImages: [],
-        };
-        return { ...state, allEvents, singleEvent };
-      }
+        case CREATE_EVENT: {
+      const allEvents = {
+        ...state.allEvents,
+        [action.event.id]: action.event,
+      };
+      const singleEvent = {
+        ...action.event,
+        EventImages: [],
+      };
+      return { ...state, allEvents, singleEvent };
+    }
       default:
           return state;
   }

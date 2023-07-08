@@ -7,6 +7,7 @@ const CREATE_GROUP = "groups/CREATE_GROUP";
 const ADD_GROUP_IMG = "groups/ADD_GROUP_IMG";
 const DELETE_GROUP = "groups/DELETE_GROUP";
 const GET_GROUP_DETAILS = "groups/groupDetails";
+const GET_EVENT_DETAIL = "groups/GET_EVENT_DETAIL"
 
 //actions
 const getAllGroups = (groups) => {
@@ -50,6 +51,13 @@ const updateGroup = (group) => {
     group: group,
   };
 };
+
+const getEventDetail = (event) => {
+  return {
+    type: GET_EVENT_DETAIL,
+    event
+  }
+}
 
 const actionGetGroupDetails = (data) => {
   return {
@@ -129,6 +137,18 @@ export const thunkCreateGroup =
     }
   };
 
+  export const thunkGetEventDetail = (eventId) => async (dispatch) => {
+  const res = await csrfFetch(`/api/events/${eventId}`)
+  if (res.ok) {
+    const data = await res.json()
+    dispatch(getEventDetail(data))
+    return data
+  } else {
+    return window.location.href = "/not-found"
+  }
+}
+
+
 export const thunkDeleteGroup = (groupId) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}`, {
     method: "DELETE",
@@ -193,6 +213,10 @@ const groupsReducer = (state = initialState, action) => {
     }
     case GET_ONE_GROUP: {
       return { ...state, singleGroup: action.group };
+    }
+        case GET_EVENT_DETAIL: {
+      const newState = { [action.event.id]: action.event}
+      return newState
     }
     case CREATE_GROUP: {
       const singleGroup = {

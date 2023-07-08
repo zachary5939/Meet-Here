@@ -243,8 +243,8 @@ function validateGroups(groups) {
     validationErrors.name = "Name must be 60 characters or less";
   }
 
-  if (!groups.about || groups.about.length < 50) {
-    validationErrors.about = "About must be 50 characters or more";
+  if (!groups.about || groups.about.length < 30) {
+    validationErrors.about = "About must be 30 characters or more";
   }
 
   if (!groups.type || !["Online", "In person"].includes(groups.type)) {

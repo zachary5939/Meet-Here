@@ -75,7 +75,6 @@ const GroupDetails = () => {
 <div className="content-container">
         <div className="upper-container">
           <div className="return-to">
-          <i class="fa-solid fa-arrow-left"></i>
             <NavLink to="/groups">Return to All Groups</NavLink>
           </div>
           <div className="upper-content">
@@ -87,15 +86,12 @@ const GroupDetails = () => {
                 <h1>{groupInfo.name}</h1>
                 <div className="group-details-list">
                   <div className="group-detail">
-                    <i class="fa-solid fa-location-dot"></i>
                     <p>{groupInfo.city}, {groupInfo.state}</p>
                   </div>
                   <div className="group-detail">
-                    <i class="fa-solid fa-users"></i>
                     <p>{groupInfo.numMembers} members &#8226; {groupInfo.private ? "Private" : "Public"}</p>
                   </div>
                   <div className="group-detail">
-                    <i class="fa-solid fa-crown"></i>
                     <p>Organized by {groupInfo.Organizer.firstName} {groupInfo.Organizer.lastName}</p>
                   </div>
                 </div>

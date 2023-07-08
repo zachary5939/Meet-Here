@@ -49,7 +49,9 @@ const EventPage = () => {
         <p className="events-in-connect">Events in Connect</p>
       </div>
       {sortedEvents.map((event, index) => (
-        <EventRecord event={event} key={index} />
+        <React.Fragment key={index}>
+          {event && <EventRecord event={event} />}
+        </React.Fragment>
       ))}
     </div>
   );

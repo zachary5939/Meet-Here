@@ -9,15 +9,15 @@ export const EventDetail = () => {
   const dispatch = useDispatch();
   const { eventId } = useParams();
   const eventInfo = useSelector((state) => state.events);
-  const event = eventInfo[eventId];
+  console.log("event info", eventInfo)
+  const events = eventInfo.singleEvents[eventId];
   const history = useHistory();
-  console.log("eeee", event)
 
   useEffect(() => {
     dispatch(thunkGetEventDetail(eventId));
   }, [dispatch, eventId]);
 
-  if (!event) {
+  if (!events) {
     return (
       <div className="loading-container">
         <div className="loading"></div>
@@ -25,9 +25,20 @@ export const EventDetail = () => {
     );
   }
 
+  const event = events.event
+
   const sendToGroup = () => {
     history.push(`/groups/${event.Group.id}`);
   };
+
+  const imageCheck = () => {
+    if (event.previewImage === "no preview image" || event.previewImage === undefined) {
+        event.previewImage = "https://images.unsplash.com/photo-1623018035782-b269248df916?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80";
+      } else {
+      return `${event.EventImages[0].url}`;
+    }
+  };
+
 
   const eventPrice = () => {
     if (event.price <= 0) {
@@ -49,7 +60,7 @@ export const EventDetail = () => {
     history.push(`/events/${eventId}/edit`);
   };
 
-  return (
+ return (
     <>
       <div className="event-detail-container">
         <div className="event-detail-breadcrumb">
@@ -63,7 +74,15 @@ export const EventDetail = () => {
       </div>
       <div className="event-detail-body-container">
         <div className="event-detail-body-info">
+          <img className="event-detail-body-image" width="500" height="300" src={imageCheck()} />
           <div className="event-detail-body-info-group">
+            <img
+              onClick={sendToGroup}
+              className="event-detail-body-info-group-image"
+              width="110"
+              height="75"
+              src={`${event.EventImages[0].url}`} //wrong image populating
+            />
             <div className="event-detail-body-info-group-body">
               <h4 onClick={sendToGroup}>{event.Group.name}</h4>
             </div>

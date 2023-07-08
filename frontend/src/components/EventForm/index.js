@@ -188,7 +188,6 @@ export function EventForm({ formType }) {
             <p className="create-event-borders" />
             <p>Please add an image URL for your event below:</p>
             <input
-              style={{ fontSize: "12px" }}
               value={imageURL}
               onChange={(e) => setImageURL(e.target.value)}
               placeholder="Image URL"
