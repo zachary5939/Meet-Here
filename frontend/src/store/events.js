@@ -109,8 +109,16 @@ const eventsReducer = (state = initialState, action) => {
           const newState = { ...state, [action.event.id]: action.event };
           return newState;
       }
-      case CREATE_EVENT: {
-          return {...state, allEvents: {...state.allEvents}, [action.payload.id]: action.payload }
+          case CREATE_EVENT: {
+        const allEvents = {
+          ...state.allEvents,
+          [action.event.id]: action.event,
+        };
+        const singleEvent = {
+          ...action.event,
+          EventImages: [],
+        };
+        return { ...state, allEvents, singleEvent };
       }
       default:
           return state;

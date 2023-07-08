@@ -48,8 +48,8 @@ const EventPage = () => {
       <div>
         <p className="events-in-connect">Events in Connect</p>
       </div>
-      {sortedEvents.map((event) => (
-        <EventRecord event={event} key={event.id} />
+      {sortedEvents.map((event, index) => (
+        <EventRecord event={event} key={index} />
       ))}
     </div>
   );

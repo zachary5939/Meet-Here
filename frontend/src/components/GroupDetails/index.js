@@ -44,7 +44,7 @@ const GroupDetails = () => {
 
   let availability;
   if (user && groupInfo) {
-    if (Number(user.id) === Number(groupInfo["Organizer"].id)) {
+    if (user && groupInfo && user.id === groupInfo["Organizer"]?.id) {
       availability = [
         <button key={1} className="create-button" onClick={createEvent}>
           Create Event

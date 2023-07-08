@@ -29,10 +29,6 @@ export const EventDetail = () => {
     history.push(`/groups/${event.Group.id}`);
   };
 
-  const imageCheck = () => {
-    // Your image rendering logic here
-  };
-
   const eventPrice = () => {
     if (event.price <= 0) {
       return "FREE";
@@ -67,38 +63,33 @@ export const EventDetail = () => {
       </div>
       <div className="event-detail-body-container">
         <div className="event-detail-body-info">
-          <div className="event-detail-body-info-group-body">
-            <h4 onClick={sendToGroup}>{event.Group.name}</h4>
+          <div className="event-detail-body-info-group">
+            <div className="event-detail-body-info-group-body">
+              <h4 onClick={sendToGroup}>{event.Group.name}</h4>
+            </div>
           </div>
-        </div>
-        <div className="event-detail-body-info-event">
-          <div className="event-detail-body-info-event-time-details">
-            <i
-              className="far fa-clock fa-lg"
-              style={{ color: "#CCCCCC" }}
-            ></i>
-            <div className="event-detail-body-info-event-details-time-container">
-              <div className="event-detail-body-info-event-details-start-time">
-                <span>START </span>
-                <div>
-                  {event.startDate.split("T")[0]} · {}
-                  {event.startDate.split("T")[1].split(".")[0]}
+          <div className="event-detail-body-info-event">
+            <div className="event-detail-body-info-event-time-details">
+              <i className="far fa-regular fa-clock fa-lg"></i>
+              <div className="event-detail-body-info-event-details-time-container">
+                <div className="event-detail-body-info-event-details-start-time">
+                  <span>START </span>
+                  <div>
+                    {event.startDate.split("T")[0]} · {}
+                    {event.startDate.split("T")[1].split(".")[0]}
+                  </div>
                 </div>
-              </div>
-              <div className="event-detail-body-info-event-details-end-time">
-                <span>END </span>
-                <div>
-                  {event.endDate.split("T")[0]} · {}
-                  {event.endDate.split("T")[1].split(".")[0]}
+                <div className="event-detail-body-info-event-details-end-time">
+                  <span>END </span>
+                  <div>
+                    {event.endDate.split("T")[0]} · {}
+                    {event.endDate.split("T")[1].split(".")[0]}
+                  </div>
                 </div>
               </div>
             </div>
-          </div>
-          <div className="event-detail-body-info-event-price-details">
-            <i
-              className="fa-solid fa-sack-dollar fa-xl"
-              style={{ color: "#CCCCCC" }}
-            ></i>
+            <div className="event-detail-body-info-event-price-details">
+              <i className="fa-regular fa-sack-dollar"></i>
               <p>{eventPrice()}</p>
             </div>
             <div className="event-detail-body-info-event-type-details">
@@ -112,7 +103,7 @@ export const EventDetail = () => {
           <h2>Details</h2>
           <p>{event.description}</p>
         </div>
-
+      </div>
     </>
   );
 };
