@@ -7,6 +7,12 @@
   border-top-color:#bababa;
  }
 
+ #root .group-list .group-header{
+  transform:translatex(32px) translatey(0px);
+ }
+
+
+
 .group-list .group-record-div .group-about{
   max-width:500px;
   width:400px;
@@ -25,25 +31,51 @@
   .group-list-item {
     border: 1.5px rgb(130, 129, 129);
   }
+  .group-list-header-events {
+    grid-area: link;
+    display: flex;
+    font-size: 1.6rem;
+    max-width: fit-content;
+    text-decoration: none;
+    color: #999999;
+    font-weight: 600;
+  }
+
+/* Group individual record */
+.group-list .group-record-div .group-individual-record{
+  transform:translatex(-80px) translatey(0px);
+ }
+
+ /* Group location */
+ .group-list .group-record-div .group-location{
+  transform:translatex(-77px) translatey(-3px);
+ }
+
+ /* Group about */
+ .group-list .group-record-div .group-about{
+  transform:translatex(-77px) translatey(-4px);
+ }
+
+ /* Group event */
+ .group-list .group-record-div .group-event{
+  transform:translatex(-79px) translatey(0px);
+ }
+
+ /* Group record div */
+ #root .group-list .group-record-div{
+  padding-top:16px;
+ }
+
 
   .group-list-header-groups {
     grid-area: link;
-    display: flex;
     color: #00798A;
     max-width: fit-content;
-    margin-left: 5.5\rem;
+    margin-left: 5.5rem;
     font-size: 1.6rem;
     font-weight: 600;
 }
 
-.group-list-header-events {
-  grid-area: link;
-  font-size: 1.6rem;
-  max-width: fit-content;
-  text-decoration: none;
-  color: #999999;
-  font-weight: 600;
-}
 
 .group-record-div {
   display: grid;

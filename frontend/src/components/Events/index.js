@@ -36,7 +36,7 @@ const EventPage = () => {
   const sortedEvents = upcomingEvents.concat(pastEvents);
 
   return (
-    <div className="event-list">
+    <div className="group-list">
       <div className="event-header">
         <Link className="event-list-header-events" to="/events">
           Events
@@ -46,7 +46,7 @@ const EventPage = () => {
         </Link>
       </div>
       <div>
-        <p className="events-in-connect">Events in Connect</p>
+        <p className="events-in-meethere">Events in Meet Here</p>
       </div>
       {sortedEvents.map((event, index) => (
         <React.Fragment key={index}>

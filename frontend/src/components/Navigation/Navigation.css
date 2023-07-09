@@ -27,6 +27,31 @@ nav {
   padding: 0;
 }
 
+.profile-dropdown li p{
+  margin-left:0px !important;
+  text-align:center;
+  border-width:0px;
+  border-top-style:solid;
+  border-top-width:1px;
+  font-size:15px;
+  padding-top:8px;
+  min-height:22px;
+  margin-bottom:0px;
+ }
+
+ /* List Item */
+ .navigation-links li li{
+  width:188px;
+  text-align:center;
+  padding-top:0px;
+ }
+
+ /* List */
+ .navigation-links li ul{
+  transform:translatex(-107px) translatey(27px);
+ }
+
+
 .navigation-links li {
   margin-right: 10px; /* Adjust margin as needed */
 }

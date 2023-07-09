@@ -118,7 +118,7 @@ export const EventDetail = () => {
               <p>{event.type}</p>
             </div>
             <div className="event-delete">
-                      <button onClick={editEvent}>Update</button>
+                      <button onClick={comingSoon}>Update</button>
                       <OpenModalButton
                         modalComponent={<DeleteEvent />}
                         buttonText={"Delete"}

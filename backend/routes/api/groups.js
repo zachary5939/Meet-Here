@@ -146,6 +146,12 @@ router.get('/:groupId', async (req, res) => {
         },
         {
           model: Event,
+          include: [
+            {
+              model: EventImage,
+              attributes: ['id', 'url', 'preview'],
+            },
+          ],
         },
       ],
     });

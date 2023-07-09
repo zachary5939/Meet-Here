@@ -149,14 +149,14 @@ export const thunkCreateGroup =
   }
 
 
-export const thunkDeleteGroup = (groupId) => async (dispatch) => {
-  const response = await csrfFetch(`/api/groups/${groupId}`, {
-    method: "DELETE",
-  });
-  const resBody = await response.json();
-  if (response.ok) dispatch(deleteGroup(groupId));
-  return resBody;
-};
+  export const thunkDeleteGroup = (groupId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/groups/${groupId}`, {
+      method: "DELETE",
+    });
+    const resBody = await response.json();
+    if (response.ok) dispatch(deleteGroup(groupId));
+    return resBody;
+  };
 
 export const thunkAddGroupImage = (groupImage, groupId) => async (dispatch) => {
   const response = await csrfFetch(`/api/groups/${groupId}/images`, {

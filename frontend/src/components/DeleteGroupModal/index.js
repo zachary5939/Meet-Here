@@ -12,6 +12,7 @@ const DeleteGroup = () => {
 
   const handleDelete = (e) => {
     e.preventDefault();
+    console.log("Deleting group:", group);
     dispatch(thunkDeleteGroup(group.id));
     closeModal();
     history.push("/groups");

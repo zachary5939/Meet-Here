@@ -20,7 +20,7 @@ export const GroupRecord = ({ group }) => {
     <div onClick={groupHistory} className="group-record-div">
       <img
         className="group-record-img"
-        width="200"
+        width="250"
         height="150"
         src={group.previewImage}
         alt="Group Preview"

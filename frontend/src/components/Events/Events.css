@@ -1,0 +1,169 @@
+.event-record-div {
+  display: grid;
+  grid-template-columns: 1fr 2fr;
+  grid-template-areas: 'image info' 'image info' 'image info';
+  margin: 0rem 12rem;
+  column-gap: .5rem;
+}
+
+.group-list .event-header .event-list-header-groups {
+  transform: translateX(121px) translateY(0px);
+}
+
+.group-list .event-record-div .event-individual-record {
+  transform: translateX(0px) translateY(-101px);
+  font-weight: 600;
+  font-size: 22px;
+  min-height: 40px;
+}
+
+.group-list .event-record-div .event-list-info-time {
+  min-height: 40px;
+  transform: translateX(0px) translateY(-17px);
+  margin-bottom: 85px;
+}
+
+.group-list div .events-in-meethere {
+  padding-right: 0px;
+  width: 274px;
+
+}
+
+.group-list .event-record-div {
+  padding-top: 23px;
+}
+
+.group-list .event-header .event-list-header-events {
+  transform: translateX(-58px) translateY(0px);
+}
+
+.group-list div .events-in-meethere {
+  margin-bottom: 0px;
+  min-height: 42px;
+  transform: translateX(190px) translateY(-6px);
+  margin-top: 30px;
+}
+
+#root .group-list .event-record-div {
+  min-height: 151px;
+  border-top-style: solid;
+  border-top-width: 2px;
+  border-top-color: #686363;
+  position: sticky;
+  top: 0px;
+  border-top-left-radius: 0px;
+  margin-top: 0px;
+  border-top-right-radius: 0px;
+  height: 219px;
+  transform:translatex(0px) translatey(0px);
+  height:189px;
+}
+
+#root .group-list .event-record-div{
+  position:relative;
+  transform:translatex(0px) translatey(0px);
+ }
+
+ /* Event location */
+ .group-list .event-record-div .event-location{
+  min-height:34px;
+  transform:translatex(-11px) translatey(-73px);
+ }
+
+ /* Events meethere */
+ .group-list div .events-in-meethere{
+  color:#6d6d6d;
+ }
+
+ /* Event individual record */
+ .group-list .event-record-div .event-individual-record{
+  transform:translatex(-8px) translatey(-102px);
+ }
+
+ /* Event list info time */
+ .group-list .event-record-div .event-list-info-time{
+  transform:translatex(-6px) translatey(-17px);
+ }
+
+
+
+.event-list-border {
+  border: 1.5px solid #999999;
+  margin: 1rem 12rem;
+}
+
+.events-in-meethere {
+  color: #999999;
+  margin-top: 1rem;
+  margin-bottom: .5rem;
+}
+
+.event-header {
+  display: grid;
+  grid-template-areas: 'link' 'header';
+  margin: 0rem 10rem;
+  margin-top: 3rem;
+}
+
+.group-list-item {
+  border: 1.5px rgb(130, 129, 129);
+}
+
+.event-list-header-events {
+  grid-area: name;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align: initial;
+  cursor: pointer;
+  color: #00798A;
+  max-width: 22.5rem;
+  word-wrap: break-word;
+}
+
+.event-list-header-events {
+  grid-area: link;
+  color: #00798A;
+  max-width: fit-content;
+  margin-left: 5.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
+
+.event-record-img {
+  grid-area: image;
+  cursor: pointer;
+}
+
+.event-list-header-groups {
+  grid-area: link;
+  display: flex;
+  font-size: 1.6rem;
+  max-width: fit-content;
+  text-decoration: none;
+  color: #999999;
+  font-weight: 600;
+}
+
+.group-location {
+  grid-area: location;
+  margin: 0px;
+  cursor: pointer;
+  color: #5b5b5b;
+  max-width: 22.5rem;
+  word-wrap: break-word;
+}
+
+.group-about {
+  grid-area: descrip;
+  margin: .5rem 0rem;
+  cursor: pointer;
+  max-width: 22.5rem;
+  word-wrap: break-word;
+}
+
+.group-event {
+  grid-area: event;
+  margin: 0px;
+  cursor: pointer;
+  color: #585858;
+}

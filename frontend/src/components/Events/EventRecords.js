@@ -12,6 +12,14 @@ export const EventRecord = ({ event }) => {
     event.Group = { city: "", state: "" };
   }
 
+  if (
+    event.previewImage === "no preview image" ||
+    event.previewImage === undefined
+  ) {
+    event.previewImage =
+      "https://vishwaentertainers.com/wp-content/uploads/2020/04/No-Preview-Available.jpg";
+  }
+
   return (
     <div onClick={eventHistory} className="event-record-div" style={{ cursor: "pointer" }}>
       <img

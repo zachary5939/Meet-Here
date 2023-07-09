@@ -15,7 +15,7 @@ module.exports = {
           organizerId: 1,
           name: "Cars Enthusiasts",
           about:
-            "For car enthusiasts who prioritize their love for cars above everything else, their unwavering obsession with automobiles drives them to seek the ultimate driving experience and chase after automotive perfection with relentless passion.”",
+            "We live and breathe the exhaust cars produce.",
           type: "In person",
           private: false,
           city: "Ventura",
@@ -23,9 +23,9 @@ module.exports = {
         },
         {
           organizerId: 2,
-          name: "Skating Plus",
+          name: "Roller Skating",
           about:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.”",
+            "Roller skate outdoors or in a roller rink, we love to roller skate!",
           type: "In person",
           private: false,
           city: "Ventura",
@@ -33,27 +33,15 @@ module.exports = {
         },
         {
           organizerId: 3,
-          name: "Video Games and Arcades",
+          name: "Gamers",
           about:
-            "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.”",
+            "Gamers of all backgrounds come together to connect, share experiences, and create lasting friendships.",
           type: "In person",
           private: true,
           city: "Ventura",
           state: "CA",
         },
-        // {
-        //   organizerId: 3,
-        //   name: "Hiking: for Beginners",
-        //   about:
-        //     "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.”",
-        //   type: "In person",
-        //   private: false,
-        //   city: "Malibu",
-        //   state: "CA",
-        // },
       ],
-
-      {}
     );
   },
 

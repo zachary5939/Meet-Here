@@ -20,22 +20,22 @@ const EditGroup = () => {
   const [privacy, setPrivacy] = useState("");
   const [validationErrors, setValidationErrors] = useState({});
 
-  useEffect(() => {
-    dispatch(thunkGetOneGroup(groupId));
-  }, [dispatch, groupId]);
+  // useEffect(() => {
+  //   dispatch(thunkGetOneGroup(groupId));
+  // }, [dispatch, groupId]);
 
-  useEffect(() => {
-    if (groupId && group.Organizer) {
-      if (group.Organizer && (!user || user.id !== group.Organizer.id)) {
-        return history.push("/");
-      }
-      setCityState(group.city.trim() + ", " + group.state.trim());
-      setName(group.name);
-      setAbout(group.about);
-      setType(group.type);
-      setPrivacy(group.private);
-    }
-  }, [groupId, group, history, user]);
+  // useEffect(() => {
+  //   if (groupId && group.Organizer) {
+  //     if (group.Organizer && (!user || user.id !== group.Organizer.id)) {
+  //       return history.push("/");
+  //     }
+  //     setCityState(group.city.trim() + ", " + group.state.trim());
+  //     setName(group.name);
+  //     setAbout(group.about);
+  //     setType(group.type);
+  //     setPrivacy(group.private);
+  //   }
+  // }, [groupId, group, history, user]);
 
   useEffect(() => {
     if (!user) {

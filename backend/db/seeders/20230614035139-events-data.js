@@ -16,7 +16,7 @@ module.exports = {
         venueId: 1,
         name: "Japanese and Korean Car Show",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          "Checkout a wide variety of peoples custom JDM & KDM cars. Toyota, Mazda, Hyundai, all of them!",
         type: "In person",
         capacity: 500,
         price: 0,
@@ -26,9 +26,9 @@ module.exports = {
       {
         groupId: 1,
         venueId: 1,
-        name: "American Car Show",
+        name: "Classic Car Show",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          "Checkout old classic cars from Americas history",
         type: "In person",
         capacity: 500,
         price: 0,
@@ -40,7 +40,7 @@ module.exports = {
         venueId: 2,
         name: "2000s Skating Night",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          "Dress in hideous outfits we used to wear in the 2000s and skate to hit songs released in the 2000s",
         type: "In person",
         capacity: 100,
         price: 20.0,
@@ -52,7 +52,7 @@ module.exports = {
         venueId: 3,
         name: "Super Smash Bros. Tournament",
         description:
-          "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+          "1 v 1 fights with the traditional general ruleset. Deodorant required to enter venue.",
         type: "In person",
         capacity: 70,
         price: 10.0,

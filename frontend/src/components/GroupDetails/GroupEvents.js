@@ -9,7 +9,7 @@ const upcomingEvent = [];
   const results = []
 
   for (let event of events) {
-    console.log(event)
+    console.log(event.previewImage);
     if (event.previewImage === undefined) {
       event.previewImage = "unavailable";
     }

@@ -17,6 +17,7 @@ const DeleteGroup = () => {
     history.push("/groups");
   };
 
+
   return (
     <div className="delete-modal">
       <h1 className="delete-modal-title">Confirm Delete</h1>
