@@ -30,10 +30,6 @@ const upcomingEvent = [];
     return new Date(b.startDate) - new Date(a.startDate);
   });
 
-  // const navigateToEvent = (eventId) => {
-  //   history.push(`/events/${eventId}`);
-  // };
-
   return (
     <>
       <div style={{ marginTop: "1.25rem" }}>
