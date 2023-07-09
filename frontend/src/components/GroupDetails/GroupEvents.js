@@ -1,16 +1,19 @@
 import { useHistory } from "react-router-dom";
 
-export const GroupEvents = ({ events, group }) => {
-  const upcomingEvent = [];
+export const GroupEvents = ({ events }) => {
+
+const upcomingEvent = [];
   const pastEvent = [];
   const time = new Date();
   const history = useHistory();
+  const results = []
+  for (const [key, value] of Object.entries(events)) {
+    results.push(value)
+  }
 
-
-  for (let event of events) {
+  for (let event of results) {
     if (event.previewImage === undefined) {
-      event.previewImage =
-        "https://vishwaentertainers.com/wp-content/uploads/2020/04/No-Preview-Available.jpg";
+      event.previewImage = "unavailable";
     }
     if (new Date(event.startDate) > time) {
       upcomingEvent.push(event);
@@ -27,9 +30,9 @@ export const GroupEvents = ({ events, group }) => {
     return new Date(b.startDate) - new Date(a.startDate);
   });
 
-  const navigateToEvent = (eventId) => {
-    history.push(`/events/${eventId}`);
-  };
+  // const navigateToEvent = (eventId) => {
+  //   history.push(`/events/${eventId}`);
+  // };
 
   return (
     <>
@@ -46,14 +49,14 @@ export const GroupEvents = ({ events, group }) => {
               <div className="event-cards-image">
                 <img
                   alt=""
-                  onClick={() => navigateToEvent(event.id)}
+                  onClick={() => history.push(`/events/${event.id}`)}
                   src={event.previewImage}
                   width={180}
                   height={120}
                   style={{ marginLeft: "1rem", marginTop: "1.25rem" }}
                 ></img>
               </div>
-              <div className="event-cards-info">
+              <div className="event-cards-info" onClick={() => history.push(`/events/${event.id}`)}>
                 <p className="event-cards-info-time">
                   {event.startDate.split("T")[0]} · {"<"}
                   {event.startDate.split("T")[1].split(".")[0]}
@@ -64,7 +67,7 @@ export const GroupEvents = ({ events, group }) => {
                   {event.Group.city}, {event.Group.state}
                 </p>
               </div>
-              <div className="event-cards-description">
+              <div className="event-cards-description" onClick={() => history.push(`/events/${event.id}`)}>
                 <p>{event.description}</p>
               </div>
             </div>
@@ -82,14 +85,14 @@ export const GroupEvents = ({ events, group }) => {
               <div className="event-cards-image">
                 <img
                   alt=""
-                  onClick={() => navigateToEvent(event.id)}
+                  onClick={() => history.push(`/events/${event.id}`)}
                   src={event.previewImage}
                   width={180}
                   height={120}
                   style={{ marginLeft: "1rem", marginTop: "1.25rem" }}
                 ></img>
               </div>
-              <div className="event-cards-info">
+              <div className="event-cards-info" onClick={() => history.push(`/events/${event.id}`)}>
                 <p className="event-cards-info-time">
                   {event.startDate.split("T")[0]} · {"<"}
                   {event.startDate.split("T")[1].split(".")[0]}

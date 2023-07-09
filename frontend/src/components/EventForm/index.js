@@ -2,33 +2,31 @@ import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useParams } from "react-router-dom";
 import { thunkCreateEvent } from "../../store/events";
+import * as groupActions from "../../store/groups";
+import * as eventActions from "../../store/events";
 import { thunkGetGroupDetails } from "../../store/groups";
 import "./EventForm.css";
 
 export function EventForm({ formType }) {
-  const { groupId } = useParams();
-  const dispatch = useDispatch();
-  const groupStore = useSelector((state) => state.groups);
-  const group = groupStore[groupId] ? groupStore[groupId] : "";
-  const [name, setName] = useState("");
-  const [eventType, setEventType] = useState("");
-  const [capacity, setCapacity] = useState(0);
-  const [price, setPrice] = useState("");
-  const [startDate, setStartDate] = useState("");
-  const [endDate, setEndDate] = useState("");
-  const [imageURL, setImageURL] = useState("");
-  const [description, setDescription] = useState("");
-  const [errors, setErrors] = useState({});
+    const { groupId } = useParams();
+    const history = useHistory();
+    const dispatch = useDispatch();
+    const group = useSelector((state) => state.groups.singleGroup);
 
-  useEffect(() => {
-    dispatch(thunkGetGroupDetails(groupId));
-  }, [dispatch, groupId]);
+    const [name, setName] = useState("");
+    const [eventType, setEventType] = useState("");
+    const [capacity, setCapacity] = useState("");
+    const [price, setPrice] = useState("");
+    const [startDate, setStartDate] = useState("");
+    const [endDate, setEndDate] = useState("");
+    const [imageURL, setImageURL] = useState("");
+    const [description, setDescription] = useState("");
+    const [validationErrors, setValidationErrors] = useState({});
+    const [privacy, setPrivacy] = useState("");
 
-
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    if (formType === "Create") {
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      if (formType === "Create") {
       const errors = {};
 
       if (!name) {
@@ -39,17 +37,19 @@ export function EventForm({ formType }) {
         errors.eventType = "Event Type is required";
       }
 
-      // Convert capacity to an integer
-      const parsedCapacity = parseInt(capacity, 10);
-      if (!parsedCapacity || !Number.isInteger(parsedCapacity)) {
-        errors.capacity = "Capacity must be a whole number";
+      if (!capacity) {
+        errors.capacity = "Capacity is required";
       }
 
-      // Convert price to a number
-      const parsedPrice = parseFloat(price);
-      if (isNaN(parsedPrice) || parsedPrice <= 0) {
-        errors.price = "Price is invalid";
-      }
+      if (!privacy) {
+          errors.privacy = "Privacy setting is required";
+        }
+
+      if (!price) {
+        errors.price = "Price is required";
+      } else if (!Number.isInteger(Number(price))) {
+      errors.price = "Price must be a number";
+    }
 
       if (!startDate) {
         errors.startDate = "Start date is required";
@@ -82,143 +82,171 @@ export function EventForm({ formType }) {
         errors.description = "Description must be at least 30 characters long";
       }
 
+      setValidationErrors(errors);
+
+
       if (Object.keys(errors).length === 0) {
-        const form = {
-          venueId: null,
+        const eventData = {
           name,
           type: eventType,
-          capacity: parsedCapacity,
-          price: parsedPrice,
-          description,
+          capacity: Number(capacity),
+          price: Number(price),
           startDate,
           endDate,
+          privacy,
+          description,
         };
-        dispatch(thunkCreateEvent(form, groupId, imageURL));
+        console.log("this is the event data", typeof capacity)
+
+        dispatch(eventActions.thunkCreateEvent(eventData, groupId, imageURL))
+          .then((res) => {
+            history.push(`/events/${res.id}`);
+          })
+          .catch((err) => {
+            console.error("Error creating group:", err);
+          });
+
+          dispatch(groupActions.thunkGetOneGroup(group, imageURL))
+            .then((res) => {
+              history.push(`/events/${res.id}`);
+            })
+            .catch((err) => {
+              console.error("Error creating group:", err);
+            });
+
+        }
       }
+    };
 
-      setErrors(errors);
-    }
-  };
-
-  return (
-    <>
-      {formType === "Create" && (
-        <form onSubmit={handleSubmit}>
-          <div className="create-event-container">
-            <p>Create a new event for {group.name}</p>
-            <p>What is the name of your event?</p>
+    return (
+      <div className="event-create-container">
+        <h1>Create an Event for {}</h1>
+        <form className="event-create-form" onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="name">What is the name of your event?</label>
             <input
-              placeholder="Event Name"
+              type="text"
+              id="name"
               value={name}
               onChange={(e) => setName(e.target.value)}
+              placeholder="Event Name"
             />
-            {errors.name && (
-              <span className="create-event-errors-section-1">
-                {errors.name}
-              </span>
+            {validationErrors.name && (
+              <span className="error">{validationErrors.name}</span>
             )}
-            <p className="create-event-borders" />
-            <p>Is this an in-person or online event?</p>
+          </div>
+          <div className="form-group">
+            <label htmlFor="eventType" className="eventType">Is this an in person or online event?</label>
             <select
-              className="create-event-select-location"
+              id="eventType"
               value={eventType}
               onChange={(e) => setEventType(e.target.value)}
             >
-              <option value="nothing">(select one)</option>
+              <option value="">(select one)</option>
               <option value="In person">In person</option>
               <option value="Online">Online</option>
             </select>
-            {errors.eventType && (
-              <span className="create-event-errors-section-2">
-                {errors.eventType}
-              </span>
+            {validationErrors.eventType && (
+              <span className="error">{validationErrors.eventType}</span>
             )}
-            <p>How many people can attend this event?</p>
+          </div>
+          <div className="form-group">
+            <label htmlFor="capacity">Capacity</label>
             <input
+              id="capacity"
               value={capacity}
-              onChange={(e) => setCapacity(e.target.value)}
-              placeholder="# of people"
               type="number"
-              step="1"
+              onChange={(e) => setCapacity(e.target.value)}
+              placeholder="# People allowed"
+            >
+            </input>
+            {validationErrors.capacity && (
+              <span className="error">{validationErrors.capacity}</span>
+            )}
+          </div>
+          <div className="form-group">
+            <label htmlFor="privacy">Privacy</label>
+            <select
+              id="privacy"
+              value={privacy}
+              onChange={(e) => setPrivacy(e.target.value)}
+            >
+              <option value="">(select one)</option>
+              <option value="private">Private</option>
+              <option value="public">Public</option>
+            </select>
+            {validationErrors.privacy && (
+              <span className="error">{validationErrors.privacy}</span>
+            )}
+          </div>
+          <div className="form-group">
+            <label htmlFor="price">Price</label>
+            <input
+              type="integer"
+              id="price"
+              value={price}
+              onChange={(e) => setPrice(e.target.value)}
+              placeholder="0"
             />
-            {errors.capacity && (
-              <span className="create-event-errors-section-2">
-                {errors.capacity}
-              </span>
+            {validationErrors.price && (
+              <span className="error">{validationErrors.price}</span>
             )}
-            <p>What is the price for your event?</p>
-            <div className="create-event-price-label">
-              <span className="create-event-price-symbol">$</span>
-              <input
-            type="text"
-            value={price}
-            onChange={(e) => setPrice(e.target.value)}
-            placeholder="0"
-            className="price-input"
-          />
-            </div>
-            {errors.price && (
-              <span className="create-event-errors-section-3">
-                {errors.price}
-              </span>
-            )}
-            <p className="create-event-borders" />
-            <p>When does your event start?</p>
+          </div>
+          <div className="form-group">
+            <label htmlFor="startDate" className="start-date">Start Date</label>
             <input
               type="datetime-local"
+              id="startDate"
               value={startDate}
               onChange={(e) => setStartDate(e.target.value)}
             />
-            {errors.startDate && (
-              <span className="create-event-errors-section-4">
-                {errors.startDate}
-              </span>
+            {validationErrors.startDate && (
+              <span className="error">{validationErrors.startDate}</span>
             )}
-            <p>When does your event end?</p>
+          </div>
+          <div className="form-group">
+            <label htmlFor="endDate">End Date</label>
             <input
               type="datetime-local"
+              id="endDate"
               value={endDate}
               onChange={(e) => setEndDate(e.target.value)}
             />
-            {errors.endDate && (
-              <span className="create-event-errors-section-4">
-                {errors.endDate}
-              </span>
+            {validationErrors.endDate && (
+              <span className="error">{validationErrors.endDate}</span>
             )}
-            <p className="create-event-borders" />
-            <p>Please add an image URL for your event below:</p>
-            <input
+          </div>
+          <div className="form-group">
+            <label htmlFor="imageURL" className="img-url">Image URL</label>
+            <input className="img-input"
+              type="text"
+              id="imageURL"
               value={imageURL}
               onChange={(e) => setImageURL(e.target.value)}
               placeholder="Image URL"
             />
-            {errors.imageURL && (
-              <span className="create-event-errors-section-5">
-                {errors.imageURL}
-              </span>
+            {validationErrors.imageURL && (
+              <span className="error">{validationErrors.imageURL}</span>
             )}
-            <p className="create-event-borders" />
-            <p
-            >
-              Please describe your event
-            </p>
+          </div>
+          <div className="form-group">
+            <label htmlFor="description" className="description">Description</label>
             <textarea
+              id="description"
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Please include at least 30 characters"
-            />
-            {errors.description && (
-              <span className="create-event-errors-section-6">
-                {errors.description}
-              </span>
+            ></textarea>
+            {validationErrors.description && (
+              <span className="error">{validationErrors.description}</span>
             )}
-            <div></div>
-            <button type="submit">Create event</button>
           </div>
+          <button type="submit" className="create-event-btn">
+            Create Event
+          </button>
         </form>
-      )}
-    </>
-  );
-}
+      </div>
+    );
+  };
 
 export default EventForm;

@@ -138,15 +138,15 @@ export const thunkCreateGroup =
   };
 
   export const thunkGetEventDetail = (eventId) => async (dispatch) => {
-  const res = await csrfFetch(`/api/events/${eventId}`)
-  if (res.ok) {
-    const data = await res.json()
-    dispatch(getEventDetail(data))
-    return data
-  } else {
-    return window.location.href = "/not-found"
+    const res = await csrfFetch(`/api/events/${eventId}`)
+    if (res.ok) {
+      const data = await res.json()
+      dispatch(getEventDetail(data))
+      return data
+    } else {
+      return window.location.href = "/not-found"
+    }
   }
-}
 
 
 export const thunkDeleteGroup = (groupId) => async (dispatch) => {
@@ -168,27 +168,27 @@ export const thunkAddGroupImage = (groupImage, groupId) => async (dispatch) => {
   return resBody;
 };
 
-export const thunkUpdateGroupImage =
-  (groupImage, groupId) => async (dispatch) => {
-    await csrfFetch(`/api/group-images/${groupImage.id}`, {
-      method: "DELETE",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(groupImage),
-    });
+// export const thunkUpdateGroupImage =
+//   (groupImage, groupId) => async (dispatch) => {
+//     await csrfFetch(`/api/group-images/${groupImage.id}`, {
+//       method: "DELETE",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(groupImage),
+//     });
 
-    const response = await csrfFetch(`/api/groups/${groupId}/images`, {
-      method: "post",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(groupImage),
-    });
-    const resBody = await response.json();
-    if (response.ok) dispatch(addGroupImg(groupImage));
-    return resBody;
-  };
+//     const response = await csrfFetch(`/api/groups/${groupId}/images`, {
+//       method: "post",
+//       headers: {
+//         "Content-Type": "application/json",
+//       },
+//       body: JSON.stringify(groupImage),
+//     });
+//     const resBody = await response.json();
+//     if (response.ok) dispatch(addGroupImg(groupImage));
+//     return resBody;
+//   };
 
 export const thunkGetGroupDetails = (groupId) => async (dispatch) => {
   const res = await fetch(`/api/groups/${groupId}`);
@@ -203,7 +203,12 @@ export const thunkGetGroupDetails = (groupId) => async (dispatch) => {
 };
 
 //init state
-const initialState = { allGroups: {}, singleGroup: {}, currentGroup: {} };
+const initialState = {
+  allGroups: {},
+  individualGroup: {},
+  currentGroup: {},
+  eventDetail: {}
+};
 //reducer
 
 const groupsReducer = (state = initialState, action) => {
@@ -214,9 +219,8 @@ const groupsReducer = (state = initialState, action) => {
     case GET_ONE_GROUP: {
       return { ...state, singleGroup: action.group };
     }
-        case GET_EVENT_DETAIL: {
-      const newState = { [action.event.id]: action.event}
-      return newState
+    case GET_EVENT_DETAIL: {
+      return { ...state, eventDetail: action.event.id };
     }
     case CREATE_GROUP: {
       const singleGroup = {

@@ -15,7 +15,7 @@ const getEventDetail = (event) => ({
   event,
 });
 
-const createEvent = (event) => ({ // Updated action creator name
+const createEvent = (event) => ({
   type: CREATE_EVENT,
   event,
 });
@@ -46,7 +46,7 @@ export const thunkCreateEvent = (event, groupId, imageURL) => async (dispatch) =
     } else {
       dispatch(createEvent(data))
     }
-  } alert("Cannot find group!")
+  } alert("Cant find group!")
 }
 
 export const thunkGetAllEvents = () => async (dispatch) => {
@@ -64,18 +64,16 @@ export const thunkGetAllEvents = () => async (dispatch) => {
 };
 
 export const thunkGetEventDetail = (eventId) => async (dispatch) => {
-  try {
-    const response = await fetch(`/api/events/${eventId}`);
-    if (!response.ok) {
-      throw new Error("Failed to fetch event details");
-    }
-    const data = await response.json();
-    dispatch(getEventDetail(data));
-  } catch (error) {
-    console.log(Response);
-    // Handle error state if needed
+  const res = await csrfFetch(`/api/events/${eventId}`);
+  if (res.ok) {
+      const data = await res.json();
+      dispatch(getEventDetail(data));
+      return data;
+  } else {
+      const errors = await res.json();
+      return errors;
   }
-};
+}
 
 export const thunkGetEventsByGroup = (groupId) => async(dispatch) => {
   const res = await fetch(`/api/groups/${groupId}/events`)
@@ -116,8 +114,6 @@ const eventsReducer = (state = initialState, action) => {
           return newState;
       }
       case GET_EVENT_DETAIL: {
-        console.log(state, 'state')
-        console.log(action, 'action')
           const newState = { ...state }
           newState.singleEvents = { [action.event.event.id]: action.event };
           return newState;
