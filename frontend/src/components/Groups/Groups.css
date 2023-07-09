@@ -1,29 +1,97 @@
 #root .group-list .group-record-div{
-    padding-left:440px;
-    padding-right:440px;
-   }
+  column-gap:13px;
+  row-gap:0px;
+  box-shadow:none;
+  border-top-width:2px;
+  border-top-style:solid;
+  border-top-color:#bababa;
+ }
 
-.group-list-header-events {
-    display: flex;
-    flex-direction: row;
+.group-list .group-record-div .group-about{
+  max-width:500px;
+  width:500px;
 }
 
-.group-list-border {
-  border: 1.5px solid #999999;
-}
-
-.group-list {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
 
 .group-header {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
+    display: grid;
+    grid-template-areas:
+    'link'
+    'header';
+    margin: 0rem 10rem;
+    margin-top: 3rem;
   }
 
   .group-list-item {
-    border: 1.5px gray;
+    border: 1.5px rgb(130, 129, 129);
   }
+
+  .group-list-header-groups {
+    grid-area: link;
+    display: flex;
+    color: #00798A;
+    max-width: fit-content;
+    margin-left: 5rem;
+    font-size: 1.6rem;
+    font-weight: 600;
+}
+
+.group-list-header-events {
+  grid-area: link;
+  font-size: 1.6rem;
+  max-width: fit-content;
+  text-decoration: none;
+  color: #999999;
+  font-weight: 600;
+}
+
+.group-record-div {
+  display: grid;
+  grid-template-areas:
+  'image name name'
+  'image location ...'
+  'image descrip descrip'
+  'image event ...';
+  margin: 0rem 12rem;
+  column-gap: .5rem;
+}
+
+.group-record-img {
+  grid-area: image;
+  cursor: pointer;
+}
+
+.group-individual-record {
+  grid-area: name;
+  font-size: 1.5rem;
+  font-weight: 800;
+  text-align:initial;
+  cursor: pointer;
+  color: #00798A;
+  max-width: 22.5rem;
+  word-wrap: break-word;
+}
+
+.group-location {
+  grid-area: location;
+  margin: 0px;
+  cursor: pointer;
+  color:#5b5b5b;
+  max-width: 22.5rem;
+  word-wrap: break-word;
+}
+
+.group-about {
+  grid-area: descrip;
+  margin: .5rem 0rem;
+  cursor: pointer;
+  max-width: 22.5rem;
+  word-wrap: break-word;
+}
+
+.group-event {
+  grid-area: event;
+  margin: 0px;
+  cursor: pointer;
+  color:#585858;
+}

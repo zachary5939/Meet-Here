@@ -41,9 +41,7 @@ router.get("/", async (req, res) => {
           },
         },
       });
-      //destructuring assignment
-      //extracts url from groupImages in array
-      //if doesnt exist, return null to url variable
+
       const { url } = groupJson.GroupImages[0]
         ? groupJson.GroupImages[0]
         : { url: null };
@@ -96,7 +94,7 @@ router.get("/current", requireAuth, async (req, res) => {
       },
     ],
   });
-  //repeat from lines 34 thru 62 to get return
+
   const currentGroups = await Promise.all(
     groups.map(async (group) => {
       const groupJson = group.toJSON();

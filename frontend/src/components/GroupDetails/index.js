@@ -18,11 +18,11 @@ const GroupDetails = () => {
   const eventInfo = useSelector((state) => state.events);
 
   useEffect(() => {
-    dispatch(eventDetails.thunkGetEventsByGroup(groupId));
+    dispatch(eventDetails.thunkGetEventDetail(groupId));
   }, [dispatch, groupId, eventId]);
 
     useEffect(() => {
-      dispatch(groupDetails.thunkGetEventDetail(groupId));
+      dispatch(groupDetails.thunkGetGroupDetails(groupId));
     }, [dispatch, groupId]);
 
     if (!groupInfo.id || Number(groupInfo.id) !== Number(groupId)) return null;

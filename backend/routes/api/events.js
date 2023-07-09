@@ -4,6 +4,7 @@ const {
   Event,
   User,
   Group,
+  GroupImage,
   Venue,
   EventImage,
   Attendance,
@@ -137,16 +138,29 @@ router.get("/:eventId", async (req, res) => {
   const event = await Event.findByPk(eventId, {
     include: [
       {
-        model: EventImage,
-        attributes: ["id", "url", "preview"],
-      },
-      {
         model: Group,
         attributes: ["id", "name", "private", "city", "state"],
+        include: [{
+          model: GroupImage,
+          attributes:["url"]
+        },{
+          model: User,
+          attributes: ["firstName", "lastName", "id"],
+          as: "Organizer",
+        }]
       },
       {
         model: Venue,
-        attributes: ["id", "address", "city", "state", "lat", "lng"],
+        attributes: {
+          exclude: ["groupId", "updatedAt", "createdAt"],
+        },
+      },
+      {
+        model: EventImage,
+        as: "EventImages",
+        attributes: {
+          exclude: ["eventId", "updatedAt", "createdAt"],
+        },
       },
     ],
   });

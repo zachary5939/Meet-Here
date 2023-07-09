@@ -89,7 +89,7 @@ export const thunkDeleteEvent = (eventId) => async (dispatch) => {
     const response = await csrfFetch(`/api/events/${eventId}`, {
       method: "DELETE",
     });
-
+    
     if (response.ok) {
       dispatch(deleteEvent(eventId));
     } else {
@@ -97,7 +97,6 @@ export const thunkDeleteEvent = (eventId) => async (dispatch) => {
     }
   } catch (error) {
     console.error("Error deleting event:", error);
-    // Handle error state if needed
   }
 };
 

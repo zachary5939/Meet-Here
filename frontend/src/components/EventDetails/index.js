@@ -5,7 +5,7 @@ import { thunkGetEventDetail } from "../../store/events";
 import "./EventDetails.css";
 import OpenModalButton from "../OpenModalButton";
 import { EventDetailButton } from "./EventDeltails";
-import DeleteEvent from "../DeleteEventModal";
+import { DeleteEvent } from "../DeleteEventModal";
 
 export const EventDetail = () => {
   const dispatch = useDispatch();
@@ -59,8 +59,8 @@ export const EventDetail = () => {
   };
 
   const editEvent = () => {
-    history.push(`/events/${eventId}/edit`)
-  }
+    history.push(`/events/${eventId}/edit`);
+  };
 
   return (
     <>
@@ -83,7 +83,7 @@ export const EventDetail = () => {
               className="event-detail-body-info-group-image"
               width="110"
               height="75"
-              src={`${event.EventImages[0].url}`}
+              src={`${event.Group.GroupImages[0].url}`}
             />
             <div className="event-detail-body-info-group-body">
               <h4 onClick={sendToGroup}>{event.Group.name}</h4>
