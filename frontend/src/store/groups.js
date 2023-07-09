@@ -216,6 +216,11 @@ const groupsReducer = (state = initialState, action) => {
     case GET_ALL_GROUPS: {
       return { ...state, allGroups: action.groups };
     }
+    case GET_GROUP_DETAILS: {
+      const newState = { ...state }
+      newState.individualGroup = {...action.payload}
+      return newState
+    }
     case GET_ONE_GROUP: {
       return { ...state, singleGroup: action.group };
     }

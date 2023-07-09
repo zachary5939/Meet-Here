@@ -7,11 +7,9 @@ const upcomingEvent = [];
   const time = new Date();
   const history = useHistory();
   const results = []
-  for (const [key, value] of Object.entries(events)) {
-    results.push(value)
-  }
 
-  for (let event of results) {
+  for (let event of events) {
+    console.log(event)
     if (event.previewImage === undefined) {
       event.previewImage = "unavailable";
     }
@@ -60,7 +58,7 @@ const upcomingEvent = [];
                 </p>
                 <p className="event-cards-info-name">{event.name}</p>
                 <p className="event-cards-info-location">
-                  {event.Group.city}, {event.Group.state}
+                  {event.city}, {event.state}
                 </p>
               </div>
               <div className="event-cards-description" onClick={() => history.push(`/events/${event.id}`)}>
@@ -96,7 +94,7 @@ const upcomingEvent = [];
                 </p>
                 <p className="event-cards-info-name">{event.name}</p>
                 <p className="event-cards-info-location">
-                  {event.Group.city}, {event.Group.state}
+                  {event.city}, {event.state}
                 </p>
               </div>
               <div className="event-cards-description" onClick={() => history.push(`/events/${event.id}`)}>

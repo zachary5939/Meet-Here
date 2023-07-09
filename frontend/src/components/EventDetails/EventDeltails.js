@@ -1,6 +1,6 @@
 import { useSelector } from "react-redux";
 import OpenModalMenuItem from "../Navigation/OpenModalMenuItem";
-import { DeleteEvent } from "../DeleteEventModal";
+import DeleteGroupModal from "../DeleteGroupModal";
 
 export const EventDetailButton = ({ event }) => {
   const sessionUser = useSelector((state) => state.session.user);
@@ -21,7 +21,7 @@ export const EventDetailButton = ({ event }) => {
           <button className="delete-modal-button-event">
             <OpenModalMenuItem
               itemText="Delete"
-              modalComponent={<DeleteEvent type="event" event={event} />}
+              modalComponent={<DeleteGroupModal type="event" event={event} />}
             />
           </button>
         </>

@@ -125,35 +125,52 @@ router.get("/current", requireAuth, async (req, res) => {
 });
 
 //get by Id, association required
-router.get('/:groupId', async(req, res) => {
-  const group = await Group.findByPk(req.params.groupId, {
-      include: [{
+router.get('/:groupId', async (req, res) => {
+  try {
+    const group = await Group.findByPk(req.params.groupId, {
+      include: [
+        {
           model: GroupImage,
-          attributes: ['id', 'url', 'preview']
-      }, {
+          attributes: ['id', 'url', 'preview'],
+        },
+        {
           model: User,
           as: 'Organizer',
-          attributes: ['id', 'firstName', 'lastName']
-      }, {
+          attributes: ['id', 'firstName', 'lastName'],
+        },
+        {
           model: Venue,
           attributes: {
-              exclude: ['createdAt', 'updatedAt']
-          }
-      }
-  ]
-  });
-  if (!group) return res.status(404).json({message: "Group couldn't be found"});
-  const members = await Membership.count({
+            exclude: ['createdAt', 'updatedAt'],
+          },
+        },
+        {
+          model: Event,
+        },
+      ],
+    });
+
+    if (!group) {
+      return res.status(404).json({ message: "Group couldn't be found" });
+    }
+
+    const members = await Membership.count({
       where: {
-          groupId: group.id,
-          status: {
-              [Op.notIn]: ['pending']
-          }
-      }
-  });
-  group.dataValues.numMembers = members;
-  return res.json(group);
-})
+        groupId: group.id,
+        status: {
+          [Op.notIn]: ['pending'],
+        },
+      },
+    });
+
+    group.dataValues.numMembers = members;
+    return res.json(group);
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ message: 'Internal server error' });
+  }
+});
+
 
 //creating groups
 router.post("/", requireAuth, handleValidationErrors, async (req, res) => {

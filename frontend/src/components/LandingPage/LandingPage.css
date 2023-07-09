@@ -102,6 +102,12 @@ html {
   align-items: center;
   text-align: center;
 }
+.feature2 a h3{
+  perspective:0px;
+  min-height:38px;
+  transform:translatex(0px) translatey(8px);
+  margin-bottom:0px;
+ }
 
 .feature1 h3,
 .feature2 h3,
@@ -142,6 +148,7 @@ html {
 }
 
 .join-button {
+  transform:translatex(-8px) translatey(-37px);
   padding: 10px 20px;
   font-size: 18px;
   background-color: #00525E;
@@ -175,6 +182,11 @@ html {
 .hover-pointer:hover {
   cursor: pointer;
 }
+
+#root .landingPage .features-section .feature1 p{
+  width:113% !important;
+ }
+
 
 @media (min-width: 1024px) {
   #root .landingPage .features-section .feature2 p {

@@ -111,8 +111,26 @@ nav {
   list-style-type: none;
  }
 
+ /* List */
+.navigation-links li ul{
+  transform:translatex(-107px) translatey(11px);
+  width:189px;
+ }
+
+ /* Menu logout */
+ .profile-dropdown li .MenuLogout{
+  padding-right:9px;
+  margin-left:63px;
+  margin-top:17px;
+ }
+
+.profile-dropdown {
+  font-weight: 600;
+}
 
  /* LOGOUT BUTTON IN DROPDOWN */
  .MenuLogout {
-  background-color: rgb(130, 175, 226);
+  cursor: pointer;
+  border-top: 2px;
+  font-weight: 600;
  }

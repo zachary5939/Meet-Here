@@ -2,24 +2,16 @@ import React, { useEffect } from "react";
 import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as groupDetails from '../../store/groups';
-import * as eventDetails from '../../store/events';
 import { GroupEvents } from "./GroupEvents"
 import "./GroupDetails.css";
 import DeleteGroup from "../DeleteGroupModal";
-import CreateEvent from "../CreateEvent";
 import OpenModalButton from "../OpenModalButton";
 
 const GroupDetails = () => {
   const dispatch = useDispatch();
   const { groupId } = useParams();
-  const { eventId } = useParams();
   const history = useHistory();
   const groupInfo = useSelector((state) => state.groups.individualGroup);
-  const eventInfo = useSelector((state) => state.events);
-
-  useEffect(() => {
-    dispatch(eventDetails.thunkGetEventDetail(groupId));
-  }, [dispatch, groupId, eventId]);
 
     useEffect(() => {
       dispatch(groupDetails.thunkGetGroupDetails(groupId));
@@ -48,12 +40,11 @@ const GroupDetails = () => {
     };
 
     const eventsCheck = () => {
-      console.log('eventscheck', eventInfo)
-      if (eventInfo === undefined) {
+      if (groupInfo.Events.length < 0) {
         return <h3 style={{ marginTop: ".2rem" }}>No Upcoming Events</h3>;
       } else {
         return (
-          <GroupEvents events={eventInfo} />
+          <GroupEvents events={groupInfo.Events} />
         );
       }
     };
