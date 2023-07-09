@@ -307,39 +307,34 @@ router.put("/:eventId", requireAuth, async (req, res) => {
 
 //delete an event
 router.delete("/:eventId", requireAuth, async (req, res) => {
-  try {
-    const event = await Event.findOne({
-      where: { id: req.params.eventId },
-      attributes: { exclude: ["updatedAt", "createdAt"] },
-    });
+  const event = await Event.findOne({
+    where: { id: req.params.eventId },
+    attributes: { exclude: ["updatedAt", "createdAt"] },
+  });
 
-    if (!event) {
-      return res.status(404).json({ message: "Event couldn't be found" });
+  if (!event)
+    return res.status(404).json({ message: "Event couldn't be found" });
+
+  const group = await Group.findOne({ where: { id: event.groupId } });
+
+  const membership = await Membership.findOne({
+    where: {
+      groupId: event.groupId,
+      userId: req.user.id,
+    },
+  });
+
+  if (group.organizerId !== req.user.id) {
+    if (!membership || membership.status !== "co-host") {
+      return res.status(403).json({ message: "Forbidden" });
     }
-
-    const group = await Group.findOne({ where: { id: event.groupId } });
-    const membership = await Membership.findOne({
-      where: {
-        groupId: event.groupId,
-        userId: req.user.id,
-      },
-    });
-
-    if (group.organizerId !== req.user.id) {
-      if (!membership || membership.status !== "co-host") {
-        return res.status(403).json({ message: "Forbidden" });
-      }
-    }
-
-    await event.destroy();
-
-    res.json({
-      message: "Successfully deleted",
-    });
-  } catch (error) {
-    console.error("Error deleting event:", error);
-    res.status(500).json({ message: "Internal Server Error" });
   }
+
+  await event.destroy();
+
+  res.json({
+    message: "Successfully deleted",
+  });
 });
 
 router.get("/:eventId/attendees", async (req, res) => {

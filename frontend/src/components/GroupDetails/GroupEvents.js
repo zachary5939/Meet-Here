@@ -1,12 +1,11 @@
 import { useHistory } from "react-router-dom";
-import { useSelector } from "react-redux";
-import "./GroupDetails.css";
 
-export const GroupEvents = ({ events }) => {
+export const GroupEvents = ({ events, group }) => {
   const upcomingEvent = [];
   const pastEvent = [];
   const time = new Date();
   const history = useHistory();
+
 
   for (let event of events) {
     if (event.previewImage === undefined) {
@@ -101,7 +100,7 @@ export const GroupEvents = ({ events }) => {
                   {event.Group.city}, {event.Group.state}
                 </p>
               </div>
-              <div className="event-cards-description">
+              <div className="event-cards-description" onClick={() => history.push(`/events/${event.id}`)}>
                 <p>{event.description}</p>
               </div>
             </div>
@@ -111,4 +110,3 @@ export const GroupEvents = ({ events }) => {
     </>
   );
 };
-export default GroupEvents;

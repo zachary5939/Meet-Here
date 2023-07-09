@@ -1,17 +1,17 @@
-/* .form-container {
+.group-form {
   max-width: 80%;
   margin: 0 auto;
   padding: 20px;
   border-radius: 5px;
 }
 
-.form-header {
+.form-container {
   text-align: left;
   margin-bottom: 20px;
 }
 
 .form-title {
-  font-size: 25px;
+  font-size: 20px;
   font-weight: bold;
   color: teal;
 }
@@ -46,11 +46,13 @@
 }
 .form-textarea {
   height: 100px;
+  font-family: "Raleway", sans-serif;
 }
 
-.errors {
+.form-error {
   color: red;
   margin-top: 0.25rem;
+  font-weight: 800;
 }
 
 .form-submit-btn {
@@ -68,4 +70,4 @@
 
 .form-submit-btn:hover {
   background-color: #e32359;
-} */
+}

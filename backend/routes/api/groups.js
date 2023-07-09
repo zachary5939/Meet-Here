@@ -127,72 +127,35 @@ router.get("/current", requireAuth, async (req, res) => {
 });
 
 //get by Id, association required
-router.get("/:groupId", async (req, res) => {
-  try {
-    const groupId = req.params.groupId;
-
-    const group = await Group.findByPk(groupId, {
-      include: [
-        { model: GroupImage },
-        { model: Venue },
-        { model: Membership },
-        {
+router.get('/:groupId', async(req, res) => {
+  const group = await Group.findByPk(req.params.groupId, {
+      include: [{
+          model: GroupImage,
+          attributes: ['id', 'url', 'preview']
+      }, {
           model: User,
-          as: "Organizer",
-          attributes: ["id", "firstName", "lastName"],
-        },
-      ],
-    });
-
-    if (group) {
-      const numMembers = group.Memberships.length;
-
-      const successBody = {
-        id: group.id,
-        organizerId: group.organizerId,
-        name: group.name,
-        about: group.about,
-        type: group.type,
-        private: group.private,
-        city: group.city,
-        state: group.state,
-        createdAt: group.createdAt,
-        updatedAt: group.updatedAt,
-        numMembers: numMembers,
-        GroupImages: group.GroupImages.map((image) => ({
-          id: image.id,
-          url: image.url,
-          preview: image.preview,
-        })),
-        Organizer: {
-          id: group.Organizer.id,
-          firstName: group.Organizer.firstName,
-          lastName: group.Organizer.lastName,
-        },
-        Venues: group.Venues.map((venue) => ({
-          id: venue.id,
-          groupId: venue.groupId,
-          address: venue.address,
-          city: venue.city,
-          state: venue.state,
-          lat: venue.lat,
-          lng: venue.lng,
-        })),
-      };
-
-      successBody.Venues.forEach((venue) => {
-        delete venue.createdAt;
-        delete venue.updatedAt;
-      });
-
-      res.status(200).json(successBody);
-    } else {
-      res.status(404).json({ message: "Group couldn't be found" });
-    }
-  } catch (error) {
-    res.status(500).json({ message: "Internal Server Error" });
-  }
-});
+          as: 'Organizer',
+          attributes: ['id', 'firstName', 'lastName']
+      }, {
+          model: Venue,
+          attributes: {
+              exclude: ['createdAt', 'updatedAt']
+          }
+      }
+  ]
+  });
+  if (!group) return res.status(404).json({message: "Group couldn't be found"});
+  const members = await Membership.count({
+      where: {
+          groupId: group.id,
+          status: {
+              [Op.notIn]: ['pending']
+          }
+      }
+  });
+  group.dataValues.numMembers = members;
+  return res.json(group);
+})
 
 //creating groups
 router.post("/", requireAuth, handleValidationErrors, async (req, res) => {
@@ -547,66 +510,46 @@ router.post("/:groupId/venues", requireAuth, async (req, res, next) => {
   return res.status(200).json(venueObject);
 });
 // get all events
-router.get("/:groupId/events", async (req, res, next) => {
-  const { groupId } = req.params;
+router.get('/:groupId/events', async(req, res) => {
+  const group = await Group.findByPk(req.params.groupId)
+  if (!group) return res.status(404).json({message: "Group couldn't be found"})
 
-  try {
-    const events = await Event.findAll({
-      where: {
-        groupId: parseInt(groupId),
-      },
-      attributes: {
-        exclude: ["description", "price", "capacity", "createdAt", "updatedAt"],
-      },
-      include: [
-        { model: Group, attributes: ["id", "name", "city", "state"] },
-        { model: Venue, attributes: ["id", "city", "state"] },
-        { model: EventImage },
-      ],
-    });
-
-    if (events.length === 0) {
-      const group = await Group.findByPk(groupId);
-      if (!group) {
-        error = new Error("Group couldn't be found.");
-        error.status = 404;
-        error.title = "Resource couldn't be found.";
-        return next(error);
-      }
-    }
-
-    const eventsArr = [];
-    for (const event of events) {
-      const eventPojo = event.toJSON();
+  const events = await Event.findAll({
+      attributes: ['id', 'groupId', 'venueId', 'name', 'type', 'startDate', 'endDate', 'description'],
+      include: [{
+          model: Group,
+          where: {
+              id: req.params.groupId
+          },
+          attributes: ['id', 'name', 'city', 'state']
+      }, {
+          model: Venue,
+          attributes: ['id', 'city', 'state']
+      }]
+  })
+  for (let event of events) {
       const numAttending = await Attendance.count({
-        where: {
-          eventId: event.id,
-        },
-      });
-
-      eventPojo.numAttending = numAttending;
-      eventPojo.previewImage = null;
-
-      for (const image of eventPojo.EventImages) {
-        if (image.preview === true) {
-          eventPojo.previewImage = image.url;
-          break;
-        }
+          where: {
+              eventId: event.id,
+              status: {
+                  [Op.notIn]: ['pending', 'waitlist']
+              }
+          }
+      })
+      event.dataValues.numAttending = numAttending;
+      const image = await EventImage.findOne({
+          where: {
+              eventId: event.id
+          }
+      })
+      if (image) {
+          event.dataValues.previewImage = image.url
+      } else {
+          event.dataValues.previewImage = 'no image'
       }
-
-      delete eventPojo.EventImages;
-
-      eventsArr.push(eventPojo);
-    }
-
-    res.json({ Events: eventsArr });
-  } catch (err) {
-    const error = new Error("Group couldn't be found.");
-    error.status = 404;
-    error.title = "Resource couldn't be found.";
-    return next(error);
   }
-});
+  return res.json({Events: events})
+})
 
 //create an event by group id
 router.post(

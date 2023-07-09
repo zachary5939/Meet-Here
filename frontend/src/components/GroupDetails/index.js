@@ -2,12 +2,14 @@ import React, { useEffect } from "react";
 import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetOneGroup } from "../../store/groups";
+import { thunkGetEventsByGroup } from "../../store/events";
+import { GroupEvents } from "./GroupEvents"
 import "./GroupDetails.css";
 import * as groupDetails from '../../store/groups';
-import GroupEvents from "./GroupEvents";
 import DeleteGroup from "../DeleteGroupModal";
 import CreateEvent from "../CreateEvent";
 import OpenModalButton from "../OpenModalButton";
+import * as eventDetails from '../../store/events';
 
 const GroupDetails = () => {
   const dispatch = useDispatch();
@@ -15,13 +17,18 @@ const GroupDetails = () => {
   const history = useHistory();
   const user = useSelector((state) => state.session.user);
   const groupInfo = useSelector((state) => state.groups.singleGroup);
+  const eventInfo = useSelector((state) => state.events.groupId);
   const eventsState = useSelector((state) => state.events.allEvents);
+  const groupStore = useSelector((state) => state.groups);
   const events = Object.values(eventsState || {}).filter((event) => event.groupId === groupId);
 
   useEffect(() => {
     dispatch(thunkGetOneGroup(groupId));
+    dispatch(thunkGetEventsByGroup)
   }, [dispatch, groupId]);
 
+
+  const group = groupStore[groupId];
   const returnGroups = () => {
     history.push("/groups");
   };
@@ -37,6 +44,24 @@ const GroupDetails = () => {
   const editGroup = () => {
     history.push(`/groups/${groupId}/edit`);
   };
+
+  const eventsCheck = () => {
+    if (groupInfo.Events === undefined) {
+      return <h2 style={{ marginTop: ".2rem" }}>No Upcoming Events</h2>;
+    } else {
+      return <GroupEvents events={groupInfo.Events} />;
+    }
+  };
+
+  const eventsLengthCheck = () => {
+    if (groupInfo.Events === undefined) {
+      return "0";
+    } else {
+      return groupInfo.Events.length;
+    }
+  };
+
+
 
   if (!groupInfo.id || Number(groupInfo.id) !== Number(groupInfo.id)) {
     return null;
@@ -75,11 +100,12 @@ const GroupDetails = () => {
 <div className="content-container">
         <div className="upper-container">
           <div className="return-to">
-            <NavLink to="/groups">Return to All Groups</NavLink>
+            <NavLink to="/groups">Groups</NavLink>
           </div>
           <div className="upper-content">
-            <div className="group-image-container">
-              <img alt="group pic" src={groupInfo.GroupImages[0].url} />
+            <div className="group-image">
+              <img alt="group pic" width="475" height="250" src={groupInfo.GroupImages[0].url}/>
+            </div>
             </div>
             <div className="content-details">
               <div className="group-details">
@@ -102,15 +128,14 @@ const GroupDetails = () => {
                     <button onClick={comingSoon}>Join this group</button>
                   ) : (
                     <div className="organizer-buttons">
-                      <button onClick={createEvent}>Create event</button>
-                      <button onClick={editGroup}>Update</button>
-                      <OpenModalButton modalComponent={<DeleteGroup />} buttonText={'Delete'}/>
+                      <button className="create" onClick={createEvent}>Create event</button>
+                      <button className="update" onClick={editGroup}>Update</button>
+                      <OpenModalButton className="delete" modalComponent={<DeleteGroup />} buttonText={'Delete'}/>
                     </div>
                   )
                 ) : null}
               </div>
             </div>
-          </div>
         </div>
           <div className="gray-container">
             <div className="gray-content">

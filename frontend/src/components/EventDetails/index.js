@@ -3,7 +3,9 @@ import { Link, useParams, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { thunkGetEventDetail } from "../../store/events";
 import "./EventDetails.css";
-import { EventDeleteButton } from "./EventDeleteButton";
+import OpenModalButton from "../OpenModalButton";
+import { EventDetailButton } from "./EventDeltails";
+import DeleteEvent from "../DeleteEventModal";
 
 export const EventDetail = () => {
   const dispatch = useDispatch();
@@ -56,11 +58,11 @@ export const EventDetail = () => {
     alert("Feature coming soon!");
   };
 
-  const onClickEdit = () => {
-    history.push(`/events/${eventId}/edit`);
-  };
+  const editEvent = () => {
+    history.push(`/events/${eventId}/edit`)
+  }
 
- return (
+  return (
     <>
       <div className="event-detail-container">
         <div className="event-detail-breadcrumb">
@@ -81,7 +83,7 @@ export const EventDetail = () => {
               className="event-detail-body-info-group-image"
               width="110"
               height="75"
-              src={`${event.EventImages[0].url}`} //wrong image populating
+              src={`${event.EventImages[0].url}`}
             />
             <div className="event-detail-body-info-group-body">
               <h4 onClick={sendToGroup}>{event.Group.name}</h4>
@@ -115,16 +117,22 @@ export const EventDetail = () => {
               <i className="fa-solid fa-map-pin fa-xl"></i>
               <p>{event.type}</p>
             </div>
-            <div className="event-detail-body-info-event-button">{/* <EventDetailButton event={event} /> */}</div>
+            <div className="event-delete">
+                      <button onClick={editEvent}>Update</button>
+                      <OpenModalButton
+                        modalComponent={<DeleteEvent />}
+                        buttonText={"Delete"}
+                      />
+            </div>
           </div>
         </div>
         <div className="event-detail-body-description">
           <h2>Details</h2>
           <p>{event.description}</p>
         </div>
-      </div>
+        </div>
     </>
   );
-};
+  }
 
 export default EventDetail;

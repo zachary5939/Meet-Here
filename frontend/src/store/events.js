@@ -65,31 +65,41 @@ export const thunkGetAllEvents = () => async (dispatch) => {
 
 export const thunkGetEventDetail = (eventId) => async (dispatch) => {
   try {
-    const response = await csrfFetch(`/api/events/${eventId}`);
+    const response = await fetch(`/api/events/${eventId}`);
     if (!response.ok) {
       throw new Error("Failed to fetch event details");
     }
     const data = await response.json();
     dispatch(getEventDetail(data));
   } catch (error) {
-    console.log(error);
+    console.log(Response);
     // Handle error state if needed
   }
 };
 
+export const thunkGetEventsByGroup = (groupId) => async(dispatch) => {
+  const res = await fetch(`/api/groups/${groupId}/events`)
+  if (res.ok) {
+      const data = await res.json()
+      dispatch(getEventDetail(data))
+      return data
+  }
+}
+
 export const thunkDeleteEvent = (eventId) => async (dispatch) => {
   try {
-    const res = await csrfFetch(`/api/events/${eventId}`, {
+    const response = await csrfFetch(`/api/events/${eventId}`, {
       method: "DELETE",
     });
 
-    if (res.ok) {
-      const data = await res.json();
+    if (response.ok) {
       dispatch(deleteEvent(eventId));
-      return data;
+    } else {
+      throw new Error("Failed to delete event");
     }
   } catch (error) {
     console.error("Error deleting event:", error);
+    // Handle error state if needed
   }
 };
 
@@ -123,6 +133,12 @@ const eventsReducer = (state = initialState, action) => {
       };
       return { ...state, allEvents, singleEvent };
     }
+    case DELETE_EVENT: {
+      const newState = { ...state };
+      delete newState[action.eventId];
+      return newState;
+    }
+
       default:
           return state;
   }

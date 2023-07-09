@@ -20,14 +20,14 @@ const DeleteGroup = () => {
   return (
     <div className="delete-group-modal">
       <h1 className="delete-group-modal-title">Confirm Delete</h1>
-      <span className="delete-group-modal-message">
+      <span className="message">
         Are you sure you want to remove this group?
       </span>
       <div className="delete-group-modal-buttons">
-        <button className="delete-group-modal-button" onClick={handleDelete}>
+        <button className="yes" onClick={handleDelete}>
           Yes (Delete Group)
         </button>
-        <button className="delete-group-modal-button" onClick={closeModal}>
+        <button className="no" onClick={closeModal}>
           No (Keep Group)
         </button>
       </div>

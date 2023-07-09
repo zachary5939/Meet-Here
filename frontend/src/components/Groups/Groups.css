@@ -8,7 +8,9 @@
     flex-direction: row;
 }
 
-.group-list
+.group-list-border {
+  border: 1.5px solid #999999;
+}
 
 .group-list {
     display: flex;
