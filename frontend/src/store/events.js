@@ -69,9 +69,6 @@ export const thunkGetEventDetail = (eventId) => async (dispatch) => {
       const data = await res.json();
       dispatch(getEventDetail(data));
       return data;
-  } else {
-      const errors = await res.json();
-      return errors;
   }
 }
 
@@ -89,7 +86,7 @@ export const thunkDeleteEvent = (eventId) => async (dispatch) => {
     const response = await csrfFetch(`/api/events/${eventId}`, {
       method: "DELETE",
     });
-    
+
     if (response.ok) {
       dispatch(deleteEvent(eventId));
     } else {

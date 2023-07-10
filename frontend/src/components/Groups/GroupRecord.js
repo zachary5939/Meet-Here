@@ -3,7 +3,6 @@ import { useHistory } from "react-router-dom";
 
 export const GroupRecord = ({ group }) => {
   const history = useHistory();
-
   const eventStatus = () => {
     if (group.private === true) {
       return "events: Private";

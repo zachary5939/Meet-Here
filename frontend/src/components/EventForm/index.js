@@ -12,7 +12,7 @@ export function EventForm({ formType }) {
     const history = useHistory();
     const dispatch = useDispatch();
     const group = useSelector((state) => state.groups.singleGroup);
-
+    const session = useSelector((state) => state.session)
     const [name, setName] = useState("");
     const [eventType, setEventType] = useState("");
     const [capacity, setCapacity] = useState("");
@@ -23,6 +23,11 @@ export function EventForm({ formType }) {
     const [description, setDescription] = useState("");
     const [validationErrors, setValidationErrors] = useState({});
     const [privacy, setPrivacy] = useState("");
+
+    useEffect(() => {
+      dispatch(thunkGetGroupDetails(groupId))
+    }, [dispatch, groupId,session])
+
 
     const handleSubmit = (e) => {
       e.preventDefault();
@@ -98,29 +103,14 @@ export function EventForm({ formType }) {
         };
         console.log("this is the event data", typeof capacity)
 
-        dispatch(eventActions.thunkCreateEvent(eventData, groupId, imageURL))
-          .then((res) => {
-            history.push(`/events/${res.id}`);
-          })
-          .catch((err) => {
-            console.error("Error creating group:", err);
-          });
-
-          dispatch(groupActions.thunkGetOneGroup(group, imageURL))
-            .then((res) => {
-              history.push(`/events/${res.id}`);
-            })
-            .catch((err) => {
-              console.error("Error creating group:", err);
-            });
-
+        dispatch(thunkCreateEvent(eventData, groupId, imageURL));
         }
       }
     };
 
     return (
       <div className="event-create-container">
-        <h1>Create an Event for {}</h1>
+        <h1>Create an Event for {group?.name}</h1>
         <form className="event-create-form" onSubmit={handleSubmit}>
           <div className="form-group">
             <label htmlFor="name">What is the name of your event?</label>

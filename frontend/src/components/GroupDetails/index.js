@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useParams, useHistory, NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as groupDetails from "../../store/groups";
-import * as sessionActions from "../../store/session"; // Import session actions
+import * as sessionActions from "../../store/session";
 import { GroupEvents } from "./GroupEvents";
 import "./GroupDetails.css";
 import DeleteGroup from "../DeleteGroupModal";
@@ -13,10 +13,7 @@ const GroupDetails = () => {
   const { groupId } = useParams();
   const history = useHistory();
   const groupInfo = useSelector((state) => state.groups.individualGroup);
-  const currentUser = useSelector((state) => state.session.user); // Retrieve the current user from the session store
-
-  // console.log("groupInfo:", groupInfo);
-  // console.log("currentUser:", currentUser);
+  const currentUser = useSelector((state) => state.session.user);
 
   useEffect(() => {
     dispatch(groupDetails.thunkGetGroupDetails(groupId));
@@ -32,10 +29,6 @@ const GroupDetails = () => {
     history.push("/groups");
   };
 
-  const comingSoon = () => {
-    alert("Feature coming soon!");
-  };
-
   const createEvent = () => {
     history.push(`/groups/${groupId}/events/new`);
   };
@@ -44,6 +37,9 @@ const GroupDetails = () => {
     history.push(`/groups/${groupId}/edit`);
   };
 
+  const joinGroup = () => {
+    alert("Feature coming soon!");
+  };
   const eventsCheck = () => {
     if (groupInfo.Events.length < 0) {
       return <h3 style={{ marginTop: ".2rem" }}>No Upcoming Events</h3>;
@@ -57,7 +53,6 @@ const GroupDetails = () => {
   };
 
   const eventsLengthCheck = () => {
-    console.log();
     if (groupInfo.Events === undefined) {
       return "0";
     } else {
@@ -70,13 +65,13 @@ const GroupDetails = () => {
       <div className="group-details-page">
         <div className="group-details-container"></div>
         <div className="return-nav">
-          <button className="return-btn" onClick={returnGroups}>
-            Return to Groups
-          </button>
+          <p className="arrow">&lt;</p>
+          <p className="return-btn" onClick={returnGroups}>
+            Groups
+          </p>
         </div>
         <div className="group-individual-header">
           <img src={previewImage} alt="Group Preview" className="group-image" />
-
           <div className="group-info">
             <h2 className="group-name">{groupInfo.name}</h2>
             <p className="group-location">
@@ -84,7 +79,7 @@ const GroupDetails = () => {
             </p>
             <div className="group-membership">
               <p>{groupInfo.numMembers} Members</p>
-              <p>{groupInfo.Events.length}</p>
+              <p>{groupInfo.Events.length} Events</p>
               <p>{groupInfo.private ? "Private" : "Public"}</p>
             </div>
             <p>
@@ -94,16 +89,20 @@ const GroupDetails = () => {
               </span>
             </p>
             <div className="buttons-container-groups">
-              {currentUser && currentUser.id === groupInfo.Organizer.id && (
+              {!currentUser || currentUser.id !== groupInfo.Organizer.id ? (
+                <button className="join" onClick={joinGroup}>
+                  Join this Group
+                </button>
+              ) : (
                 <>
-                  <button className="create-event-button" onClick={createEvent}>
+                  <button className="create" onClick={createEvent}>
                     Create Event
                   </button>
-                  <button className="update-group-button" onClick={updateGroup}>
+                  <button className="update" onClick={updateGroup}>
                     Update
                   </button>
                   <OpenModalButton
-                    className="delete-group-button"
+                    className="delete"
                     modalComponent={<DeleteGroup />}
                     buttonText={"Delete"}
                   />
@@ -112,20 +111,19 @@ const GroupDetails = () => {
             </div>
           </div>
         </div>
-      </div>
-      <div className="about-events-section">
-        <div className="about">
-          <div className="organizer-body">
-            <h3>Organizer</h3>
-            <p className="organizer-name">
-              {groupInfo["Organizer"].firstName} {groupInfo["Organizer"].lastName}
-            </p>
+        <div className="about-events-section">
+          <div className="about">
+            <div className="organizer-body">
+              <h3>Organizer</h3>
+              <p className="organizer-name">
+                {groupInfo["Organizer"].firstName} {groupInfo["Organizer"].lastName}
+              </p>
+            </div>
+            <h3>What we're about</h3>
+            <p>{groupInfo.about}</p>
           </div>
-          <h3>What we're about</h3>
-          <p>{groupInfo.about}</p>
         </div>
         <div className="upcoming-events">
-          {/* <h3>Upcoming Events ({eventsLengthCheck()})</h3> */}
           {eventsCheck()}
         </div>
       </div>

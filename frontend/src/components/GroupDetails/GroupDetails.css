@@ -2,9 +2,9 @@
     font-family: "Raleway", sans-serif;
   }
 
-  .group-image {
-    display: inline-block;
-    transform: translate(-49px, 18px);
+  .return-nav {
+    display: flex;
+    flex-direction: row;
   }
 
   #root .group-details h1 {
@@ -18,14 +18,27 @@
     margin-top: 2rem;
   }
 
-  .group-detail {
-
-  }
+.group-info {
+  display: flex;
+  flex-direction: column;
+  margin-left: 40px;
+  margin-top: 20px;
+}
 
   .return-to {
     font-size: 15px;
     margin-bottom: 4px;
     cursor: pointer;
+  }
+
+  .group-individual-header {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+  }
+
+  .group-image {
+    width:489px;
   }
 
   .upper-container {
@@ -40,12 +53,6 @@
   .buttons {
     display: flex;
     flex-direction: column;
-  }
-
-  #root .buttons .organizer-buttons {
-    position: relative;
-    bottom: -82px;
-    left: -33px;
   }
 
   .create,

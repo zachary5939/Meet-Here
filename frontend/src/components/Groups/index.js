@@ -9,6 +9,7 @@ import "./Groups.css";
 function GroupPage() {
   const dispatch = useDispatch();
   const groups = useSelector((state) => state.groups);
+  const groupInfo = useSelector((state) => state.groups.individualGroup);
   const normalizedGroups =
     groups && groups.allGroups ? Object.values(groups.allGroups) : [];
 
@@ -34,6 +35,7 @@ function GroupPage() {
             <GroupRecord group={group} />
             <p className="group-list-item"></p>
           </React.Fragment>
+
         ))}
       </div>
     </>

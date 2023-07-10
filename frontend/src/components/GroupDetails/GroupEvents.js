@@ -1,4 +1,5 @@
 import { useHistory } from "react-router-dom";
+import "./GroupDetails.css"
 
 export const GroupEvents = ({ events }) => {
 
