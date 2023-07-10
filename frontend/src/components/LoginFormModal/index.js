@@ -20,6 +20,8 @@ function LoginFormModal() {
       .catch((res) => {
         if (res.data && res.data.errors) {
           setErrors(res.data.errors);
+        } else {
+          setErrors({ credential: "Invalid credentials. Please try again." });
         }
       });
   };
@@ -33,6 +35,8 @@ function LoginFormModal() {
       .catch((res) => {
         if (res.data && res.data.errors) {
           setErrors(res.data.errors);
+        } else {
+          setErrors({ credential: "Invalid credentials. Please try again." });
         }
       });
   };
@@ -61,7 +65,7 @@ function LoginFormModal() {
             required
           />
         </label>
-        {errors.credential && <p>{errors.credential}</p>}
+        {errors.credential && <p className="ErrorMessage">{errors.credential}</p>}
         <button className="LoginButton" type="submit">
           Log In
         </button>
