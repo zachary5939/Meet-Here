@@ -105,7 +105,7 @@ const eventsReducer = (state = initialState, action) => {
       case GET_ALL_EVENTS: {
           const newState = {...state};
           action.events.Events.forEach(event => {
-              newState[event.id] = event;
+            newState.allEvents[event.id] = event
           });
           return newState;
       }

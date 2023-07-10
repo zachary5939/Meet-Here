@@ -1,3 +1,101 @@
 html {
     overflow-y: scroll;
   }
+
+  .event-create-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+  .create-event-btn {
+    display: block;
+    width: 20%;
+    padding: 10px;
+    font-size: 16px;
+    font-weight: bold;
+    background-color: #e32359;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+
+  .form-input,
+  .form-select,
+  .form-textarea {
+    width: 30%;
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 2px solid black;
+    background-color: #f4f4f4;
+  }
+
+  .create-event-btn:hover {
+    background-color: #aa0030;
+  }
+
+.error {
+  color: red;
+  font-weight: 900;
+}
+
+  .form-group {
+    margin-bottom: 20px;
+  }
+
+  #root .event-create-container .event-create-form .create-event-btn{
+    width:72% !important;
+   }
+
+   /* Form Division */
+   #root form{
+    position:static;
+    transform:translatex(0px) translatey(0px);
+   }
+
+   /* Label */
+   .event-create-form .form-group label{
+    min-height:40px;
+    font-weight:600;
+   }
+
+   /* Create event */
+   #root .event-create-form .create-event-btn{
+    box-shadow:4px 5px 6px -3px #000000;
+   }
+
+   /* Description */
+   #description{
+    width:331px;
+    min-height:72px;
+   }
+
+   /* Imageurl */
+   #imageURL{
+    width:327px;
+   }
+
+   /* Capacity */
+   #capacity{
+    width:214px;
+   }
+
+   /* Privacy */
+   #privacy{
+    width:153px;
+   }
+
+   /* Event type */
+   #eventType{
+    width:50%;
+   }
+
+   /* Name */
+   #name{
+    width:327px;
+    min-height:27px;
+   }

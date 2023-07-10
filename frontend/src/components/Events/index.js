@@ -8,16 +8,18 @@ import "./Events.css";
 
 const EventPage = () => {
   const dispatch = useDispatch();
-  const events = useSelector((state) => Object.values(state.events));
+  const eventdata = useSelector((state) => state.events);
   const time = new Date();
   const upcomingEvents = [];
   const pastEvents = [];
+  const events = Object.values(Object.values(eventdata)[0]);
 
   useEffect(() => {
     dispatch(thunkGetAllEvents());
   }, [dispatch]);
 
   for (let event of events) {
+    console.log('eventt', event)
     if (new Date(event.startDate) > time) {
       upcomingEvents.push(event);
     } else {
@@ -32,11 +34,10 @@ const EventPage = () => {
   pastEvents.sort((a, b) => {
     return new Date(b.startDate) - new Date(a.startDate);
   });
-
   const sortedEvents = upcomingEvents.concat(pastEvents);
-
   return (
-    <div className="group-list">
+    <>
+     <div className="group-list">
       <div className="event-header">
         <Link className="event-list-header-events" to="/events">
           Events
@@ -50,10 +51,11 @@ const EventPage = () => {
       </div>
       {sortedEvents.map((event, index) => (
         <React.Fragment key={index}>
-          {event && <EventRecord event={event} />}
+          {<EventRecord event={event} />}
         </React.Fragment>
       ))}
     </div>
+    </>
   );
 };
 

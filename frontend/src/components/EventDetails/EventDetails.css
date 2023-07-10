@@ -51,6 +51,91 @@ html {
   display: block;
 }
 
+.START {
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.END {
+  display: flex;
+  flex-direction: row;
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.event-detail-body-info-event-time-details .event-detail-body-info-event-details-start-time .START{
+  min-height:32px;
+  transform:translatex(692px) translatey(-271px);
+ }
+
+ /* Span Tag */
+ .event-detail-body-info-event-time-details .event-detail-body-info-event-details-start-time span{
+  transform:translatex(684px) translatey(-268px);
+  min-height:33px;
+ }
+
+ /* Span Tag */
+ .event-detail-body-info-event-time-details .event-detail-body-info-event-details-end-time span{
+  display:inline-block;
+  height:28px;
+  transform:translatex(692px) translatey(-278px);
+ }
+
+ /* End */
+ .event-detail-body-info-event-time-details .event-detail-body-info-event-details-end-time .END{
+  width:165px;
+  min-height:32px;
+  transform:translatex(751px) translatey(-311px);
+  padding-top:2px;
+ }
+
+ /* Font Icon */
+ .event-detail-body-info-event-time-details i{
+  font-size:36px;
+  transform:translatex(632px) translatey(-229px);
+  color:#c9bfbf;
+ }
+
+ /* Paragraph */
+ .event-detail-body-info-event .event-detail-body-info-event-price-details p{
+  width:7%;
+  font-weight:500;
+  font-size:17px;
+  transform:translatex(694px) translatey(-312px);
+  margin-bottom:0px;
+  min-height:29px;
+ }
+
+ /* Paragraph */
+ .event-detail-body-info-event .event-detail-body-info-event-type-details p{
+  width:16%;
+  font-size:14px;
+  font-weight:500;
+  transform:translatex(632px) translatey(-328px);
+  padding-top:7px;
+ }
+
+ /* Event Unknown */
+ #root .event-detail-body-info-event .event-delete{
+  width:12%;
+  min-height:28px;
+  transform:translatex(821px) translatey(-363px);
+ }
+
+ /* Event detail body description */
+ #root .event-detail-body-description{
+  transform:translatex(36px) translatey(-353px);
+ }
+
+ /* Division */
+ #root .event-detail-body-info-event .event-detail-body-info-event-type-details{
+  font-size:21px;
+ }
+
+
+
 .event-detail-body-info .event-detail-body-info-group img {
   transform: translate(-197px, -279px);
 }

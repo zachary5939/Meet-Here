@@ -109,14 +109,14 @@ export const EventDetail = () => {
             <i className="far fa-regular fa-clock fa-lg"></i>
               <div className="event-detail-body-info-event-details-start-time">
                 <span>START </span>
-                <div>
+                <div className="START" >
                   {event.startDate.split("T")[0]} · {}
                   {event.startDate.split("T")[1].split(".")[0]}
                 </div>
               </div>
               <div className="event-detail-body-info-event-details-end-time">
                 <span>END </span>
-                <div>
+                <div className="END" >
                   {event.endDate.split("T")[0]} ·  {}
                   {event.endDate.split("T")[1].split(".")[0]}
                 </div>
@@ -124,17 +124,15 @@ export const EventDetail = () => {
             </div>
           </div>
           <div className="event-detail-body-info-event-price-details">
-          <i className="fa-regular fa-money-bills"></i>
             <p>{eventPrice()}</p>
           </div>
           <div className="event-detail-body-info-event-type-details">
-            <i className="fa-solid fa-map-pin fa-xl"></i>
             <p>{event.type}</p>
           </div>
           <div className="event-delete">
             <button onClick={comingSoon}>Update</button>
             <OpenModalButton
-              modalComponent={<DeleteEvent eventId={eventId} />}
+              modalComponent={<DeleteEvent eventId={eventId} groupId={event.Group.id}/>}
               buttonText={"Delete"}
             />
           </div>

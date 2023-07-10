@@ -176,7 +176,7 @@ export function EventForm({ formType }) {
               id="price"
               value={price}
               onChange={(e) => setPrice(e.target.value)}
-              placeholder="0"
+              placeholder="$"
             />
             {validationErrors.price && (
               <span className="error">{validationErrors.price}</span>
