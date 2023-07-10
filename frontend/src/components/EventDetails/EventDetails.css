@@ -65,91 +65,94 @@ html {
   padding-right: 5px;
 }
 
-.event-detail-body-info-event-time-details .event-detail-body-info-event-details-start-time .START{
-  min-height:32px;
-  transform:translatex(692px) translatey(-271px);
- }
+.event-detail-body-info-event-time-details .event-detail-body-info-event-details-start-time .START {
+  min-height: 32px;
+  transform: translateX(692px) translateY(-271px);
+}
 
- /* Span Tag */
- .event-detail-body-info-event-time-details .event-detail-body-info-event-details-start-time span{
-  transform:translatex(684px) translatey(-268px);
-  min-height:33px;
- }
+/* Span Tag */
+.event-detail-body-info-event-time-details .event-detail-body-info-event-details-start-time span {
+  transform: translateX(684px) translateY(-268px);
+  min-height: 33px;
+}
 
- /* Span Tag */
- .event-detail-body-info-event-time-details .event-detail-body-info-event-details-end-time span{
-  display:inline-block;
-  height:28px;
-  transform:translatex(692px) translatey(-278px);
- }
+/* Span Tag */
+.event-detail-body-info-event-time-details .event-detail-body-info-event-details-end-time span {
+  display: inline-block;
+  height: 28px;
+  transform: translateX(692px) translateY(-278px);
+}
 
- /* End */
- .event-detail-body-info-event-time-details .event-detail-body-info-event-details-end-time .END{
-  width:165px;
-  min-height:32px;
-  transform:translatex(751px) translatey(-311px);
-  padding-top:2px;
- }
+/* End */
+.event-detail-body-info-event-time-details .event-detail-body-info-event-details-end-time .END {
+  width: 165px;
+  min-height: 32px;
+  transform: translateX(751px) translateY(-311px);
+  padding-top: 2px;
+}
 
- /* Font Icon */
- .event-detail-body-info-event-time-details i{
-  font-size:36px;
-  transform:translatex(632px) translatey(-229px);
-  color:#c9bfbf;
- }
+/* Font Icon */
+.event-detail-body-info-event-time-details i {
+  font-size: 36px;
+  transform: translateX(632px) translateY(-229px);
+  color: #c9bfbf;
+}
 
- /* Paragraph */
- .event-detail-body-info-event .event-detail-body-info-event-price-details p{
-  width:7%;
-  font-weight:500;
-  font-size:17px;
-  transform:translatex(694px) translatey(-312px);
-  margin-bottom:0px;
-  min-height:29px;
- }
+/* Paragraph */
+.event-detail-body-info-event .event-detail-body-info-event-price-details p {
+  width: 7%;
+  font-weight: 500;
+  font-size: 17px;
+  transform: translateX(694px) translateY(-312px);
+  margin-bottom: 0px;
+  min-height: 29px;
+}
 
- /* Paragraph */
- .event-detail-body-info-event .event-detail-body-info-event-type-details p{
-  width:16%;
-  font-size:14px;
-  font-weight:500;
-  transform:translatex(632px) translatey(-328px);
-  padding-top:7px;
- }
+/* Paragraph */
+.event-detail-body-info-event .event-detail-body-info-event-type-details p {
+  width: 16%;
+  font-size: 14px;
+  font-weight: 500;
+  transform: translateX(632px) translateY(-328px);
+  padding-top: 7px;
+}
 
- /* Event Unknown */
- #root .event-detail-body-info-event .event-delete{
-  width:12%;
-  min-height:28px;
-  transform:translatex(821px) translatey(-363px);
- }
+.event-delete-button {
+  background-color: #999999;
+  color: white;
+  box-shadow: 2px 2px black;
+  margin-right: 8px;
+  cursor: pointer;
+  width: 12%;
+  min-height: 28px;
+  transform: translateX(821px) translateY(-363px);
+}
 
- /* Event detail body description */
- #root .event-detail-body-description{
-  transform:translatex(36px) translatey(-353px);
- }
+.event-delete-button:hover {
+  background-color: #ff5a5f;
+  color: white;
+}
 
- /* Division */
- #root .event-detail-body-info-event .event-detail-body-info-event-type-details{
-  font-size:21px;
- }
+/* Event detail body description */
+#root .event-detail-body-description {
+  transform: translateX(36px) translateY(-353px);
+}
 
-
+/* Division */
+#root .event-detail-body-info-event .event-detail-body-info-event-type-details {
+  font-size: 21px;
+}
 
 .event-detail-body-info .event-detail-body-info-group img {
-  transform: translate(-197px, -279px);
+  transform: translateX(-197px) translateY(-279px);
 }
 
 .event-detail-body-info .event-detail-body-info-group .event-detail-body-info-group-body {
-  transform: translate(-178px, -275px);
+  transform: translateX(-178px) translateY(-275px);
 }
 
 #root .event-detail-header-container h2 {
-  transform: translate(-62px, 33px);
-}
-
-#root .event-detail-header-container p {
-  transform: translate(-412px, 67px);
+  transform: translateX(-62px) translateY(33px);
 }
 
 #root .event-detail-header-container p {

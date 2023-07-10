@@ -136,6 +136,7 @@ export const EventDetail = () => {
             {/* <button onClick={comingSoon}>Update</button> */}
             {isOrganizer && (
               <OpenModalButton
+              className="event-delete-button"
                 modalComponent={<DeleteEvent eventId={eventId} groupId={event.Group.id} />}
                 buttonText={"Delete"}
               />
