@@ -11,6 +11,7 @@ export const EventDetail = () => {
   const dispatch = useDispatch();
   const { eventId } = useParams();
   const eventInfo = useSelector((state) => state.events);
+  const session = useSelector((state) => state.session); // Get the session information
   console.log("event info", eventInfo);
   const events = eventInfo.singleEvents[eventId];
   const history = useHistory();
@@ -65,6 +66,8 @@ export const EventDetail = () => {
     history.push(`/events/${eventId}/edit`);
   };
 
+  const isOrganizer = session.user.id === event.Group.Organizer.id;
+
   return (
     <>
       <div className="event-detail-container">
@@ -106,18 +109,18 @@ export const EventDetail = () => {
         <div className="event-detail-body-info-event">
           <div className="event-detail-body-info-event-time-details">
             <div className="event-detail-body-info-event-details-time-container">
-            <i className="far fa-regular fa-clock fa-lg"></i>
+              <i className="far fa-regular fa-clock fa-lg"></i>
               <div className="event-detail-body-info-event-details-start-time">
                 <span>START </span>
-                <div className="START" >
+                <div className="START">
                   {event.startDate.split("T")[0]} · {}
                   {event.startDate.split("T")[1].split(".")[0]}
                 </div>
               </div>
               <div className="event-detail-body-info-event-details-end-time">
                 <span>END </span>
-                <div className="END" >
-                  {event.endDate.split("T")[0]} ·  {}
+                <div className="END">
+                  {event.endDate.split("T")[0]} · {}
                   {event.endDate.split("T")[1].split(".")[0]}
                 </div>
               </div>
@@ -131,10 +134,12 @@ export const EventDetail = () => {
           </div>
           <div className="event-delete">
             <button onClick={comingSoon}>Update</button>
-            <OpenModalButton
-              modalComponent={<DeleteEvent eventId={eventId} groupId={event.Group.id}/>}
-              buttonText={"Delete"}
-            />
+            {isOrganizer && (
+              <OpenModalButton
+                modalComponent={<DeleteEvent eventId={eventId} groupId={event.Group.id} />}
+                buttonText={"Delete"}
+              />
+            )}
           </div>
         </div>
         <div className="event-detail-body-description">
