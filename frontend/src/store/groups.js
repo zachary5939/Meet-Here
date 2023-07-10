@@ -84,43 +84,42 @@ export const thunkGetOneGroup = (groupId) => async (dispatch) => {
   return resBody;
 };
 
-export const thunkCreateGroup =
-  (group, img, currentUser) => async (dispatch) => {
-    const res = await csrfFetch("/api/groups", {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(group),
-    });
+export const thunkCreateGroup = (group, imgUrl) => async (dispatch) => {
 
-    // console.log("Create Group Response:", res);
+    console.log(JSON.stringify(group));
+  const res = await csrfFetch('/api/groups', {
+    method: 'POST',
+    body: JSON.stringify(group),
+  });
 
-    if (res.ok) {
-      const data = await res.json();
+  if (res.ok) {
+    const createdGroup = await res.json();
 
-      console.log("Create Group Data:", data);
-
-      const imgRes = await csrfFetch(`/api/groups/${data.id}/images`, {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
+    if (imgUrl) {
+      const imgRes = await csrfFetch(`/api/groups/${createdGroup.id}/images`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          url: img,
+          url: imgUrl,
           preview: true,
         }),
       });
 
-      console.log("Add Group Image Response:", imgRes);
-
-      const newImg = await imgRes.json();
-      data.GroupImages = [newImg];
-      data.Organizer = currentUser;
-      data.numMembers = 1;
-      dispatch(createGroup(data));
-      return data;
-    } else {
-      const errorData = await res.json();
-      return errorData;
+      if (imgRes.ok) {
+        const newImg = await imgRes.json();
+        createdGroup.GroupImages = [newImg];
+      }
     }
-  };
+
+    dispatch(createGroup(createdGroup));
+    return createdGroup;
+  } else {
+    const errors = await res.json();
+    return errors;
+  }
+};
+
+
 
   export const thunkUpdateGroup = (group, groupId) => async (dispatch) => {
     const res = await csrfFetch(`/api/groups/${groupId}`, {

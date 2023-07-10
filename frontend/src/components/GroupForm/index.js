@@ -45,13 +45,6 @@ export const GroupForm = ({ formType, group }) => {
       if (privacy === undefined) {
         errors.privacy = "Visibility type is required";
       }
-      if (
-        !url.endsWith(".png") &&
-        !url.endsWith(".jpg") &&
-        !url.endsWith(".jpeg")
-      ) {
-        errors.url = "Image URL must end in .png, .jpg, or .jpeg";
-      }
 
       setValidationErrors(errors);
 
