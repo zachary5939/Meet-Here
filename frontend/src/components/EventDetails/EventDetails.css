@@ -1,3 +1,27 @@
 html {
     overflow-y: scroll;
   }
+
+.event-detail-container {
+  display: flex;
+  flex-direction: row;
+  background-color: white;
+}
+
+.event-detail-breadcrumb {
+  display: flex;
+  flex-direction: row;
+}
+
+.event-detail-header-container {
+  display: flex;
+  flex-direction: column;
+
+}
+
+.event-detail-body-image {
+  display: flex;
+  flex-direction: row;
+  padding-left: 40px;
+  padding-top: 20px;
+}

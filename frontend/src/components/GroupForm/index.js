@@ -17,6 +17,7 @@ export const GroupForm = ({ formType, group }) => {
     url: "",
   });
 
+
   const [validationErrors, setValidationErrors] = useState({});
 
   const handleInputChange = (e) => {
@@ -58,7 +59,7 @@ export const GroupForm = ({ formType, group }) => {
         name,
         about,
         type,
-        privacy,
+        private: Boolean(privacy),
         url,
       };
 
@@ -165,8 +166,8 @@ export const GroupForm = ({ formType, group }) => {
               onChange={handleInputChange}
             >
               <option value={undefined}>(select one)</option>
-              <option value={true}>Private</option>
-              <option value={false}>Public</option>
+              <option value="private">Private</option>
+                <option value="public">Public</option>
             </select>
             {validationErrors.privacy && (
               <span className="errors">{validationErrors.privacy}</span>
