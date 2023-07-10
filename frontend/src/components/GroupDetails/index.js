@@ -42,7 +42,6 @@ const GroupDetails = () => {
   };
   const eventsCheck = () => {
     if (groupInfo.Events.length < 0) {
-      return <h3 style={{ marginTop: ".2rem" }}>No Upcoming Events</h3>;
     } else {
       return <GroupEvents events={groupInfo.Events} />;
     }
@@ -78,7 +77,7 @@ const GroupDetails = () => {
               {groupInfo.city}, {groupInfo.state}
             </p>
             <div className="group-membership">
-              <p>{groupInfo.numMembers} Members</p>
+              {/* <p>{groupInfo.numMembers} Members</p> */}
               <p>{groupInfo.Events.length} Events</p>
               <p>{groupInfo.private ? "Private" : "Public"}</p>
             </div>
@@ -112,7 +111,7 @@ const GroupDetails = () => {
           </div>
         </div>
         <div className="about-events-section">
-          <div className="about">
+          <div className="group-detail-about">
             <div className="organizer-body">
               <h3>Organizer</h3>
               <p className="organizer-name">
@@ -123,9 +122,11 @@ const GroupDetails = () => {
             <p>{groupInfo.about}</p>
           </div>
         </div>
+        <div className="group-event-area">
         <div className="upcoming-events">
           {eventsCheck()}
         </div>
+      </div>
       </div>
     </>
   );

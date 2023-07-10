@@ -5,85 +5,76 @@
   border-top-width:2px;
   border-top-style:solid;
   border-top-color:#bababa;
- }
+}
 
- #root .group-list .group-header{
+html {
+  overflow-y: scroll;
+}
+
+#root .group-list .group-header{
   transform:translatex(32px) translatey(0px);
- }
-
-
+}
 
 .group-list .group-record-div .group-about{
   max-width:500px;
   width:400px;
 }
 
-
 .group-header {
-    display: grid;
-    grid-template-areas:
+  display: grid;
+  grid-template-areas:
     'link'
     'header';
-    margin: 0rem 10rem;
-    margin-top: 3rem;
-  }
-
-  .group-list-item {
-    border: 1.5px rgb(130, 129, 129);
-  }
-  .group-list-header-events {
-    grid-area: link;
-    display: flex;
-    font-size: 1.6rem;
-    max-width: fit-content;
-    text-decoration: none;
-    color: #999999;
-    font-weight: 600;
-  }
-
-/* Group individual record */
-.group-list .group-record-div .group-individual-record{
-  transform:translatex(-80px) translatey(0px);
- }
-
- /* Group location */
- .group-list .group-record-div .group-location{
-  transform:translatex(-77px) translatey(-3px);
- }
-
- /* Group about */
- .group-list .group-record-div .group-about{
-  transform:translatex(-77px) translatey(-4px);
- }
-
- /* Group event */
- .group-list .group-record-div .group-event{
-  transform:translatex(-79px) translatey(0px);
- }
-
- /* Group record div */
- #root .group-list .group-record-div{
-  padding-top:16px;
- }
-
-
-  .group-list-header-groups {
-    grid-area: link;
-    color: #00798A;
-    max-width: fit-content;
-    margin-left: 5.5rem;
-    font-size: 1.6rem;
-    font-weight: 600;
+  margin: 0rem 10rem;
+  margin-top: 3rem;
 }
 
+.group-list-item {
+  border: 1.5px rgb(130, 129, 129);
+}
+
+.group-list-header-events {
+  grid-area: link;
+  display: flex;
+  font-size: 1.6rem;
+  max-width: fit-content;
+  text-decoration: none;
+  color: #999999;
+  font-weight: 600;
+}
+
+.group-individual-header .group-info .group-membership{
+  position:static;
+  flex-direction:row;
+  justify-content:normal;
+  align-items:normal;
+  flex-wrap:wrap;
+}
+
+.group-info .group-membership p{
+  width:78px;
+}
+
+#root .group-list .group-record-div{
+  padding-top:16px;
+}
+
+.group-list-header-groups {
+  grid-area: link;
+  color: #00798A;
+  max-width: fit-content;
+  margin-left: 5.5rem;
+  font-size: 1.6rem;
+  font-weight: 600;
+}
 
 .group-record-div {
   display: grid;
   grid-template-areas:
-  'image name name'
-  'image location ...'
-  'image descrip descrip'
-  'image event ...';
+    'image name name'
+    'image location ...'
+    'image descrip descrip'
+    'image event ...';
   margin: 0rem 12rem;
   column-gap: .5rem;
 }
@@ -103,6 +94,35 @@
   max-width: 22.5rem;
   word-wrap: break-word;
 }
+
+/* Buttons container groups */
+#root .group-details-page .group-individual-header .group-info .buttons-container-groups{
+  width:120% !important;
+ }
+
+ /* Buttons container groups */
+ .group-individual-header .group-info .buttons-container-groups{
+  margin-bottom:0px;
+  min-height:53px;
+  transform:translatex(-13px) translatey(53px);
+ }
+
+ /* Heading */
+ .group-individual-header .group-info h2{
+  transform:translatex(0px) translatey(-37px);
+ }
+
+ /* Group location */
+ .group-individual-header .group-info .group-location{
+  min-height:35px;
+  transform:translatex(0px) translatey(-42px);
+ }
+
+ /* Group membership */
+ .group-individual-header .group-info .group-membership{
+  transform:translatex(0px) translatey(-45px);
+ }
+
 
 .group-location {
   grid-area: location;

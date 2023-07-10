@@ -2,6 +2,10 @@
     display: none;
   }
 
+  html {
+    overflow-y: scroll;
+  }
+
 nav {
   display: flex;
   justify-content: space-between;

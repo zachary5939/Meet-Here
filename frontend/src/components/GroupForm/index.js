@@ -89,8 +89,7 @@ export const GroupForm = ({ formType, group }) => {
         <div className="form-step">
           <h3>First, set your group's location</h3>
           <span>
-            Meetup groups meet locally, in person and online. We'll connect you
-            with people in your area, and more can join you online.
+            Meetup groups meet locally, in person and online.
           </span>
           <div className="form-group">
             <input
@@ -112,8 +111,7 @@ export const GroupForm = ({ formType, group }) => {
               is about.
             </span>
             <span>
-              Feel free to get creative! You can edit this later if you change
-              your mind.
+              You can edit this later if you change your mind.
             </span>
             <input
               type="text"
@@ -200,6 +198,7 @@ export const GroupForm = ({ formType, group }) => {
         </div>
       </div>
     </form>
+
   );
 };
 

@@ -1,22 +1,25 @@
 #root {
-    font-family: "Raleway", sans-serif;
-  }
+  font-family: "Raleway", sans-serif;
+}
+html {
+  overflow-y: scroll;
+}
 
-  .return-nav {
-    display: flex;
-    flex-direction: row;
-  }
+.return-nav {
+  display: flex;
+  flex-direction: row;
+}
 
-  #root .group-details h1 {
-    transform: translate(-4px, 0px);
-    font-size: 22px;
-    text-align: left;
-  }
+#root .group-details h1 {
+  transform: translate(-4px, 0px);
+  font-size: 22px;
+  text-align: left;
+}
 
-  .content-container {
-    margin: 0 8rem;
-    margin-top: 2rem;
-  }
+.content-container {
+  margin: 0 8rem;
+  margin-top: 2rem;
+}
 
 .group-info {
   display: flex;
@@ -25,48 +28,181 @@
   margin-top: 20px;
 }
 
-  .return-to {
-    font-size: 15px;
-    margin-bottom: 4px;
-    cursor: pointer;
-  }
+.group-membership {
+  display: flex;
+  flex-direction: column;
+}
 
-  .group-individual-header {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-  }
+.return-to {
+  font-size: 15px;
+  margin-bottom: 4px;
+  cursor: pointer;
+}
 
-  .group-image {
-    width:489px;
-  }
+.group-individual-header {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
 
-  .upper-container {
-    display: flex;
-    flex-direction: row;
-  }
+.group-image {
+  width: 559px;
+  height: 300px;
+}
 
-  .organizer-buttons {
-    justify-content: space-between;
-  }
+.upper-container {
+  display: flex;
+  flex-direction: row;
+}
 
-  .buttons {
-    display: flex;
-    flex-direction: column;
-  }
+.organizer-buttons {
+  justify-content: space-between;
+}
 
-  .create,
-  .update,
-  .delete {
-    background-color: #999999;
-    color: white;
-    box-shadow: 2px 2px black;
-    margin-right: 8px;
-  }
+.buttons {
+  display: flex;
+  flex-direction: column;
+}
 
-  .create:hover,
-  .update:hover,
-  .delete:hover {
-    background-color: #ff5a5f;
-    color: white;
-  }
+.return-btn {
+  cursor: pointer;
+}
+
+.arrow {
+  cursor: pointer;
+}
+
+.group-details-page .return-nav .return-btn{
+  width: 82px;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-start;
+  padding-left: 0px;
+  text-align: left;
+  padding-right: 0px;
+  margin-left: 5px;
+  margin-top: 16px;
+  margin-bottom: 13px;
+}
+
+.group-details-page .return-nav .arrow{
+  width: 37px;
+  padding-left: 100px;
+  margin-left: 2px;
+  display: flex;
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.create,
+.update,
+.delete {
+  background-color: #999999;
+  color: white;
+  box-shadow: 2px 2px black;
+  margin-right: 8px;
+}
+
+.create:hover,
+.update:hover,
+.delete:hover {
+  background-color: #ff5a5f;
+  color: white;
+}
+
+.join {
+  background-color: #999999;
+  color: white;
+  box-shadow: 2px 2px black;
+  margin-right: 8px;
+  cursor: pointer;
+}
+
+.join:hover {
+  background-color: #ff5a5f;
+  color: white;
+}
+
+.about-events-section {
+ display: flex;
+ flex-direction: column;
+ background-color: #fdeced;
+ margin-top: 30px;
+}
+
+.group-detail-about {
+  padding-left: 110px;
+}
+
+.group-detail-about {
+  display: flex;
+  flex-direction: column;
+}
+
+.group-event-area {
+  display: flex;
+  flex-direction: column;
+  padding-left: 230px;
+  background-color: #fdeced;
+}
+
+.upcoming-events {
+  border-radius: 20px;
+  max-width: 500px;
+}
+
+.upcoming-events div h2{
+  display:flex;
+  justify-content:normal;
+  min-height:37px;
+  transform:translatex(-120px) translatey(-6px);
+ }
+
+
+
+.upcoming-events div .event-cards{
+  background-color: white;
+  border-radius: 20px;
+  transform:translatex(-120px) translatey(0px);
+ height:272px;
+ padding-top:0px;
+ margin-top:19px;
+ }
+
+ .group-detail-about .organizer-body h3{
+  font-size:26px;
+ }
+
+ /* Paragraph */
+ .group-detail-about .organizer-body p{
+  font-size:16px;
+ }
+
+ /* Heading */
+ .about-events-section .group-detail-about h3{
+  font-size:22px;
+ }
+
+ /* Event cards info time */
+ .upcoming-events div .event-cards-info-time{
+  min-height:36px;
+  transform:translatex(202px) translatey(-137px);
+  width:58%;
+ }
+
+ /* Event cards info name */
+ .upcoming-events div .event-cards-info-name{
+  width:58%;
+  min-height:70px;
+  transform:translatex(202px) translatey(-154px);
+ }
+
+ /* Paragraph */
+ .upcoming-events .event-cards-description p{
+  min-height:44px;
+  transform:translatex(0px) translatey(-167px);
+  padding-left:13px;
+  padding-right:36px;
+  text-overflow: wrap;
+ }

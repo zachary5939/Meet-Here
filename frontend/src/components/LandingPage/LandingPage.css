@@ -6,6 +6,10 @@ html {
   font-family: "Raleway", sans-serif;
 }
 
+html {
+  overflow-y: scroll;
+}
+
 .landingPage {
   display: flex;
   flex-direction: column;

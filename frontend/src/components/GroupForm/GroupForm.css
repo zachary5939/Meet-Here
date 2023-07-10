@@ -1,3 +1,20 @@
+html {
+  overflow-y: scroll;
+}
+
+/* Form step */
+.form-step-form .form-step{
+  padding-left:51px;
+  padding-bottom:0px;
+ }
+
+ /* Form header */
+ .form-step-form .form-header{
+  padding-left:46px;
+ }
+
+
+
 .group-form {
   max-width: 80%;
   margin: 0 auto;
@@ -53,6 +70,7 @@
   color: red;
   margin-top: 0.25rem;
   font-weight: 800;
+  font-style: bold;
 }
 
 .form-submit-btn {
@@ -69,5 +87,5 @@
 }
 
 .form-submit-btn:hover {
-  background-color: #e32359;
+  background-color: #aa0030;
 }
