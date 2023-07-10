@@ -2,19 +2,6 @@ html {
   overflow-y: scroll;
 }
 
-/* Form step */
-.form-step-form .form-step{
-  padding-left:51px;
-  padding-bottom:0px;
- }
-
- /* Form header */
- .form-step-form .form-header{
-  padding-left:46px;
- }
-
-
-
 .group-form {
   max-width: 80%;
   margin: 0 auto;
@@ -61,6 +48,7 @@ html {
   border: 2px solid black;
   background-color: #f4f4f4;
 }
+
 .form-textarea {
   height: 100px;
   font-family: "Raleway", sans-serif;
@@ -85,8 +73,14 @@ html {
   border-radius: 5px;
   cursor: pointer;
   text-align: center;
+  box-shadow: 4px 5px 6px -3px #000000;
 }
 
 .form-submit-btn:hover {
   background-color: #aa0030;
 }
+
+.form-step .form-group input[type=url]{
+  width:215px;
+ }
+

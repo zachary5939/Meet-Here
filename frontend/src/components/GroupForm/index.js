@@ -17,7 +17,6 @@ export const GroupForm = ({ formType, group }) => {
     url: "",
   });
 
-
   const [validationErrors, setValidationErrors] = useState({});
 
   const handleInputChange = (e) => {
@@ -64,17 +63,17 @@ export const GroupForm = ({ formType, group }) => {
       };
 
       dispatch(groupActions.thunkCreateGroup(groupData, url))
-      .then((res) => {
-        history.push(`/groups/${res.id}`);
-      })
-      .catch((err) => {
-        console.error("Error creating group:", err);
-      });
-  }
-};
+        .then((res) => {
+          history.push(`/groups/${res.id}`);
+        })
+        .catch((err) => {
+          console.error("Error creating group:", err);
+        });
+    }
+  };
 
   return (
-    <form className="form-step-form" onSubmit={handleSubmit}>
+    <form className="group-form" onSubmit={handleSubmit}>
       <div className="form-container">
         <div className="form-header">
           <span className="form-title">BECOME AN ORGANIZER</span>
@@ -85,9 +84,7 @@ export const GroupForm = ({ formType, group }) => {
         <hr />
         <div className="form-step">
           <h3>First, set your group's location</h3>
-          <span>
-            Meetup groups meet locally, in person and online.
-          </span>
+          <span>Meetup groups meet locally, in person and online.</span>
           <div className="form-group">
             <input
               type="text"
@@ -98,7 +95,7 @@ export const GroupForm = ({ formType, group }) => {
               onChange={handleInputChange}
             />
             {validationErrors.location && (
-              <span className="errors">{validationErrors.location}</span>
+              <span className="form-error">{validationErrors.location}</span>
             )}
           </div>
           <div className="form-group">
@@ -107,9 +104,7 @@ export const GroupForm = ({ formType, group }) => {
               Choose a name that will give people a clear idea of what the group
               is about.
             </span>
-            <span>
-              You can edit this later if you change your mind.
-            </span>
+            <span>You can edit this later if you change your mind.</span>
             <input
               type="text"
               className="form-input"
@@ -119,7 +114,7 @@ export const GroupForm = ({ formType, group }) => {
               onChange={handleInputChange}
             />
             {validationErrors.name && (
-              <span className="errors">{validationErrors.name}</span>
+              <span className="form-error">{validationErrors.name}</span>
             )}
           </div>
           <div className="form-group">
@@ -139,7 +134,7 @@ export const GroupForm = ({ formType, group }) => {
               onChange={handleInputChange}
             ></textarea>
             {validationErrors.about && (
-              <span className="errors">{validationErrors.about}</span>
+              <span className="form-error">{validationErrors.about}</span>
             )}
           </div>
           <div className="form-group">
@@ -156,7 +151,7 @@ export const GroupForm = ({ formType, group }) => {
               <option value="In person">In person</option>
             </select>
             {validationErrors.type && (
-              <span className="errors">{validationErrors.type}</span>
+              <span className="form-error">{validationErrors.type}</span>
             )}
             <span>Is this group private or public?</span>
             <select
@@ -167,10 +162,10 @@ export const GroupForm = ({ formType, group }) => {
             >
               <option value={undefined}>(select one)</option>
               <option value="private">Private</option>
-                <option value="public">Public</option>
+              <option value="public">Public</option>
             </select>
             {validationErrors.privacy && (
-              <span className="errors">{validationErrors.privacy}</span>
+              <span className="form-error">{validationErrors.privacy}</span>
             )}
             <span>Please add an image URL for your group below.</span>
             <input
@@ -181,7 +176,7 @@ export const GroupForm = ({ formType, group }) => {
               onChange={handleInputChange}
             />
             {validationErrors.url && (
-              <span className="errors">{validationErrors.url}</span>
+              <span className="form-error">{validationErrors.url}</span>
             )}
           </div>
           <hr />
@@ -195,7 +190,6 @@ export const GroupForm = ({ formType, group }) => {
         </div>
       </div>
     </form>
-
   );
 };
 
