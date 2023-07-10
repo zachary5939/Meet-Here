@@ -66,7 +66,7 @@ export const EventDetail = () => {
     history.push(`/events/${eventId}/edit`);
   };
 
-  const isOrganizer = session.user.id === event.Group.Organizer.id;
+  const isOrganizer = session?.user?.id === event?.Group?.Organizer?.id; // Check if the user is signed in and the necessary data exists
 
   return (
     <>
@@ -133,10 +133,9 @@ export const EventDetail = () => {
             <p>{event.type}</p>
           </div>
           <div className="event-delete">
-            {/* <button onClick={comingSoon}>Update</button> */}
-            {isOrganizer && (
+            {isOrganizer && session.user && ( // Render the button only if the user is signed in and is the organizer
               <OpenModalButton
-              className="event-delete-button"
+                className="event-delete-button"
                 modalComponent={<DeleteEvent eventId={eventId} groupId={event.Group.id} />}
                 buttonText={"Delete"}
               />
