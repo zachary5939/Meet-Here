@@ -4,16 +4,16 @@ import { useHistory } from "react-router-dom";
 import { thunkDeleteGroup } from "../../store/groups";
 import "./DeleteGroup.css";
 
-const DeleteGroup = () => {
+const DeleteGroup = ({groupId}) => {
   const dispatch = useDispatch();
   const history = useHistory();
-  const group = useSelector((state) => state.groups.singleGroup);
   const { closeModal } = useModal();
+
 
   const handleDelete = (e) => {
     e.preventDefault();
-    console.log("Deleting group:", group);
-    dispatch(thunkDeleteGroup(group.id));
+    console.log("Deleting group:", groupId);
+    dispatch(thunkDeleteGroup(groupId));
     closeModal();
     history.push("/groups");
   };

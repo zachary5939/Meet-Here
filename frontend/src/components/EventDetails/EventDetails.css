@@ -1,6 +1,6 @@
 html {
-    overflow-y: scroll;
-  }
+  overflow-y: scroll;
+}
 
 .event-detail-container {
   display: flex;
@@ -11,12 +11,15 @@ html {
 .event-detail-breadcrumb {
   display: flex;
   flex-direction: row;
+  align-items: center;
+  padding: 20px;
+  transform: translate(16px, -11px);
 }
 
 .event-detail-header-container {
   display: flex;
-  flex-direction: column;
-
+  flex-direction: row;
+  background-color: white;
 }
 
 .event-detail-body-image {
@@ -24,4 +27,46 @@ html {
   flex-direction: row;
   padding-left: 40px;
   padding-top: 20px;
+  margin-top: 40px;
+}
+
+.event-detail-body-info-group {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+}
+
+.event-detail-body-info-event {
+  display: flex;
+  flex-direction: column;
+}
+
+.event-detail-body-info-event-details-start-time {
+  display: flex;
+  flex-direction: row;
+  padding: 10px;
+}
+
+.event-detail-body-info-event-details-time-container {
+  display: block;
+}
+
+.event-detail-body-info .event-detail-body-info-group img {
+  transform: translate(-197px, -279px);
+}
+
+.event-detail-body-info .event-detail-body-info-group .event-detail-body-info-group-body {
+  transform: translate(-178px, -275px);
+}
+
+#root .event-detail-header-container h2 {
+  transform: translate(-62px, 33px);
+}
+
+#root .event-detail-header-container p {
+  transform: translate(-412px, 67px);
+}
+
+#root .event-detail-header-container p {
+  transform: translateX(-243px) translateY(73px);
 }

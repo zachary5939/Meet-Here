@@ -14,6 +14,7 @@ const GroupDetails = () => {
   const history = useHistory();
   const groupInfo = useSelector((state) => state.groups.individualGroup);
   const currentUser = useSelector((state) => state.session.user);
+  
 
   useEffect(() => {
     dispatch(groupDetails.thunkGetGroupDetails(groupId));
@@ -102,7 +103,7 @@ const GroupDetails = () => {
                   </button>
                   <OpenModalButton
                     className="delete"
-                    modalComponent={<DeleteGroup />}
+                    modalComponent={<DeleteGroup group={groupId}/>}
                     buttonText={"Delete"}
                   />
                 </>
