@@ -1,8 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
-import { thunkCreateGroup } from "../../store/groups";
-import { thunkUpdateGroup } from "../../store/groups";
+import * as groupActions from "../../store/groups";
 import "./GroupForm.css"
 
 export const GroupForm = ({ formType, group }) => {
@@ -60,21 +59,25 @@ export const GroupForm = ({ formType, group }) => {
         return;
       }
 
-      const city = location.split(",")[0];
-      const state = location.split(",")[1];
+      const groupData = {
+        city: location.split(",")[0],
+        state: location.split(",")[1],
+        name,
+        about,
+        type,
+        privacy,
+        url,
+      };
 
-      const payload = { name, about, type, private: privacy, city, state };
-
-      try {
-        const newGroup = await dispatch(thunkCreateGroup(payload, url));
-
-        history.push(`/groups/${newGroup.id}`);
-      } catch (error) {
-        console.error("Error creating group:", error);
-        // Handle the error appropriately
-      }
-    }
-  };
+      dispatch(groupActions.thunkCreateGroup(groupData, url))
+      .then((res) => {
+        history.push(`/groups/${res.id}`);
+      })
+      .catch((err) => {
+        console.error("Error creating group:", err);
+      });
+  }
+};
 
   return (
     <form className="form-step-form" onSubmit={handleSubmit}>

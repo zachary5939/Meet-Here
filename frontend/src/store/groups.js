@@ -97,7 +97,7 @@ export const thunkCreateGroup =
     if (res.ok) {
       const data = await res.json();
 
-      // console.log("Create Group Data:", data);
+      console.log("Create Group Data:", data);
 
       const imgRes = await csrfFetch(`/api/groups/${data.id}/images`, {
         method: "POST",
@@ -150,12 +150,16 @@ export const thunkCreateGroup =
 
 
   export const thunkDeleteGroup = (groupId) => async (dispatch) => {
-    const response = await csrfFetch(`/api/groups/${groupId}`, {
-      method: "DELETE",
+    const res = await csrfFetch(`/api/groups/${groupId}`, {
+      method: 'DELETE',
     });
-    const resBody = await response.json();
-    if (response.ok) dispatch(deleteGroup(groupId));
-    return resBody;
+    if (res.ok) {
+      dispatch(deleteGroup(groupId));
+      return res;
+    } else {
+      const errors = await res.json();
+      return errors;
+    }
   };
 
 export const thunkAddGroupImage = (groupImage, groupId) => async (dispatch) => {
@@ -228,16 +232,14 @@ const groupsReducer = (state = initialState, action) => {
       return { ...state, eventDetail: action.event.id };
     }
     case CREATE_GROUP: {
-      const singleGroup = {
-        ...action.group,
-      };
-      return { ...state, singleGroup };
+      return { ...state, allGroups: { ...state.allGroups, [action.group.id]: action.group } };
+
     }
     case DELETE_GROUP: {
-      const allGroups = { ...state.allGroups };
-      delete allGroups[action.groupId];
-      return { allGroups, singleGroup: {} };
-    }
+      const { [action.groupId]: deletedGroup, ...updatedGroups } = state.allGroups;
+      return { ...state, allGroups: updatedGroups };
+  }
+
     case ADD_GROUP_IMG: {
       const singleGroup = {
         ...state.singleGroup,
