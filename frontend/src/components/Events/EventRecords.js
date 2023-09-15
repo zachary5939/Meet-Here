@@ -26,12 +26,12 @@ export const EventRecord = ({ event }) => {
         className="event-record-img"
         width="250"
         height="150"
-        src={event.previewImage}
+        src={event?.previewImage}
         alt="Event Preview"
       ></img>
       <p className="event-list-info-time">
-        {event.startDate && event.startDate.split("T")[0]} · {}
-        {event.startDate && event.startDate.split("T")[1].split(".")[0]}
+        {event?.startDate && event.startDate.split("T")[0]} · {}
+        {event?.startDate && event.startDate.split("T")[1].split(".")[0]}
       </p>
       <div
         className="event-individual-record"
@@ -40,7 +40,7 @@ export const EventRecord = ({ event }) => {
         {event.name}
       </div>
       <p className="event-location">
-        {event.Group.city}, {event.Group.state}
+        {event?.Group?.city}, {event?.Group?.state}
       </p>
     </div>
   );

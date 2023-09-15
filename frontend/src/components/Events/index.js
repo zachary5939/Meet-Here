@@ -19,7 +19,7 @@ const EventPage = () => {
   }, [dispatch]);
 
   for (let event of events) {
-    console.log('eventt', event)
+    console.log('aaaaaaaaaaaaa', event)
     if (new Date(event.startDate) > time) {
       upcomingEvents.push(event);
     } else {

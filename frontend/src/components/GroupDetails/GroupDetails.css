@@ -206,3 +206,20 @@ html {
   padding-right:36px;
   text-overflow: wrap;
  }
+
+
+.upcoming-events .event-item img{
+ max-width:223px;
+ position:relative;
+ left:-123px;
+}
+
+/* Heading */
+.upcoming-events .event-item h3{
+ transform: translatex(-121px);
+}
+
+/* Heading */
+.upcoming-events h1{
+ transform: translatex(-242px);
+}

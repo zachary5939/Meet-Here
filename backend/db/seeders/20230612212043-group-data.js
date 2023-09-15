@@ -45,8 +45,8 @@ module.exports = {
     );
   },
 
-  async down(queryInterface, Sequelize) {
-    options.tableName = "Groups";
+  async down (queryInterface, Sequelize) {
+    options.tableName = 'Attendances';
     await queryInterface.bulkDelete(options);
-  },
+  }
 };

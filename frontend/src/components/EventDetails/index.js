@@ -4,7 +4,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { thunkGetEventDetail } from "../../store/events";
 import "./EventDetails.css";
 import OpenModalButton from "../OpenModalButton";
-import { EventDetailButton } from "./EventDeltails";
 import { DeleteEvent } from "../DeleteEventModal";
 
 export const EventDetail = () => {

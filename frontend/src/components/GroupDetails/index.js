@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { useParams, useHistory, NavLink } from "react-router-dom";
+import { useParams, useHistory, Link } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import * as groupDetails from "../../store/groups";
 import * as sessionActions from "../../store/session";
@@ -125,7 +125,21 @@ const GroupDetails = () => {
         </div>
         <div className="group-event-area">
         <div className="upcoming-events">
-          {eventsCheck()}
+        <div className="events-container">
+  <h1>Upcoming Events</h1>
+  {groupInfo.Events && groupInfo.Events.map(event => (
+    <div key={event.id} className="event-item">
+      <h3>{event.name}</h3>
+      {event.EventImages && event.EventImages.map(image => (
+        <Link to={`/events/${event.id}`} key={image.id}>
+          <img src={image.url} alt="Event" />
+        </Link>
+      ))}
+    </div>
+  ))}
+</div>
+
+
         </div>
       </div>
       </div>

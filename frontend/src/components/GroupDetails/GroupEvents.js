@@ -45,7 +45,7 @@ const upcomingEvent = [];
                 <img
                   alt=""
                   onClick={() => history.push(`/events/${event.id}`)}
-                  src={event.previewImage}
+                  src={event?.previewImage}
                   width={180}
                   height={120}
                   style={{ marginLeft: "1rem", marginTop: "1.25rem" }}
